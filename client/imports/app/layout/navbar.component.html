@@ -1,0 +1,15 @@
+<ul id="nav-mobile" class="side-nav left-bar fixed">
+    <li class="admin-pro">
+    <img src="images/no-image-male.jpg" alt="" style="width:100px;" />
+    <h2>{{user.profile.firstName}} {{user.profile.lastName}}</h2>
+    </li>
+    
+    <ul class="collapsible collapsible-accordion">
+        <li class="bold"><a href="javascript:void(0);" [routerLink]="['/dashboard']" class="collapsible-header waves-effect waves-tea"><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a></li>
+        <li class="bold"><a href="javascript:void(0);" class="collapsible-header waves-effect"><i class="zmdi zmdi-account"></i> My Account</a></li>
+    </ul>
+    
+    <li class="bold"><a href="javascript:void(0);" class="waves-effect" [hidden]="!user" (click)="logout()">
+        <i class="zmdi zmdi-lock"></i> Logout</a>
+    </li>
+</ul>
