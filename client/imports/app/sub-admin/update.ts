@@ -2,16 +2,20 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
+import { Subscription } from "rxjs";
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
 
-import template from "./create.html";
+import template from "./update.html";
 
 @Component({
-  selector: 'create-subadmin',
+  selector: 'update-subadmin',
   template
 })
-export class CreateSubadminComponent extends MeteorComponent implements OnInit {
+export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
+  paramsSub: Subscription;
+  userId: string;
+  user: User;
   createForm: FormGroup;
   error: string;
   rolesArray: [{label: string, value: string}] = [
@@ -30,10 +34,37 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.paramsSub = this.route.params
+      .map(params => params['id'])
+      .subscribe(id => {
+          this.userId = id;
+          //console.log("patientId:", patientId);
+  
+          this.call("users.findOne", id, (err, res)=> {
+              if (err) {
+                  //console.log("error while fetching patient data:", err);
+                  showAlert("Error while fetching user data.", "danger");
+                  return;
+              }
+              this.user = res;
+              this.createForm.controls['firstName'].setValue(res.profile.firstName);
+              this.createForm.controls['lastName'].setValue(res.profile.lastName);
+              this.createForm.controls['phoneNum'].setValue(res.profile.phoneNum);
+              //console.log("this.rolesBoxArray:", this.rolesBoxArray);
+              for(let i=0; i<res.roles.length; i++) {
+                let role = res.roles[i];
+                for(let i2=0; i2<this.rolesArray.length; i2++) {
+                  if (this.rolesArray[i2].value == role) {
+                    this.rolesBoxArray.controls[i2].setValue(true);
+                  }
+                }
+              }
+          });
+
+      });
+
     var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
     this.createForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.pattern(emailRegex), Validators.required])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern("[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}")])],
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern("[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}")])],
       phoneNum: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(15), Validators.pattern("[0-9\(\)\-\.\ \+]{7,20}")])],
@@ -64,26 +95,27 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
       return;
     }
 
-    // insert new user
-    let userData = {
-      email: this.createForm.value.email,
-      passwd: this.createForm.value.password,
-      profile: {
-        firstName: this.createForm.value.firstName,
-        lastName: this.createForm.value.lastName,
-        phoneNum: this.createForm.value.phoneNum
-      }
-    };
-    this.call("users.insert", userData, roles, (err, res) => {
-      if (err) {
-        this.zone.run(() => {
-          this.error = err;
-        });
-      } else {
-        console.log("new user-id:", res);
-        this.router.navigate(['/sub-admin/list']);
-      }
-    });
+    // update old user
+    if (!!this.userId && this.userId.length) {
+      let userData = {
+        profile: {
+          firstName: this.createForm.value.firstName,
+          lastName: this.createForm.value.lastName,
+          phoneNum: this.createForm.value.phoneNum
+        },
+        roles: roles
+      };
+
+      this.call("users.update", this.userId, userData, (err, res) => {
+        if (err) {
+          this.zone.run(() => {
+            this.error = err;
+          });
+        } else {
+          this.router.navigate(['/sub-admin/list']);
+        }
+      });
+    } 
+    // finish update old user
   }
-  // finish insert new user
 }

@@ -22,9 +22,9 @@ export class SignupComponent extends MeteorComponent implements OnInit {
         var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
         this.signupForm = this.formBuilder.group({
           email: ['', Validators.compose([Validators.pattern(emailRegex), Validators.required])],
-          password: ['', Validators.compose([Validators.required, Validators.minLength(6)]) ],
-          firstName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z]{2}[a-zA-Z ]{0,30}")])],
-          lastName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z]{2}[a-zA-Z ]{0,30}")])],
+          password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+          firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern("[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}")])],
+          lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern("[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}")])],
         });
   
         this.error = '';
@@ -47,7 +47,7 @@ export class SignupComponent extends MeteorComponent implements OnInit {
               });
             } else {
               console.log("new user-id:", res);
-              this.router.navigate(['/dashboard']);
+              this.router.navigate(['/login']);
             }
           });
         }

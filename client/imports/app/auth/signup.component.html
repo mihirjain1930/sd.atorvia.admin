@@ -11,7 +11,9 @@
             <label for="firstName" style="transform: translateY(-140%);">First Name</label>
             <div *ngIf="signupForm.controls['firstName'].errors && signupForm.controls['firstName'].touched" class="error">
                 <div [hidden]="!signupForm.controls['firstName'].errors.required">First Name is required.</div>
-                <div [hidden]="!signupForm.controls['firstName'].errors.pattern">Minimum 2 characters required.</div>
+                <div [hidden]="!signupForm.controls['firstName'].errors.minlength">Min 2 characters required.</div>
+                <div [hidden]="!signupForm.controls['firstName'].errors.maxlength">Max 30 characters allowed.</div>
+                <div [hidden]="!signupForm.controls['firstName'].errors.pattern">Please type valid name.</div>
             </div>
         </div>
         <div class="input-field col s12">
@@ -19,7 +21,9 @@
             <label for="lastName" style="transform: translateY(-140%);">Last Name</label>
             <div *ngIf="signupForm.controls['lastName'].errors && signupForm.controls['lastName'].touched" class="error">
                 <div [hidden]="!signupForm.controls['lastName'].errors.required">Last Name is required.</div>
-                <div [hidden]="!signupForm.controls['lastName'].errors.pattern">Minimum 2 characters required.</div>
+                <div [hidden]="!signupForm.controls['lastName'].errors.minlength">Min 2 characters required.</div>
+                <div [hidden]="!signupForm.controls['lastName'].errors.maxlength">Max 30 characters allowed.</div>
+                <div [hidden]="!signupForm.controls['lastName'].errors.pattern">Please type valid name.</div>
             </div>
         </div>
 
