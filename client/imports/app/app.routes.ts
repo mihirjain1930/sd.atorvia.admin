@@ -6,6 +6,7 @@ import {RecoverComponent} from "./auth/recover.component";
 import {LoginComponent} from "./auth/login.component.web";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {LandingComponent} from "./layout/landing.component";
+import {routes as subadminRoutes} from "./sub-admin/routes";
 
 let mainRoutes = [
     { path: '', component: LandingComponent/*, canActivate: ['canActivateForLogoff']*/ },
@@ -17,6 +18,7 @@ let mainRoutes = [
 
 export const routes: Route[] = [
     ...mainRoutes,
+    ...subadminRoutes
 ];
 
 export const ROUTES_PROVIDERS = [

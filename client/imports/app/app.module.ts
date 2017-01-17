@@ -11,6 +11,7 @@ import { routes, ROUTES_PROVIDERS } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
 import {AUTH_DECLARATIONS} from "./auth/index";
 import { LAYOUT_DECLARATIONS } from "./layout/index";
+import { Subadmin_Declarations } from "./sub-admin/index";
 import {FileDropModule} from "angular2-file-drop";
 import {DASHBOARD_DECLARATIONS} from "./dashboard/index";
 
@@ -37,7 +38,8 @@ moduleDefinition = {
     ...SHARED_DECLARATIONS,
     ...AUTH_DECLARATIONS,
     ...DASHBOARD_DECLARATIONS,
-    ...LAYOUT_DECLARATIONS
+    ...LAYOUT_DECLARATIONS,
+    ...Subadmin_Declarations
   ],
   providers: [
     ...ROUTES_PROVIDERS,

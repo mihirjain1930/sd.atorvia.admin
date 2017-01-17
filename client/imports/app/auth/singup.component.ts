@@ -23,8 +23,8 @@ export class SignupComponent extends MeteorComponent implements OnInit {
         this.signupForm = this.formBuilder.group({
           email: ['', Validators.compose([Validators.pattern(emailRegex), Validators.required])],
           password: ['', Validators.compose([Validators.required, Validators.minLength(6)]) ],
-          firstName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")])],
-          lastName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z ]{2,30}")])],
+          firstName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z]{2}[a-zA-Z ]{0,30}")])],
+          lastName: ['', Validators.compose([Validators.required, Validators.pattern("[a-zA-Z]{2}[a-zA-Z ]{0,30}")])],
         });
   
         this.error = '';
@@ -40,7 +40,7 @@ export class SignupComponent extends MeteorComponent implements OnInit {
               lastName: this.signupForm.value.lastName
             }
           };
-          this.call("users.insert", userData, (err, res) => {
+          this.call("users.insert", userData, ['super-admin'], (err, res) => {
             if (err) {
               this.zone.run(() => {
                 this.error = err;
