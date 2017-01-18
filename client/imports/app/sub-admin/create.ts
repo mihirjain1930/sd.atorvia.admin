@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
+import {validateEmail, validatePhoneNum, validateFirstName} from "../validators/common";
 
 import template from "./create.html";
 
@@ -30,17 +31,35 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
   }
 
   ngOnInit() {
-    var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
     this.createForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.pattern(emailRegex), Validators.required])],
+      email: ['', Validators.compose([Validators.required, validateEmail])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-      firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern("[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}")])],
-      lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern("[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}")])],
-      phoneNum: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(15), Validators.pattern("[0-9\(\)\-\.\ \+]{7,20}")])],
+      repeatPassword: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
+      lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
+      phoneNum: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(15), validatePhoneNum])],
       roles: this.rolesBoxArray
-    });
+    }, {validator: this.matchPasswords('password', 'repeatPassword')});
 
     this.error = '';
+  }
+
+  matchPasswords(passwordKey: string, confirmPasswordKey: string) {
+    return (group: FormGroup): {[key: string]: any} => {
+      let password = group.controls[passwordKey];
+      let confirmPassword = group.controls[confirmPasswordKey];
+      //console.log("passwd:", password.value);
+      //console.log("repeat passwd:", confirmPassword.value);
+
+      if (password.value !== confirmPassword.value) {
+        console.log("password mismatch");
+        return {
+          "password.mismatch": false
+        };
+      } else {
+        return null;
+      }
+    }
   }
 
   rolesRequired(formArray: FormArray) {
@@ -60,6 +79,7 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
     }
 
     if (!this.createForm.valid) {
+      console.log(this.createForm);
       showAlert("Invalid form-data supplied.", "danger");
       return;
     }
@@ -71,7 +91,7 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
       profile: {
         firstName: this.createForm.value.firstName,
         lastName: this.createForm.value.lastName,
-        phoneNum: this.createForm.value.phoneNum
+        contact: this.createForm.value.phoneNum
       }
     };
     this.call("users.insert", userData, roles, (err, res) => {

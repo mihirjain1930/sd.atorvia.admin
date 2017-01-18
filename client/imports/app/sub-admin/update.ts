@@ -5,6 +5,7 @@ import { MeteorComponent } from 'angular2-meteor';
 import { Subscription } from "rxjs";
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
+import {validateEmail, validatePhoneNum, validateFirstName} from "../validators/common";
 
 import template from "./update.html";
 
@@ -49,7 +50,7 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
               this.user = res;
               this.createForm.controls['firstName'].setValue(res.profile.firstName);
               this.createForm.controls['lastName'].setValue(res.profile.lastName);
-              this.createForm.controls['phoneNum'].setValue(res.profile.phoneNum);
+              this.createForm.controls['phoneNum'].setValue(res.profile.contact);
               //console.log("this.rolesBoxArray:", this.rolesBoxArray);
               for(let i=0; i<res.roles.length; i++) {
                 let role = res.roles[i];
@@ -65,9 +66,9 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
 
     var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
     this.createForm = this.formBuilder.group({
-      firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern("[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}")])],
-      lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern("[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}")])],
-      phoneNum: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(15), Validators.pattern("[0-9\(\)\-\.\ \+]{7,20}")])],
+      firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
+      lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
+      phoneNum: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(15), validatePhoneNum])],
       roles: this.rolesBoxArray
     });
 
@@ -101,7 +102,7 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
         profile: {
           firstName: this.createForm.value.firstName,
           lastName: this.createForm.value.lastName,
-          phoneNum: this.createForm.value.phoneNum
+          contact: this.createForm.value.phoneNum
         },
         roles: roles
       };
