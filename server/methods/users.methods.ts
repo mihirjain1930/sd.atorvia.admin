@@ -1,6 +1,8 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
+import {check} from "meteor/check";
+import {isValidEmail, isValidFirstName, isValidPhoneNum, isValidSSN, isValidPasswd} from "../../both/validators";
 
 interface Options {
   [key: string]: any;
@@ -8,12 +10,40 @@ interface Options {
 
 Meteor.methods({
     "users.insert": (userData: {email: string, passwd: string, profile?: any}, roles: [string]): string => {
+        /* validate email */
+        check(userData.email, String);
+        if (! isValidEmail(userData.email) ) {
+            throw new Meteor.Error(`Invalid email ${userData.email}`);
+        }
+        /* validate password */
+        if (! isValidPasswd(userData.passwd)) {
+            throw new Meteor.Error(`Invalid password supplied.`);
+        }
+        /* validate first name */
+        check(userData.profile.firstName, String);
+        if (! isValidFirstName(userData.profile.firstName)) {
+            throw new Meteor.Error(`Invalid first name ${userData.profile.firstName}`);
+        }
+        /* validate last name */
+        check(userData.profile.lastName, String);
+        if (! isValidFirstName(userData.profile.lastName)) {
+            throw new Meteor.Error(`Invalid last name ${userData.profile.lastName}`);
+        }
+        /* valiate contact */
+        check(userData.profile.contact, String);
+        if (! isValidPhoneNum(userData.profile.contact)) {
+            throw new Meteor.Error(`Invalid contact ${userData.profile.contact}`);
+        }
+        
         let userId = Accounts.createUser({
             email: userData.email,
             password: userData.passwd,
             profile: userData.profile
         });
 
+        if (typeof roles == "undefined" || !roles.length) {
+            roles = ["standard"];
+        }
         Roles.addUsersToRoles(userId, roles);
 
         return userId;
@@ -51,10 +81,23 @@ Meteor.methods({
         return Meteor.users.findOne({_id: userId});
     },
     "users.update": (userId: string, userData: any) => {
+        check(userData.profile.firstName, String);
+        if (! isValidFirstName(userData.profile.firstName)) {
+            throw new Meteor.Error(`Invalid firstName ${userData.profile.firstName}`);
+        }
+        check(userData.profile.lastName, String);
+        if (! isValidFirstName(userData.profile.lastName)) {
+            throw new Meteor.Error(`Invalid lastName ${userData.profile.lastName}`);
+        }
+        check(userData.profile.contact, String);
+        if (! isValidPhoneNum(userData.profile.contact)) {
+            throw new Meteor.Error(`Invalid phoneNum ${userData.profile.contact}`);
+        }
+
         return Meteor.users.update({_id: userId}, {$set: {
             "profile.firstName": userData.profile.firstName,
             "profile.lastName": userData.profile.lastName,
-            "profile.phoneNum": userData.profile.phoneNum,
+            "profile.contact": userData.profile.contact,
             "roles": userData.roles
         }});
     },

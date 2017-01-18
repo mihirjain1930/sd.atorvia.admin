@@ -113,6 +113,7 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
             this.error = err;
           });
         } else {
+          showAlert("User profile updated successfully.", "success");
           this.router.navigate(['/sub-admin/list']);
         }
       });

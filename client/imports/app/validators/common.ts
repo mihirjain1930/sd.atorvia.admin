@@ -29,3 +29,13 @@ export const validateFirstName = function(c: FormControl) {
     }
   };
 }
+
+export const validatePassword = function(c: FormControl) {
+  let REGEXP = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
+
+  return REGEXP.test(c.value) ? null : {
+    validatePassword: {
+      valid: false
+    }
+  };
+}
