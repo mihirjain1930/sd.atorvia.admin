@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Accounts } from 'meteor/accounts-base';
 import {MeteorComponent} from 'angular2-meteor';
-import {validateEmail, validatePhoneNum, validateFirstName} from "../validators/common";
+import {validateEmail, validatePhoneNum, validateFirstName} from "../../validators/common";
 
 import template from './signup.component.html';
 

@@ -1,10 +1,12 @@
+import { Meteor } from 'meteor/meteor';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
-import {validateEmail, validatePhoneNum, validateFirstName, validatePassword} from "../validators/common";
+import {validateEmail, validatePhoneNum, validateFirstName, validatePassword} from "../../validators/common";
+import { Roles } from 'meteor/alanning:roles';
 
 import template from "./create.html";
 
@@ -33,8 +35,8 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
   ngOnInit() {
     this.createForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, validateEmail])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(6), validatePassword])],
-      repeatPassword: ['', Validators.compose([Validators.required, Validators.minLength(6), validatePassword])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(8), validatePassword])],
+      repeatPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), validatePassword])],
       firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
       phoneNum: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(15), validatePhoneNum])],

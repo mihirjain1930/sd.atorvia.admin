@@ -3,6 +3,9 @@
         <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
         <label class="tooltipped" for="search" (click)="search(searchtext.value)" data-position="top" data-delay="0" data-tooltip="Click to Search"><i class="material-icons">search</i></label>
     </section>
+    <section class="download-btn">
+        <a class="waves-effect waves-light btn" [routerLink]="['/sub-admin/create']"><i class="zmdi zmdi-account-add"></i>Add User</a>
+    </section>
 </section>
 
 <pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
@@ -22,7 +25,7 @@
 [hidden]="user.deleted">
     <section class="pateint-list">
         <section class="col s6 mar-tp10">
-            <h2 class="pateint-name"><a [routerLink]="['/subadmin/view', user._id]">{{user.profile.firstName}} {{user.profile.lastName}}</a></h2>
+            <h2 class="pateint-name"><a [routerLink]="['/sub-admin/view', user._id]">{{user.profile.firstName}} {{user.profile.lastName}}</a></h2>
             <ul class="pateint-deatil">
                 <li><i class="zmdi zmdi-email tooltipped" data-position="top" data-delay="0" data-tooltip="Email"></i> {{user.emails[0].address}}</li>
                 <li><i class="zmdi zmdi-phone tooltipped" data-position="top" data-delay="0" data-tooltip="Contact"></i> {{user.profile.contact}}</li>

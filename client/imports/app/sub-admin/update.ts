@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -5,7 +6,8 @@ import { MeteorComponent } from 'angular2-meteor';
 import { Subscription } from "rxjs";
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
-import {validateEmail, validatePhoneNum, validateFirstName} from "../validators/common";
+import {validateEmail, validatePhoneNum, validateFirstName} from "../../validators/common";
+import { Roles } from 'meteor/alanning:roles';
 
 import template from "./update.html";
 
@@ -16,7 +18,6 @@ import template from "./update.html";
 export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
   paramsSub: Subscription;
   userId: string;
-  user: User;
   createForm: FormGroup;
   error: string;
   rolesArray: [{label: string, value: string}] = [
@@ -47,7 +48,6 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
                   showAlert("Error while fetching user data.", "danger");
                   return;
               }
-              this.user = res;
               this.createForm.controls['firstName'].setValue(res.profile.firstName);
               this.createForm.controls['lastName'].setValue(res.profile.lastName);
               this.createForm.controls['phoneNum'].setValue(res.profile.contact);
@@ -64,7 +64,6 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
 
       });
 
-    var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
     this.createForm = this.formBuilder.group({
       firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],

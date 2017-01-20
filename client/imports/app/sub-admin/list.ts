@@ -5,12 +5,13 @@ import {PaginationService} from "ng2-pagination";
 import {MeteorObservable} from "meteor-rxjs";
 import {InjectUser} from "angular2-meteor-accounts-ui";
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
+import { Roles } from 'meteor/alanning:roles';
 
 import template from "./list.html";
 
@@ -39,10 +40,12 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     searchSubject: Subject<string> = new Subject<string>();
     searchString: string = "";
 
-    constructor(private paginationService: PaginationService, 
-    private ngZone: NgZone, 
-    private changeDetectorRef: ChangeDetectorRef,
-    private localStorageService: LocalStorageService
+    constructor(private router: Router, 
+        private route: ActivatedRoute,
+        private paginationService: PaginationService, 
+        private ngZone: NgZone, 
+        private changeDetectorRef: ChangeDetectorRef,
+        private localStorageService: LocalStorageService
     ) {
         super();
     }

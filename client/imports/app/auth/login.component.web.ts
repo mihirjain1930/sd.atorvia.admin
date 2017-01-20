@@ -2,7 +2,7 @@ import {Component, OnInit, NgZone} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Meteor } from 'meteor/meteor';
-import {validateEmail, validatePhoneNum, validateFirstName} from "../validators/common";
+import {validateEmail, validatePhoneNum, validateFirstName} from "../../validators/common";
 
 import template from './login.component.web.html';
 

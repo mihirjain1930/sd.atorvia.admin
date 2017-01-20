@@ -41,8 +41,8 @@
             <label for="password">Password</label>
             <div *ngIf="createForm.controls['password'].errors && createForm.controls['password'].touched" class="error">
                 <div [hidden]="!createForm.controls['password'].errors.required">Password is required.</div>
-                <div [hidden]="!createForm.controls['password'].errors.minlength">Minimum 6 characters required.</div>
-                <div [hidden]="!createForm.controls['password'].errors.validatePassword">At least 1 Alphabet, 1 Number and 1 Special Character required.</div>
+                <div [hidden]="!createForm.controls['password'].errors.minlength">Minimum 8 characters required.</div>
+                <div [hidden]="!createForm.controls['password'].errors.validatePassword">At least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character required.</div>
             </div>
         </div>
 
@@ -51,8 +51,8 @@
             <label for="repeatPassword">Repeat Password</label>
             <div *ngIf="createForm.controls['repeatPassword'].errors && createForm.controls['repeatPassword'].touched" class="error">
                 <div [hidden]="!createForm.controls['repeatPassword'].errors.required">Repeat Password is required.</div>
-                <div [hidden]="!createForm.controls['repeatPassword'].errors.minlength">Minimum 6 characters required.</div>
-                <div [hidden]="!createForm.controls['repeatPassword'].errors.validatePassword">At least 1 Alphabet, 1 Number and 1 Special Character required.</div>
+                <div [hidden]="!createForm.controls['repeatPassword'].errors.minlength">Minimum 8 characters required.</div>
+                <div [hidden]="!createForm.controls['repeatPassword'].errors.validatePassword">At least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character required.</div>
             </div>
             <div class="error" [hidden]="!(createForm.controls['repeatPassword'].touched && createForm.hasError('password.mismatch'))">Type correct repeat password.</div>
         </div>

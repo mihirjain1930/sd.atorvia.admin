@@ -31,10 +31,20 @@ export const validateFirstName = function(c: FormControl) {
 }
 
 export const validatePassword = function(c: FormControl) {
-  let REGEXP = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
+  let REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)\-\_\=\+\{\}\[\]\;\:\'\"\,\.\<\>\/\\\|\?])(?=.{8,})/;
 
   return REGEXP.test(c.value) ? null : {
     validatePassword: {
+      valid: false
+    }
+  };
+}
+
+export const validateSlug = function(c: FormControl) {
+  let REGEXP = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/;
+
+  return REGEXP.test(c.value) ? null : {
+    validateSlug: {
       valid: false
     }
   };

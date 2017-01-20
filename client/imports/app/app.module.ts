@@ -12,8 +12,10 @@ import { SHARED_DECLARATIONS } from './shared';
 import {AUTH_DECLARATIONS} from "./auth/index";
 import { LAYOUT_DECLARATIONS } from "./layout/index";
 import { Subadmin_Declarations } from "./sub-admin/index";
+import { Page_Declarations } from "./content-page/index";
 import {FileDropModule} from "angular2-file-drop";
 import {DASHBOARD_DECLARATIONS} from "./dashboard/index";
+import {Services_Providers} from "../services/index";
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
 let localStorageServiceConfig = {
@@ -39,10 +41,12 @@ moduleDefinition = {
     ...AUTH_DECLARATIONS,
     ...DASHBOARD_DECLARATIONS,
     ...LAYOUT_DECLARATIONS,
-    ...Subadmin_Declarations
+    ...Subadmin_Declarations,
+    ...Page_Declarations
   ],
   providers: [
     ...ROUTES_PROVIDERS,
+    ...Services_Providers,
     LocalStorageService,
       {
           provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig
