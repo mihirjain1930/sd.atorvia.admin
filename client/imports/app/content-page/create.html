@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="input-field col s12">
-            <input formControlName="heading" id="heading" type="text"></input>
+            <input formControlName="heading" id="heading" type="text" [ngClass]="{'invalid':createForm.controls['heading'].touched && !createForm.controls['heading'].valid}"></input>
             <label for="heading" style="transform: translateY(-140%);">Heading</label>
             <div *ngIf="createForm.controls['heading'].errors && createForm.controls['heading'].touched" class="error">
                 <div [hidden]="!createForm.controls['heading'].errors.required">Heading is required.</div>
@@ -27,7 +27,7 @@
         </div>
 
         <div class="input-field col s12">
-            <input formControlName="slug" id="slug" type="text"></input>
+            <input formControlName="slug" id="slug" type="text" [ngClass]="{'invalid':createForm.controls['slug'].touched && !createForm.controls['slug'].valid}"></input>
             <label for="slug" style="transform: translateY(-140%);">Slug</label>
             <div *ngIf="createForm.controls['slug'].errors && createForm.controls['slug'].touched" class="error">
                 <div [hidden]="!createForm.controls['slug'].errors.required">Slug is required.</div>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="input-field col s12">
-            <textarea formControlName="summary" id="summary" style="height:8rem;"></textarea>
+            <textarea formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':createForm.controls['summary'].touched && !createForm.controls['summary'].valid}"></textarea>
             <label for="summary" style="transform: translateY(-140%);">Summary</label>
             <div *ngIf="createForm.controls['summary'].errors && createForm.controls['summary'].touched" class="error">
                 <div [hidden]="!createForm.controls['summary'].errors.required">Summary is required.</div>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="input-field col s12">
-            <textarea formControlName="contents" id="contents" style="height:12rem;"></textarea>
+            <textarea formControlName="contents" id="contents" style="height:12rem;" [ngClass]="{'invalid':createForm.controls['contents'].touched && !createForm.controls['contents'].valid}"></textarea>
             <label for="contents" style="transform: translateY(-140%);">Contents</label>
             <div *ngIf="createForm.controls['contents'].errors && createForm.controls['contents'].touched" class="error">
                 <div [hidden]="!createForm.controls['contents'].errors.required">Contents is required.</div>

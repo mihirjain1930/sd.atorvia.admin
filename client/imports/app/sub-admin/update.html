@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="input-field col s12">
-            <input formControlName="lastName" id="lastName" type="text"></input>
+            <input formControlName="lastName" id="lastName" type="text" [ngClass]="{'invalid':createForm.controls['lastName'].touched && !createForm.controls['lastName'].valid}"></input>
             <label for="lastName" style="transform: translateY(-140%);">Last Name</label>
             <div *ngIf="createForm.controls['lastName'].errors && createForm.controls['lastName'].touched" class="error">
                 <div [hidden]="!createForm.controls['lastName'].errors.required">Last Name is required.</div>
@@ -28,7 +28,7 @@
         </div>
 
         <div class="input-field col s12">
-            <input formControlName="phoneNum" id="phoneNum" type="text"></input>
+            <input formControlName="phoneNum" id="phoneNum" type="text" [ngClass]="{'invalid':createForm.controls['phoneNum'].touched && !createForm.controls['phoneNum'].valid}"></input>
             <label for="phoneNum" style="transform: translateY(-140%);">Contact</label>
             <div *ngIf="createForm.controls['phoneNum'].errors && createForm.controls['phoneNum'].touched" class="error">
                 <div [hidden]="!createForm.controls['phoneNum'].errors.required">Contact is required.</div>
@@ -39,7 +39,7 @@
         <div class="row">
             <div class="input-field col s12" formArrayName="roles">
                 <p *ngFor="let def of createForm.controls.roles.controls; let i = index">
-                <input type="checkbox" [attr.id]="'role'+i" formControlName="{{i}}" [attr.value]="rolesArray[i].value" />
+                <input type="checkbox" [attr.id]="'role'+i" formControlName="{{i}}" [attr.value]="rolesArray[i].value" [ngClass]="{'invalid':createForm.controls['roles'].touched && !createForm.controls['roles'].valid}"></input>
                 <label [attr.for]="'role'+i">{{rolesArray[i].label}}</label>
                 </p>
                 <label for="roles" class="active">Roles</label>
@@ -59,6 +59,7 @@
             <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!createForm.valid">Submit
               <i class="material-icons right">send</i>
             </button>
+            <button class="btn waves-effect waves-light grey lighten-2" type="submit" name="action" [routerLink]="['/sub-admin/list']">Cancel</button>
           </div>
         </div>
 

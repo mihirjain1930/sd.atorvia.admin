@@ -12,7 +12,7 @@ import { Roles } from 'meteor/alanning:roles';
 import template from "./create.html";
 
 @Component({
-  selector: 'create-page',
+  selector: '',
   template
 })
 export class CreatePageComponent extends MeteorComponent implements OnInit, OnDestroy {
@@ -37,6 +37,11 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
           this.pageId = id;
           //console.log("patientId:", patientId);
   
+          if (! this.pageId) {
+            //console.log("no page-id supplied");
+            return;
+          }
+
           this.call("pages.findOne", id, (err, res)=> {
               if (err) {
                   //console.log("error while fetching patient data:", err);
