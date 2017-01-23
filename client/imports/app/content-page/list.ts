@@ -27,7 +27,7 @@ interface Options extends Pagination {
 declare var jQuery:any;
 
 @Component({
-  selector: 'list-page',
+  selector: '',
   template
 })
 export class ListPageComponent extends MeteorComponent implements OnInit, OnDestroy {
