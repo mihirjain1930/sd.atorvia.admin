@@ -89,7 +89,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
 
                 setTimeout(function(){
                     jQuery(function($){
-                    $('.tooltipped').tooltip({delay: 0});
+                    /*$('.tooltipped').tooltip({delay: 0});*/
                     });
                 }, 200);
             })
@@ -180,8 +180,8 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
 
     ngAfterViewInit() {
         jQuery(function($){
-        $('select').material_select();
-        $('.tooltipped').tooltip({delay: 50});
+        /*$('select').material_select();
+        $('.tooltipped').tooltip({delay: 50});*/
         })
     }
 }

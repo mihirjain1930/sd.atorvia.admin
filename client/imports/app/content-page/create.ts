@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
@@ -15,7 +15,7 @@ import template from "./create.html";
   selector: 'create-page',
   template
 })
-export class CreatePageComponent extends MeteorComponent implements OnInit {
+export class CreatePageComponent extends MeteorComponent implements OnInit, OnDestroy {
   paramsSub: Subscription;
   pageId: string;
   createForm: FormGroup;
@@ -92,7 +92,9 @@ export class CreatePageComponent extends MeteorComponent implements OnInit {
         } else {
           //console.log("new user-id:", res);
           showAlert("New page saved successfully.", "success");
-          this.router.navigate(['/page/list']);
+          this.zone.run(() => {
+            this.router.navigate(['/page/list']);
+          });
         }
       });
     }
@@ -114,10 +116,16 @@ export class CreatePageComponent extends MeteorComponent implements OnInit {
         } else {
           //console.log("new user-id:", res);
           showAlert("Page data updated successfully.", "success");
-          this.router.navigate(['/page/list']);
+          this.zone.run(() => {
+            this.router.navigate(['/page/list']);
+          });
         }
       });
     }
     // finish update page data
+  }
+
+  ngOnDestroy() {
+    this.paramsSub.unsubscribe();
   }
 }

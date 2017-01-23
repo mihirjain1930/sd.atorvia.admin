@@ -30,7 +30,7 @@ declare var jQuery:any;
   selector: 'list-page',
   template
 })
-export class ListPageComponent extends MeteorComponent implements OnInit {
+export class ListPageComponent extends MeteorComponent implements OnInit, OnDestroy {
     items: Page[];
     pageSize: Subject<number> = new Subject<number>();
     curPage: Subject<number> = new Subject<number>();
@@ -51,12 +51,14 @@ export class ListPageComponent extends MeteorComponent implements OnInit {
     }
 
     ngOnInit() {
+        //console.log("inside init");
         this.optionsSub = Observable.combineLatest(
             this.pageSize,
             this.curPage,
             this.nameOrder,
             this.searchSubject
         ).subscribe(([pageSize, curPage, nameOrder, searchString]) => {
+            //console.log("inside subscribe");
             const options: Options = {
                 limit: pageSize as number,
                 skip: ((curPage as number) - 1) * (pageSize as number),
@@ -75,6 +77,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit {
             //console.log("searchString:", this.searchString);
             this.searchString = searchString;
             jQuery(".loading").show();
+            //console.log("call pages.find()");
             this.call("pages.find", options, {}, searchString, (err, res) => {
                 //console.log("patients.find() done");
                 jQuery(".loading").hide();
@@ -89,9 +92,10 @@ export class ListPageComponent extends MeteorComponent implements OnInit {
 
                 setTimeout(function(){
                     jQuery(function($){
-                    $('.tooltipped').tooltip({delay: 0});
+                    /*$('.tooltipped').tooltip({delay: 0});*/
                     });
                 }, 200);
+                //console.log("data:", this.items);
             })
 
         });
@@ -143,6 +147,10 @@ export class ListPageComponent extends MeteorComponent implements OnInit {
         this.searchSubject.next(options.searchString);
     }
 
+    get pageArr() {
+        return this.items;
+    }
+
     search(value: string): void {
         this.searchSubject.next(value);
     }
@@ -180,8 +188,8 @@ export class ListPageComponent extends MeteorComponent implements OnInit {
 
     ngAfterViewInit() {
         jQuery(function($){
-        $('select').material_select();
-        $('.tooltipped').tooltip({delay: 50});
+        /*$('select').material_select();
+        $('.tooltipped').tooltip({delay: 50});*/
         })
     }
 }

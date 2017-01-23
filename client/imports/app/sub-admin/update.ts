@@ -96,27 +96,27 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
     }
 
     // update old user
-    if (!!this.userId && this.userId.length) {
-      let userData = {
-        profile: {
-          firstName: this.createForm.value.firstName,
-          lastName: this.createForm.value.lastName,
-          contact: this.createForm.value.phoneNum
-        },
-        roles: roles
-      };
+    let userData = {
+      profile: {
+        firstName: this.createForm.value.firstName,
+        lastName: this.createForm.value.lastName,
+        contact: this.createForm.value.phoneNum
+      },
+      roles: roles
+    };
 
-      this.call("users.update", this.userId, userData, (err, res) => {
-        if (err) {
-          this.zone.run(() => {
-            this.error = err;
-          });
-        } else {
-          showAlert("User profile updated successfully.", "success");
+    this.call("users.update", this.userId, userData, (err, res) => {
+      if (err) {
+        this.zone.run(() => {
+          this.error = err;
+        });
+      } else {
+        showAlert("User profile updated successfully.", "success");
+        this.zone.run(() => {
           this.router.navigate(['/sub-admin/list']);
-        }
-      });
-    } 
+        });
+      }
+    });
     // finish update old user
   }
 }

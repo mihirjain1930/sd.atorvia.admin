@@ -10,7 +10,7 @@
 
 <pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
-<div *ngIf="items && items.length==0">
+<div *ngIf="pageArr && pageArr.length==0">
     No records found.
 </div>
 
@@ -29,7 +29,7 @@
     </thead>
     <tbody>
     <tr class="" 
-        *ngFor="let page of items" 
+        *ngFor="let page of pageArr" 
         [attr.data-page-id]="page._id"
         [ngClass]="{'red accent-1': page.deleted}"
         [hidden]="page.deleted">

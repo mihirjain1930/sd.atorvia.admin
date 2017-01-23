@@ -104,7 +104,9 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
       } else {
         //console.log("new user-id:", res);
         showAlert("New user saved successfully.", "success");
-        this.router.navigate(['/sub-admin/list']);
+        this.zone.run(() => {
+          this.router.navigate(['/sub-admin/list']);
+        });
       }
     });
   }
