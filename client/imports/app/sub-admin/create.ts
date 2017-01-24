@@ -6,7 +6,6 @@ import { MeteorComponent } from 'angular2-meteor';
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
 import {validateEmail, validatePhoneNum, validateFirstName, validatePassword} from "../../validators/common";
-import { Roles } from 'meteor/alanning:roles';
 
 import template from "./create.html";
 

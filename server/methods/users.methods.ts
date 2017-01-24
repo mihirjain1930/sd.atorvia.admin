@@ -110,5 +110,12 @@ Meteor.methods({
         return Meteor.users.update({_id: userId}, {$set: {
             "active": true
         }});
+    },
+    "users.resetPasswd": (userId: string, newPasswd: string) => {
+        /* validate password */
+        if (! isValidPasswd(newPasswd)) {
+            throw new Meteor.Error(`Invalid password supplied.`);
+        }
+        return Accounts.setPassword(userId, newPasswd);
     }
 })
