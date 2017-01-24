@@ -1,6 +1,6 @@
 <div class="row" >
     <h2 class="header red-text text-lighten-1" color="primary">
-      Create new Sub-admin
+      Create new Practitioner
     </h2>
 
     <div class="row">
@@ -67,29 +67,11 @@
         </div>
 
         <div class="row">
-            <div class="input-field col s12" formArrayName="roles">
-                <p *ngFor="let def of createForm.controls.roles.controls; let i = index">
-                <input type="checkbox" [attr.id]="'role'+i" formControlName="{{i}}" [attr.value]="rolesArray[i].value" [ngClass]="{'invalid':createForm.controls['roles'].touched && !createForm.controls['roles'].valid}"></input>
-                <label [attr.for]="'role'+i">{{rolesArray[i].label}}</label>
-                </p>
-                <label for="roles" class="active">Roles</label>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="input-field col s12">
-            <div *ngIf="createForm.controls['roles'].errors && createForm.controls['roles'].touched" class="error">
-                <div [hidden]="!createForm.controls['roles'].errors.required">Please select user role.</div>
-            </div>
-            </div>
-        </div>
-
-        <div class="row">
           <div class="col s12">
             <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!createForm.valid">Submit
               <i class="material-icons right">send</i>
             </button>
-            <button class="btn waves-effect waves-light grey lighten-2" type="submit" name="action" [routerLink]="['/sub-admin/list']">Cancel</button>
+            <button class="btn waves-effect waves-light grey lighten-2" type="submit" name="action" [routerLink]="['/practitioner/list']">Cancel</button>
           </div>
         </div>
 
