@@ -12,7 +12,7 @@ import { Roles } from 'meteor/alanning:roles';
 import template from "./update.html";
 
 @Component({
-  selector: 'update-subadmin',
+  selector: '',
   template
 })
 export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
@@ -97,12 +97,10 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
 
     // update old user
     let userData = {
-      profile: {
-        firstName: this.createForm.value.firstName,
-        lastName: this.createForm.value.lastName,
-        contact: this.createForm.value.phoneNum
-      },
-      roles: roles
+      "profile.firstName": this.createForm.value.firstName,
+      "profile.lastName": this.createForm.value.lastName,
+      "profile.contact": this.createForm.value.phoneNum,
+      "roles": roles
     };
 
     this.call("users.update", this.userId, userData, (err, res) => {

@@ -81,29 +81,34 @@ Meteor.methods({
         return Meteor.users.findOne({_id: userId});
     },
     "users.update": (userId: string, userData: any) => {
-        check(userData.profile.firstName, String);
-        if (! isValidFirstName(userData.profile.firstName)) {
+        check(userData["profile.firstName"], String);
+        if (! isValidFirstName(userData["profile.firstName"])) {
             throw new Meteor.Error(`Invalid firstName ${userData.profile.firstName}`);
         }
-        check(userData.profile.lastName, String);
-        if (! isValidFirstName(userData.profile.lastName)) {
+        check(userData["profile.lastName"], String);
+        if (! isValidFirstName(userData["profile.lastName"])) {
             throw new Meteor.Error(`Invalid lastName ${userData.profile.lastName}`);
         }
-        check(userData.profile.contact, String);
-        if (! isValidPhoneNum(userData.profile.contact)) {
+        check(userData["profile.contact"], String);
+        if (! isValidPhoneNum(userData["profile.contact"])) {
             throw new Meteor.Error(`Invalid phoneNum ${userData.profile.contact}`);
         }
 
-        return Meteor.users.update({_id: userId}, {$set: {
-            "profile.firstName": userData.profile.firstName,
-            "profile.lastName": userData.profile.lastName,
-            "profile.contact": userData.profile.contact,
-            "roles": userData.roles
-        }});
+        return Meteor.users.update({_id: userId}, {$set: userData});
     },
     "users.delete": (userId: string) => {
         return Meteor.users.update({_id: userId}, {$set: {
             "deleted": true
+        }});
+    },
+    "users.deactivate": (userId: string) => {
+        return Meteor.users.update({_id: userId}, {$set: {
+            "active": false
+        }});
+    },
+    "users.activate": (userId: string) => {
+        return Meteor.users.update({_id: userId}, {$set: {
+            "active": true
         }});
     }
 })

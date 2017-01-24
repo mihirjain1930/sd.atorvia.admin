@@ -66,12 +66,10 @@ export class UpdatePractitionerComponent extends MeteorComponent implements OnIn
 
     // update old user
     let userData = {
-      profile: {
-        firstName: this.createForm.value.firstName,
-        lastName: this.createForm.value.lastName,
-        contact: this.createForm.value.phoneNum
-      },
-      roles: ["practitioner"]
+      "profile.firstName": this.createForm.value.firstName,
+      "profile.lastName": this.createForm.value.lastName,
+      "profile.contact": this.createForm.value.phoneNum,
+      "roles": ["practitioner"]
     };
 
     this.call("users.update", this.userId, userData, (err, res) => {

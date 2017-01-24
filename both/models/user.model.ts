@@ -6,5 +6,6 @@ export interface User extends Meteor.User {
         lastName: string;
         contact: string;
     },
+    active: boolean,
     deleted: boolean;
 }

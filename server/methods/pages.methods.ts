@@ -59,6 +59,16 @@ Meteor.methods({
         return Pages.collection.update({_id: pageId}, {$set: {
             deleted: true
         } });
+    },
+    "pages.activate": (pageId: string) => {
+        return Pages.collection.update({_id: pageId}, {$set: {
+            active: true
+        } });
+    },
+    "pages.deactivate": (pageId: string) => {
+        return Pages.collection.update({_id: pageId}, {$set: {
+            active: false
+        } });
     }
 });
 
