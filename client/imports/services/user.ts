@@ -7,6 +7,6 @@ export class UserService {
   }
 
   isLoggedIn() {
-    return true;
+    return !!Meteor.userId();
   }
 }
