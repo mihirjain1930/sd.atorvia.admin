@@ -11,7 +11,7 @@ import { Roles } from 'meteor/alanning:roles';
 import template from "./create.html";
 
 @Component({
-  selector: 'create-subadmin',
+  selector: '',
   template
 })
 export class CreateSubadminComponent extends MeteorComponent implements OnInit {

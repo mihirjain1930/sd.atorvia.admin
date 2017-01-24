@@ -31,12 +31,14 @@
     <tr class="" 
         *ngFor="let page of pageArr" 
         [attr.data-page-id]="page._id"
-        [ngClass]="{'red accent-1': page.deleted}"
+        [ngClass]="{'red accent-1': page.deleted, 'red lighten-4': page.active === false}"
         [hidden]="page.deleted">
         <td><a [routerLink]="['/page/view', page._id]">{{page.title}}</a></h2></td>
         <td>{{page.heading}}</td>
         <td>{{page.summary}}</td>
         <td><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/page/update', page._id]" data-position="top" data-delay="0" data-tooltip="Edit Page"><i class="material-icons">mode_edit</i></a>
+            <a *ngIf="page.active == undefined || page.active === true" class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="deactivate(page)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a>
+            <a *ngIf="page.active === false" class="btn-floating waves-effect waves-light green lighten-2 tooltipped" href="javascript:void(0);" (click)="activate(page)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
             <a *ngIf="!page.deleted" class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deletePage(page)" data-position="top" data-delay="0" data-tooltip="Delete Page"><i class="material-icons">delete</i></a>
         </td>
     </tr>
