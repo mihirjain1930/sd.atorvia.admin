@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AccountsModule } from 'angular2-meteor-accounts-ui';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import {LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG} from "angular-2-local-storage";
+import { CKEditorModule } from 'ng2-ckeditor';
 
 import { AppComponent } from "./app.component.web";
 import { routes, ROUTES_PROVIDERS } from './app.routes';
@@ -34,7 +35,8 @@ moduleDefinition = {
     RouterModule.forRoot(routes),
     AccountsModule,
     Ng2PaginationModule,
-    FileDropModule
+    FileDropModule,
+    CKEditorModule
   ],
   declarations: [
     AppComponent,
