@@ -1,6 +1,10 @@
 import { FormControl } from '@angular/forms';
 
 export const validateEmail = function(c: FormControl) {
+  if (isEmptyInputValue(c.value)) {
+    return null;  // don't validate empty values to allow optional controls
+  }
+  
   let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
   return EMAIL_REGEXP.test(c.value) ? null : {
@@ -11,6 +15,10 @@ export const validateEmail = function(c: FormControl) {
 }
 
 export const validatePhoneNum = function(c: FormControl) {
+  if (isEmptyInputValue(c.value)) {
+    return null;  // don't validate empty values to allow optional controls
+  }
+
   let REGEXP = /^\+?[0-9\(\)\-\.\ ]{7,20}[0-9]{3}$/;
 
   return REGEXP.test(c.value) ? null : {
@@ -21,6 +29,10 @@ export const validatePhoneNum = function(c: FormControl) {
 }
 
 export const validateFirstName = function(c: FormControl) {
+  if (isEmptyInputValue(c.value)) {
+    return null;  // don't validate empty values to allow optional controls
+  }
+
   let REGEXP = /^[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}$/;
   
   return REGEXP.test(c.value) ? null : {
@@ -31,6 +43,10 @@ export const validateFirstName = function(c: FormControl) {
 }
 
 export const validatePassword = function(c: FormControl) {
+  if (isEmptyInputValue(c.value)) {
+    return null;  // don't validate empty values to allow optional controls
+  }
+
   let REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\(\)\-\_\=\+\{\}\[\]\;\:\'\"\,\.\<\>\/\\\|\?])(?=.{8,})/;
 
   return REGEXP.test(c.value) ? null : {
@@ -41,6 +57,10 @@ export const validatePassword = function(c: FormControl) {
 }
 
 export const validateSlug = function(c: FormControl) {
+  if (isEmptyInputValue(c.value)) {
+    return null;  // don't validate empty values to allow optional controls
+  }
+
   let REGEXP = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/;
 
   return REGEXP.test(c.value) ? null : {
@@ -48,4 +68,8 @@ export const validateSlug = function(c: FormControl) {
       valid: false
     }
   };
+}
+
+function isEmptyInputValue(value: any) {
+  return value == null || typeof value === 'string' && value.length === 0;
 }
