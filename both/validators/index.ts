@@ -3,11 +3,11 @@ export function isValidEmail (address) {
 };
 
 export function isValidFirstName (value) {
-    return /[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}/.test(value);
+    return /^[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}$/.test(value);
 };
 
 export function isValidPhoneNum (value) {
-    return /[0-9\(\)\-\.\ \+]{7,20}/.test(value);
+    return /^\+?[0-9\(\)\-\.\ ]{7,20}[0-9]{3}$/.test(value);
 }
 
 export function isValidSSN (value) {

@@ -11,7 +11,7 @@ export const validateEmail = function(c: FormControl) {
 }
 
 export const validatePhoneNum = function(c: FormControl) {
-  let REGEXP = /[0-9\(\)\-\.\ \+]{7,20}/;
+  let REGEXP = /^\+?[0-9\(\)\-\.\ ]{7,20}[0-9]{3}$/;
 
   return REGEXP.test(c.value) ? null : {
     validatePhoneNum: {
@@ -21,8 +21,8 @@ export const validatePhoneNum = function(c: FormControl) {
 }
 
 export const validateFirstName = function(c: FormControl) {
-  let REGEXP = /[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}/;
-
+  let REGEXP = /^[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}$/;
+  
   return REGEXP.test(c.value) ? null : {
     validateFirstName: {
       valid: false
