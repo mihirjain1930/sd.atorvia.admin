@@ -1,35 +1,33 @@
 import { Meteor } from "meteor/meteor";
-import {Component, OnInit, OnDestroy, NgZone, AfterViewInit} from "@angular/core";
-import {Observable, Subscription, Subject, BehaviorSubject} from "rxjs";
-import {PaginationService} from "ng2-pagination";
-import {MeteorObservable} from "meteor-rxjs";
-import {InjectUser} from "angular2-meteor-accounts-ui";
+import { Component, OnInit, OnDestroy, NgZone, AfterViewInit } from "@angular/core";
+import { Observable, Subscription, Subject, BehaviorSubject } from "rxjs";
+import { PaginationService } from "ng2-pagination";
+import { MeteorObservable } from "meteor-rxjs";
+import { InjectUser } from "angular2-meteor-accounts-ui";
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Package } from "../../../../both/models/package.model";
-import {showAlert} from "../shared/show-alert";
-import { Roles } from 'meteor/alanning:roles';
+import { showAlert } from "../shared/show-alert";
 
 import template from "./packagelist.html";
 
-
 interface Pagination {
-  limit: number;
-  skip: number;
+    limit: number;
+    skip: number;
 }
 
 interface Options extends Pagination {
-  [key: string]: any
+    [key: string]: any
 }
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 @Component({
-  selector: '',
-  template
+    selector: '',
+    template
 })
 export class ListPackageComponent extends MeteorComponent implements OnInit, OnDestroy {
     items: Package[];
@@ -65,7 +63,7 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
                 skip: ((curPage as number) - 1) * (pageSize as number),
                 sort: { "title": nameOrder as number }
             };
-            this.localStorageService.set("page-list.options", {
+            this.localStorageService.set("package-list.options", {
                 pageSize: pageSize,
                 curPage: curPage,
                 nameOrder: nameOrder,
@@ -91,9 +89,9 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
                 this.itemsSize = res.count;
                 this.paginationService.setTotalItems(this.paginationService.defaultId, this.itemsSize);
 
-                setTimeout(function(){
-                    jQuery(function($){
-                    /*$('.tooltipped').tooltip({delay: 0});*/
+                setTimeout(function () {
+                    jQuery(function ($) {
+                        /*$('.tooltipped').tooltip({delay: 0});*/
                     });
                 }, 200);
                 //console.log("data:", this.items);
@@ -101,29 +99,29 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
 
         });
 
-        let options:any = this.localStorageService.get("page-list.options");
+        let options: any = this.localStorageService.get("package-list.options");
         //console.log("patient-list.options:", options);
 
         if (!!options) {
-            if (! options.limit) {
+            if (!options.limit) {
                 options.limit = 10;
             } else {
                 options.limit = Number(options.limit);
             }
 
-            if (! options.curPage) {
+            if (!options.curPage) {
                 options.curPage = 1;
             } else {
                 options.curPage = Number(options.curPage);
             }
 
-            if (! options.nameOrder) {
+            if (!options.nameOrder) {
                 options.nameOrder = 1;
             } else {
                 options.nameOrder = Number(options.nameOrder);
             }
 
-            if (! options.searchString) {
+            if (!options.searchString) {
                 options.searchString = '';
             }
         } else {
@@ -136,10 +134,10 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
         }
 
         this.paginationService.register({
-        id: this.paginationService.defaultId,
-        itemsPerPage: 10,
-        currentPage: options.curPage,
-        totalItems: this.itemsSize
+            id: this.paginationService.defaultId,
+            itemsPerPage: 10,
+            currentPage: options.curPage,
+            totalItems: this.itemsSize
         });
 
         this.pageSize.next(options.limit);
@@ -164,18 +162,18 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
         this.nameOrder.next(parseInt(nameOrder));
     }
 
-    deletePackage(package: Package) {
-        if (! confirm("Are you sure to delete this record?")) {
+    deletePackage(item: Package) {
+        if (!confirm("Are you sure to delete this record?")) {
             return false;
         }
 
-        Meteor.call("packages.delete", package._id, (err, res) => {
+        Meteor.call("packages.delete", item._id, (err, res) => {
             if (err) {
                 showAlert("Error calling package.delete", "danger");
                 return;
             }
-            //set patient isDeleted to true to remove from list
-            package.deleted = true;
+            //set item.deleted to true to remove from list
+            item.deleted = true;
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom
             this.changeDetectorRef.detectChanges();
@@ -188,9 +186,9 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
     }
 
     ngAfterViewInit() {
-        jQuery(function($){
-        /*$('select').material_select();
-        $('.tooltipped').tooltip({delay: 50});*/
+        jQuery(function ($) {
+            /*$('select').material_select();
+            $('.tooltipped').tooltip({delay: 50});*/
         })
     }
 }

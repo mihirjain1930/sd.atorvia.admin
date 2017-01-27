@@ -70,6 +70,44 @@ export const validateSlug = function(c: FormControl) {
   };
 }
 
+export const validateMinVal = (min: number) => {
+  return (c: FormControl) => {
+    if (isEmptyInputValue(c.value)) {
+      return null;  // don't validate empty values to allow optional controls
+    }
+
+    let num = +c.value;
+
+    if(isNaN(num) || num < min){
+      return {
+        validateMinVal: {
+          valid: false
+        }
+      }
+    }
+    return null;
+  }
+}
+
+export const validateMaxVal = (max: number) => {
+  return (c: FormControl) => {
+    if (isEmptyInputValue(c.value)) {
+      return null;  // don't validate empty values to allow optional controls
+    }
+
+    let num = +c.value;
+
+    if(isNaN(num) || num > max){
+      return {
+        validateMaxVal: {
+          valid: false
+        }
+      }
+    }
+    return null;
+  }
+}
+
 function isEmptyInputValue(value: any) {
   return value == null || typeof value === 'string' && value.length === 0;
 }
