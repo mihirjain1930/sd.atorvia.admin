@@ -5,6 +5,7 @@ import {check} from "meteor/check";
 import {Pages} from "../../both/collections/pages.collection";
 import {Page} from "../../both/models/page.model";
 import {isValidSlug} from "../../both/validators";
+import * as _ from 'underscore';
 
 interface Options {
   [key: string]: any;
