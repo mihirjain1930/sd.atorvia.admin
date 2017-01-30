@@ -35,7 +35,7 @@ export const validateFirstName = function(c: FormControl) {
   }
 
   let REGEXP = /^[a-zA-Z\.]{2,}[a-zA-Z ]{0,30}$/;
-
+  
   return REGEXP.test(c.value) ? null : {
     validateFirstName: {
       valid: false
@@ -57,7 +57,6 @@ export const validatePassword = function(c: FormControl) {
   };
 }
 
-
 export function matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
   return (group: FormGroup): {[key: string]: any} => {
     let password = group.controls[passwordKey];
@@ -70,7 +69,6 @@ export function matchingPasswords(passwordKey: string, confirmPasswordKey: strin
     }
   }
 }
-
 
 export const validateSlug = function(c: FormControl) {
   if (isEmptyInputValue(c.value)) {
