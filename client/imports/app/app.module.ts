@@ -10,6 +10,7 @@ import { AppComponent } from "./app.component.web";
 import { routes, ROUTES_PROVIDERS } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
 import {AUTH_DECLARATIONS} from "./auth/index";
+import {ACCOUNT_DECLARATIONS} from "./myaccount/index";
 import { LAYOUT_DECLARATIONS } from "./layout/index";
 import { Subadmin_Declarations } from "./sub-admin/index";
 import { Practitioner_Declarations } from "./practitioner/index";
@@ -43,6 +44,7 @@ moduleDefinition = {
     ...AUTH_DECLARATIONS,
     ...DASHBOARD_DECLARATIONS,
     ...LAYOUT_DECLARATIONS,
+    ...ACCOUNT_DECLARATIONS,
     ...Subadmin_Declarations,
     ...Page_Declarations,
     ...Practitioner_Declarations,
