@@ -11,7 +11,8 @@ import {routes as pageRoutes} from "./content-page/routes";
 import {routes as packageRoutes} from "./package-page/routes";
 import {routes as practitionerRoutes} from "./practitioner/routes";
 import {routes as accountRoutes} from "./myaccount/route";
-
+import {routes as emailRoutes} from "./email/routes";
+ 
 let mainRoutes = [
     { path: '', component: LandingComponent/*, canActivate: ['canActivateForLogoff']*/ },
     { path: 'dashboard', component: DashboardComponent, canActivate: ['canActivateForLoggedIn'] },
@@ -26,7 +27,8 @@ export const routes: Route[] = [
     ...pageRoutes,
     ...practitionerRoutes,
     ...packageRoutes,
-    ...accountRoutes
+    ...accountRoutes, 
+    ...emailRoutes 
 ];
 
 export const ROUTES_PROVIDERS = [
