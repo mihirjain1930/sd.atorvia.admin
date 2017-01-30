@@ -13,16 +13,22 @@ interface Options {
 
 Meteor.methods({
     "pages.insert": (pageData: Page) => {
-        if (!validatePageData(pageData)) {
-            throw new Meteor.Error(`Invalid formData supplied.`);
+        try {
+            validatePageData(pageData);
+        } catch (err) {
+            let errMesg = err.reason || `Invalid formData supplied.`;
+            throw new Meteor.Error(403, errMesg);
         }
         let pageId = Pages.collection.insert(pageData);
 
         return pageId;
     },
     "pages.update": (pageId: string, pageData: Page) => {
-        if (!validatePageData(pageData)) {
-            throw new Meteor.Error(`Invalid formData supplied.`);
+        try {
+            validatePageData(pageData);
+        } catch (err) {
+            let errMesg = err.reason || `Invalid formData supplied.`;
+            throw new Meteor.Error(403, errMesg);
         }
         return Pages.collection.update({_id: pageId}, {$set: pageData});
     },
@@ -77,30 +83,30 @@ function validatePageData(pageData: Page) {
     /* validate title */
     let titleLen = pageData.title.length;
     if (titleLen < 8 || titleLen > 255) {
-        throw new Meteor.Error(`Invalid title supplied.`);
+        throw new Meteor.Error(403, `Invalid title supplied.`);
     }
     /* validate heading */
     let headingLen = pageData.heading.length;
     if (headingLen < 8 || headingLen > 255) {
-        throw new Meteor.Error(`Invalid heading supplied.`);
+        throw new Meteor.Error(403, `Invalid heading supplied.`);
     }
     /* validate summary */
     let summaryLen = pageData.summary.length;
     if (summaryLen < 8 || summaryLen > 255) {
-        throw new Meteor.Error(`Invalid summary supplied.`);
+        throw new Meteor.Error(403, `Invalid summary supplied.`);
     }
     /* validate contents */
     let contentsLen = pageData.contents.length;
     if (contentsLen < 8) {
-        throw new Meteor.Error(`Invalid contents supplied.`);
+        throw new Meteor.Error(403, `Invalid contents supplied.`);
     }
     /* validate slug */
     let slugLen = pageData.slug.length;
     if (slugLen < 8 || slugLen > 255) {
-        throw new Meteor.Error(`Invalid slug supplied.`);
+        throw new Meteor.Error(403, `Invalid slug supplied.`);
     }
     if (! isValidSlug(pageData.slug) ) {
-        throw new Meteor.Error(`Invalid slug ${pageData.slug}`);
+        throw new Meteor.Error(403, `Invalid slug ${pageData.slug}`);
     }
 
     return true;
