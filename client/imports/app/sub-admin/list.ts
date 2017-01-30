@@ -27,7 +27,7 @@ interface Options extends Pagination {
 declare var jQuery:any;
 
 @Component({
-  selector: 'list-subadmin',
+  selector: '',
   template
 })
 export class ListSubadminComponent extends MeteorComponent implements OnInit {
@@ -155,6 +155,42 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
         this.nameOrder.next(parseInt(nameOrder));
     }
 
+    activate(user: User) {
+        if (! confirm("Are you sure to activate this record?")) {
+            return false;
+        }
+
+        Meteor.call("users.activate", user._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling users.activate", "danger");
+                return;
+            }
+            user.active = true;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("User has been activated.", "success");
+        })
+    }
+
+    deactivate(user: User) {
+        if (! confirm("Are you sure to deactivate this record?")) {
+            return false;
+        }
+
+        Meteor.call("users.deactivate", user._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling users.deactivate", "danger");
+                return;
+            }
+            user.active = false;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("User has been deactivated.", "success");
+        })
+    }
+
     deleteUser(user: User) {
         if (! confirm("Are you sure to delete this record?")) {
             return false;
@@ -165,7 +201,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
                 showAlert("Error calling users.delete", "danger");
                 return;
             }
-            //set patient isDeleted to true to remove from list
+            //set user.deleted to true to remove from list
             user.deleted = true;
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom

@@ -13,7 +13,7 @@
                 <div [hidden]="!createForm.controls['firstName'].errors.required">First Name is required.</div>
                 <div [hidden]="!createForm.controls['firstName'].errors.minlength">Min 2 characters required.</div>
                 <div [hidden]="!createForm.controls['firstName'].errors.maxlength">Max 30 characters allowed.</div>
-                <div [hidden]="!createForm.controls['firstName'].errors.validateFirstName">Please type valid name.</div>
+                <div [hidden]="!createForm.controls['firstName'].errors.validateFirstName">Please type valid First Name.</div>
             </div>
         </div>
         <div class="input-field col s12">
@@ -23,7 +23,7 @@
                 <div [hidden]="!createForm.controls['lastName'].errors.required">Last Name is required.</div>
                 <div [hidden]="!createForm.controls['lastName'].errors.minlength">Min 2 characters required.</div>
                 <div [hidden]="!createForm.controls['lastName'].errors.maxlength">Max 30 characters allowed.</div>
-                <div [hidden]="!createForm.controls['lastName'].errors.validateFirstName">Please type valid name.</div>
+                <div [hidden]="!createForm.controls['lastName'].errors.validateFirstName">Please type valid Last Name.</div>
             </div>
         </div>
 
@@ -31,7 +31,7 @@
             <input formControlName="phoneNum" id="phoneNum" type="text" [ngClass]="{'invalid':createForm.controls['phoneNum'].touched && !createForm.controls['phoneNum'].valid}"></input>
             <label for="phoneNum" style="transform: translateY(-140%);">Contact</label>
             <div *ngIf="createForm.controls['phoneNum'].errors && createForm.controls['phoneNum'].touched" class="error">
-                <div [hidden]="!createForm.controls['phoneNum'].errors.required">Contact is required.</div>
+                <div [hidden]="!createForm.controls['phoneNum'].errors.required">Contact Number is required.</div>
                 <div [hidden]="!createForm.controls['phoneNum'].errors.validatePhoneNum">Invalid Contact Number.</div>
             </div>
         </div>

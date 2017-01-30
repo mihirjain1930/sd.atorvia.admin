@@ -163,6 +163,42 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
         this.nameOrder.next(parseInt(nameOrder));
     }
 
+    activate(page: Page) {
+        if (! confirm("Are you sure to activate this record?")) {
+            return false;
+        }
+
+        Meteor.call("pages.activate", page._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling page.activate", "danger");
+                return;
+            }
+            page.active = true;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("Page has been activated.", "success");
+        })
+    }
+
+    deactivate(page: Page) {
+        if (! confirm("Are you sure to deactivate this record?")) {
+            return false;
+        }
+
+        Meteor.call("pages.deactivate", page._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling page.deactivate", "danger");
+                return;
+            }
+            page.active = false;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("Page has been deactivated.", "success");
+        })
+    }
+
     deletePage(page: Page) {
         if (! confirm("Are you sure to delete this record?")) {
             return false;
@@ -173,7 +209,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
                 showAlert("Error calling pages.delete", "danger");
                 return;
             }
-            //set patient isDeleted to true to remove from list
+            //set page.deleted to true to remove from list
             page.deleted = true;
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom

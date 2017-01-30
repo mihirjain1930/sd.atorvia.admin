@@ -52,5 +52,15 @@ Meteor.methods({
         return Packages.collection.update({_id: packageId}, {$set: {
             deleted: true
         } });
+    },
+    "packages.activate": (packageId: string) => {
+        return Packages.collection.update({_id: packageId}, {$set: {
+            active: true
+        } });
+    },
+    "packages.deactivate": (packageId: string) => {
+        return Packages.collection.update({_id: packageId}, {$set: {
+            active: false
+        } });
     }
 });

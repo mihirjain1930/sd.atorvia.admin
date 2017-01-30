@@ -164,6 +164,42 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
         this.nameOrder.next(parseInt(nameOrder));
     }
 
+    activate(package: Package) {
+        if (! confirm("Are you sure to activate this record?")) {
+            return false;
+        }
+
+        Meteor.call("packages.activate", package._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling package.activate", "danger");
+                return;
+            }
+            package.active = true;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("Package has been activated.", "success");
+        })
+    }
+
+    deactivate(package: Package) {
+        if (! confirm("Are you sure to deactivate this record?")) {
+            return false;
+        }
+
+        Meteor.call("packages.deactivate", package._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling package.deactivate", "danger");
+                return;
+            }
+            package.active = false;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("Package has been deactivated.", "success");
+        })
+    }
+
     deletePackage(package: Package) {
         if (! confirm("Are you sure to delete this record?")) {
             return false;

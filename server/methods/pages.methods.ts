@@ -5,6 +5,7 @@ import {check} from "meteor/check";
 import {Pages} from "../../both/collections/pages.collection";
 import {Page} from "../../both/models/page.model";
 import {isValidSlug} from "../../both/validators";
+import * as _ from 'underscore';
 
 interface Options {
   [key: string]: any;
@@ -58,6 +59,16 @@ Meteor.methods({
     "pages.delete": (pageId: string) => {
         return Pages.collection.update({_id: pageId}, {$set: {
             deleted: true
+        } });
+    },
+    "pages.activate": (pageId: string) => {
+        return Pages.collection.update({_id: pageId}, {$set: {
+            active: true
+        } });
+    },
+    "pages.deactivate": (pageId: string) => {
+        return Pages.collection.update({_id: pageId}, {$set: {
+            active: false
         } });
     }
 });

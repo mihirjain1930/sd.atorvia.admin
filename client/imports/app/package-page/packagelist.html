@@ -31,12 +31,14 @@
     <tr class=""
         *ngFor="let package of packageArr"
         [attr.data-page-id]="package._id"
-        [ngClass]="{'red accent-1': package.deleted}"
+      [ngClass]="{'red accent-1': package.deleted, 'red lighten-4': package.active === false}"
         [hidden]="package.deleted">
         <td>{{package.title}}</a></h2></td>
         <td>{{package.code}}</td>
         <td>{{package.summary}}</td>
         <td><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/package/update', package._id]" data-position="top" data-delay="0" data-tooltip="Edit Package"><i class="material-icons">mode_edit</i></a>
+          <a *ngIf="package.active == undefined || package.active === true" class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="deactivate(package)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a>
+          <a *ngIf="package.active === false" class="btn-floating waves-effect waves-light green lighten-2 tooltipped" href="javascript:void(0);" (click)="activate(package)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
             <a *ngIf="!package.deleted" class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deletePackage(package)" data-position="top" data-delay="0" data-tooltip="Delete Package"><i class="material-icons">delete</i></a>
         </td>
     </tr>
