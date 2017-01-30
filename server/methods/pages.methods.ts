@@ -13,16 +13,22 @@ interface Options {
 
 Meteor.methods({
     "pages.insert": (pageData: Page) => {
-        if (!validatePageData(pageData)) {
-            throw new Meteor.Error(`Invalid formData supplied.`);
+        try {
+            validatePageData(pageData);
+        } catch (err) {
+            let errMesg = err.reason || `Invalid formData supplied.`;
+            throw new Meteor.Error(403, errMesg);
         }
         let pageId = Pages.collection.insert(pageData);
 
         return pageId;
     },
     "pages.update": (pageId: string, pageData: Page) => {
-        if (!validatePageData(pageData)) {
-            throw new Meteor.Error(`Invalid formData supplied.`);
+        try {
+            validatePageData(pageData);
+        } catch (err) {
+            let errMesg = err.reason || `Invalid formData supplied.`;
+            throw new Meteor.Error(403, errMesg);
         }
         return Pages.collection.update({_id: pageId}, {$set: pageData});
     },

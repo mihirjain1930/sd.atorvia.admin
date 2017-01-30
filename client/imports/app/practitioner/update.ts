@@ -37,9 +37,12 @@ export class UpdatePractitionerComponent extends MeteorComponent implements OnIn
           //console.log("patientId:", patientId);
   
           this.call("users.findOne", id, (err, res)=> {
-              if (err) {
+              if (err || typeof res == "undefined" || res._id !== id) {
                   //console.log("error while fetching patient data:", err);
                   showAlert("Error while fetching user data.", "danger");
+                  this.zone.run(() => {
+                    this.router.navigate(['/practitioner/list']);
+                  });
                   return;
               }
               this.createForm.controls['firstName'].setValue(res.profile.firstName);
