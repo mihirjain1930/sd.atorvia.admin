@@ -43,9 +43,12 @@ export class UpdateSubadminComponent extends MeteorComponent implements OnInit {
           //console.log("patientId:", patientId);
   
           this.call("users.findOne", id, (err, res)=> {
-              if (err) {
+              if (err || typeof res == "undefined" || res._id !== id) {
                   //console.log("error while fetching patient data:", err);
                   showAlert("Error while fetching user data.", "danger");
+                  this.zone.run(() => {
+                    this.router.navigate(['/sub-admin/list']);
+                  });
                   return;
               }
               this.createForm.controls['firstName'].setValue(res.profile.firstName);

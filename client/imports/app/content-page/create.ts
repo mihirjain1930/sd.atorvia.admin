@@ -43,9 +43,12 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
           }
 
           this.call("pages.findOne", id, (err, res)=> {
-              if (err) {
+              if (err || typeof res == "undefined" || res._id !== id) {
                   //console.log("error while fetching patient data:", err);
                   showAlert("Error while fetching page data.", "danger");
+                  this.zone.run(() => {
+                    this.router.navigate(['/page/list']);
+                  });
                   return;
               }
               this.createForm.controls['title'].setValue(res.title);

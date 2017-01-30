@@ -43,9 +43,12 @@ export class CreatePackageComponent extends MeteorComponent implements OnInit, O
         }
 
         this.call("packages.findOne", id, (err, res) => {
-          if (err) {
+          if (err || typeof res == "undefined" || res._id !== id) {
             //console.log("error while fetching patient data:", err);
             showAlert("Error while fetching package data.", "danger");
+            this.zone.run(() => {
+              this.router.navigate(['/package/list']);
+            });
             return;
           }
           this.packageForm.controls['title'].setValue(res.title);
