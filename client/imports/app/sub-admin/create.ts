@@ -17,7 +17,7 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
   createForm: FormGroup;
   error: string;
   rolesArray: [{label: string, value: string}] = [
-    {label: "Sub-admin", value: "sub-admin"},
+    {label: "Author", value: "author"},
     {label: "Moderator", value: "moderator"}
     ];
   rolesBoxArray: FormArray;
@@ -72,7 +72,7 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
   }
 
   onSubmit() {
-    let roles = [];
+    let roles = ["sub-admin"];
     for (let i=0; i<this.createForm.value.roles.length; i++) {
       if (this.createForm.value.roles[i] === true) {
         roles.push(this.rolesArray[i].value);
