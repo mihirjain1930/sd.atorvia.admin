@@ -8,7 +8,7 @@ export interface Package extends CollectionObject {
     maxPatients: number;
     pricePerPatient: number;
     pricePerDevice: number;
-    duration: string;
+    durationInMonths: number;
     durationInDays: number;
     active: boolean;
     deleted: boolean;

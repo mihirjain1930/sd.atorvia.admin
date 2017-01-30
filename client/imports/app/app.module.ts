@@ -10,6 +10,7 @@ import { AppComponent } from "./app.component.web";
 import { routes, ROUTES_PROVIDERS } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
 import {AUTH_DECLARATIONS} from "./auth/index";
+import {ACCOUNT_DECLARATIONS} from "./myaccount/index";
 import { LAYOUT_DECLARATIONS } from "./layout/index";
 import { Subadmin_Declarations } from "./sub-admin/index";
 import { Practitioner_Declarations } from "./practitioner/index";
@@ -17,6 +18,7 @@ import { Page_Declarations } from "./content-page/index";
 import {FileDropModule} from "angular2-file-drop";
 import {DASHBOARD_DECLARATIONS} from "./dashboard/index";
 import {Services_Providers} from "../services/index";
+import {Package_Declarations} from "./package-page/index";
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
 let localStorageServiceConfig = {
@@ -42,9 +44,11 @@ moduleDefinition = {
     ...AUTH_DECLARATIONS,
     ...DASHBOARD_DECLARATIONS,
     ...LAYOUT_DECLARATIONS,
+    ...ACCOUNT_DECLARATIONS,
     ...Subadmin_Declarations,
     ...Page_Declarations,
-    ...Practitioner_Declarations
+    ...Practitioner_Declarations,
+    ...Package_Declarations
   ],
   providers: [
     ...ROUTES_PROVIDERS,
@@ -62,6 +66,6 @@ moduleDefinition = {
 @NgModule(moduleDefinition)
 export class AppModule {
   constructor() {
-    
+
   }
 }

@@ -1,10 +1,11 @@
 import { FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export const validateEmail = function(c: FormControl) {
   if (isEmptyInputValue(c.value)) {
     return null;  // don't validate empty values to allow optional controls
   }
-  
+
   let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
   return EMAIL_REGEXP.test(c.value) ? null : {
@@ -56,6 +57,19 @@ export const validatePassword = function(c: FormControl) {
   };
 }
 
+export function matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+  return (group: FormGroup): {[key: string]: any} => {
+    let password = group.controls[passwordKey];
+    let confirmPassword = group.controls[confirmPasswordKey];
+
+    if (password.value !== confirmPassword.value) {
+      return {
+        mismatchedPasswords: true
+      };
+    }
+  }
+}
+
 export const validateSlug = function(c: FormControl) {
   if (isEmptyInputValue(c.value)) {
     return null;  // don't validate empty values to allow optional controls
@@ -68,6 +82,44 @@ export const validateSlug = function(c: FormControl) {
       valid: false
     }
   };
+}
+
+export const validateMinVal = (min: number) => {
+  return (c: FormControl) => {
+    if (isEmptyInputValue(c.value)) {
+      return null;  // don't validate empty values to allow optional controls
+    }
+
+    let num = +c.value;
+
+    if(isNaN(num) || num < min){
+      return {
+        validateMinVal: {
+          valid: false
+        }
+      }
+    }
+    return null;
+  }
+}
+
+export const validateMaxVal = (max: number) => {
+  return (c: FormControl) => {
+    if (isEmptyInputValue(c.value)) {
+      return null;  // don't validate empty values to allow optional controls
+    }
+
+    let num = +c.value;
+
+    if(isNaN(num) || num > max){
+      return {
+        validateMaxVal: {
+          valid: false
+        }
+      }
+    }
+    return null;
+  }
 }
 
 function isEmptyInputValue(value: any) {

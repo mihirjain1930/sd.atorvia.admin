@@ -8,7 +8,9 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {LandingComponent} from "./layout/landing.component";
 import {routes as subadminRoutes} from "./sub-admin/routes";
 import {routes as pageRoutes} from "./content-page/routes";
+import {routes as packageRoutes} from "./package-page/routes";
 import {routes as practitionerRoutes} from "./practitioner/routes";
+import {routes as accountRoutes} from "./myaccount/route";
 
 let mainRoutes = [
     { path: '', component: LandingComponent/*, canActivate: ['canActivateForLogoff']*/ },
@@ -22,7 +24,9 @@ export const routes: Route[] = [
     ...mainRoutes,
     ...subadminRoutes,
     ...pageRoutes,
-    ...practitionerRoutes
+    ...practitionerRoutes,
+    ...packageRoutes,
+    ...accountRoutes
 ];
 
 export const ROUTES_PROVIDERS = [
