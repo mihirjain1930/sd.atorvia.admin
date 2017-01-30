@@ -38,7 +38,7 @@
             <td><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/email/update', email._id]"
                     data-position="top" data-delay="0" data-tooltip="Edit Email"><i class="material-icons">mode_edit</i></a>
                 <a *ngIf="email.active == undefined || email.active === true" class="btn-floating waves-effect waves-light red lighten-2 tooltipped"
-                    href="javascript:void(0);" (click)="deactivate(Email)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a>
+                    href="javascript:void(0);" (click)="deactivate(email)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a>
                 <a *ngIf="email.active === false" class="btn-floating waves-effect waves-light green lighten-2 tooltipped" href="javascript:void(0);"
                     (click)="activate(email)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
                 <a *ngIf="!email.deleted" class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deleteEmail(email)"
