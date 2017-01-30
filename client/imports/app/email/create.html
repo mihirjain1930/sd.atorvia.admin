@@ -1,54 +1,54 @@
 <div class="row" >
     <h2 class="header red-text text-lighten-1" color="primary">
-      <span *ngIf="!pageId">Create new Email</span>
-      <span *ngIf="!!pageId">Update Email</span>
+      <span *ngIf="!emailId">Create new Email</span>
+      <span *ngIf="!!emailId">Update Email</span>
     </h2>
 
     <div class="row">
-      <form class="col s12" [formGroup]="createForm" #f="ngForm" (ngSubmit)="onSubmit()">
+      <form class="col s12" [formGroup]="emailForm" #f="ngForm" (ngSubmit)="onSubmit()">
 
         <div class="input-field col s12">
-            <input formControlName="title" id="title" type="text" [ngClass]="{'invalid':createForm.controls['title'].touched && !createForm.controls['title'].valid}"></input>
+            <input formControlName="title" id="title" type="text" [ngClass]="{'invalid':emailForm.controls['title'].touched && !emailForm.controls['title'].valid}"></input>
             <label for="title" style="transform: translateY(-140%);">Title</label>
-            <div *ngIf="createForm.controls['title'].errors && createForm.controls['title'].touched" class="error">
-                <div [hidden]="!createForm.controls['title'].errors.required">Title is required.</div>
-                <div [hidden]="!createForm.controls['title'].errors.minlength">Min 8 characters required.</div>
-                <div [hidden]="!createForm.controls['title'].errors.maxlength">Max 255 characters allowed.</div>
+            <div *ngIf="emailForm.controls['title'].errors && emailForm.controls['title'].touched" class="error">
+                <div [hidden]="!emailForm.controls['title'].errors.required">Title is required.</div>
+                <div [hidden]="!emailForm.controls['title'].errors.minlength">Min 8 characters required.</div>
+                <div [hidden]="!emailForm.controls['title'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
         <div class="input-field col s12">
-            <input formControlName="heading" id="heading" type="text" [ngClass]="{'invalid':createForm.controls['heading'].touched && !createForm.controls['heading'].valid}"></input>
+            <input formControlName="heading" id="heading" type="text" [ngClass]="{'invalid':emailForm.controls['heading'].touched && !emailForm.controls['heading'].valid}"></input>
             <label for="heading" style="transform: translateY(-140%);">Heading</label>
-            <div *ngIf="createForm.controls['heading'].errors && createForm.controls['heading'].touched" class="error">
-                <div [hidden]="!createForm.controls['heading'].errors.required">Heading is required.</div>
-                <div [hidden]="!createForm.controls['heading'].errors.minlength">Min 8 characters required.</div>
-                <div [hidden]="!createForm.controls['heading'].errors.maxlength">Max 255 characters allowed.</div>
+            <div *ngIf="emailForm.controls['heading'].errors && emailForm.controls['heading'].touched" class="error">
+                <div [hidden]="!emailForm.controls['heading'].errors.required">Heading is required.</div>
+                <div [hidden]="!emailForm.controls['heading'].errors.minlength">Min 8 characters required.</div>
+                <div [hidden]="!emailForm.controls['heading'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
 
         <div class="input-field col s12">
-            <textarea formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':createForm.controls['summary'].touched && !createForm.controls['summary'].valid}"></textarea>
+            <textarea formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':emailForm.controls['summary'].touched && !emailForm.controls['summary'].valid}"></textarea>
             <label for="summary" style="transform: translateY(-140%);">Summary</label>
-            <div *ngIf="createForm.controls['summary'].errors && createForm.controls['summary'].touched" class="error">
-                <div [hidden]="!createForm.controls['summary'].errors.required">Summary is required.</div>
-                <div [hidden]="!createForm.controls['summary'].errors.minlength">Min 8 characters required.</div>
-                <div [hidden]="!createForm.controls['summary'].errors.maxlength">Max 255 characters allowed.</div>
+            <div *ngIf="emailForm.controls['summary'].errors && emailForm.controls['summary'].touched" class="error">
+                <div [hidden]="!emailForm.controls['summary'].errors.required">Summary is required.</div>
+                <div [hidden]="!emailForm.controls['summary'].errors.minlength">Min 8 characters required.</div>
+                <div [hidden]="!emailForm.controls['summary'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
 
         <div class="input-field col s12">
-            <textarea formControlName="contents" id="contents" style="height:12rem;" [ngClass]="{'invalid':createForm.controls['contents'].touched && !createForm.controls['contents'].valid}"></textarea>
+            <textarea formControlName="contents" id="contents" style="height:12rem;" [ngClass]="{'invalid':emailForm.controls['contents'].touched && !emailForm.controls['contents'].valid}"></textarea>
             <label for="contents" style="transform: translateY(-140%);">Contents</label>
-            <div *ngIf="createForm.controls['contents'].errors && createForm.controls['contents'].touched" class="error">
-                <div [hidden]="!createForm.controls['contents'].errors.required">Contents is required.</div>
-                <div [hidden]="!createForm.controls['contents'].errors.minlength">Min 8 characters required.</div>
-                <div [hidden]="!createForm.controls['contents'].errors.maxlength">Max 255 characters allowed.</div>
+            <div *ngIf="emailForm.controls['contents'].errors && emailForm.controls['contents'].touched" class="error">
+                <div [hidden]="!emailForm.controls['contents'].errors.required">Contents is required.</div>
+                <div [hidden]="!emailForm.controls['contents'].errors.minlength">Min 8 characters required.</div>
+                <div [hidden]="!emailForm.controls['contents'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
 
         <div class="row">
           <div class="col s12">
-            <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!createForm.valid">Submit
+            <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!emailForm.valid">Submit
               <i class="material-icons right">send</i>
             </button>
             <button class="btn waves-effect waves-light grey lighten-2" type="submit" name="action" [routerLink]="['/email/list']">Cancel</button>

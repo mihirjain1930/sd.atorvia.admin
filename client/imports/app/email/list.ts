@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
-import { Page } from "../../../../both/models/page.model";
+import { Email } from "../../../../both/models/email.model";
 import {showAlert} from "../shared/show-alert";
 import { Roles } from 'meteor/alanning:roles';
 
@@ -31,7 +31,7 @@ declare var jQuery:any;
   template
 })
 export class ListEmailComponent extends MeteorComponent implements OnInit, OnDestroy {
-    items: Page[];
+    items: Email[];
     pageSize: Subject<number> = new Subject<number>();
     curPage: Subject<number> = new Subject<number>();
     nameOrder: Subject<number> = new Subject<number>();
@@ -78,12 +78,12 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
             this.searchString = searchString;
             jQuery(".loading").show();
             //console.log("call pages.find()");
-            this.call("pages.find", options, {}, searchString, (err, res) => {
+            this.call("emails.find", options, {}, searchString, (err, res) => {
                 //console.log("patients.find() done");
                 jQuery(".loading").hide();
                 if (err) {
                     //console.log("error while fetching patient list:", err);
-                    showAlert("Error while fetching pages list.", "danger");
+                    showAlert("Error while fetching emails list.", "danger");
                     return;
                 }
                 this.items = res.data;
@@ -100,7 +100,7 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
 
         });
 
-        let options:any = this.localStorageService.get("page-list.options");
+        let options:any = this.localStorageService.get("email-list.options");
         //console.log("patient-list.options:", options);
 
         if (!!options) {
@@ -147,7 +147,7 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
         this.searchSubject.next(options.searchString);
     }
 
-    get pageArr() {
+    get emailArr() {
         return this.items;
     }
 
@@ -163,58 +163,58 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
         this.nameOrder.next(parseInt(nameOrder));
     }
 
-    activate(page: Page) {
+    activate(item: Email) {
         if (! confirm("Are you sure to activate this record?")) {
             return false;
         }
 
-        Meteor.call("pages.activate", page._id, (err, res) => {
+        Meteor.call("emails.activate", item._id, (err, res) => {
             if (err) {
                 showAlert("Error calling page.activate", "danger");
                 return;
             }
-            page.active = true;
+            item.active = true;
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom
             this.changeDetectorRef.detectChanges();
-            showAlert("Page has been activated.", "success");
+            showAlert("Email has been activated.", "success");
         })
     }
 
-    deactivate(page: Page) {
+    deactivate(item: Email) {
         if (! confirm("Are you sure to deactivate this record?")) {
             return false;
         }
 
-        Meteor.call("pages.deactivate", page._id, (err, res) => {
+        Meteor.call("emails.deactivate", item._id, (err, res) => {
             if (err) {
-                showAlert("Error calling page.deactivate", "danger");
+                showAlert("Error calling email.deactivate", "danger");
                 return;
             }
-            page.active = false;
+            item.active = false;
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom
             this.changeDetectorRef.detectChanges();
-            showAlert("Page has been deactivated.", "success");
+            showAlert("Email has been deactivated.", "success");
         })
     }
 
-    deletePage(page: Page) {
+    deleteEmail(item: Email) {
         if (! confirm("Are you sure to delete this record?")) {
             return false;
         }
 
-        Meteor.call("pages.delete", page._id, (err, res) => {
+        Meteor.call("emails.delete", item._id, (err, res) => {
             if (err) {
-                showAlert("Error calling pages.delete", "danger");
+                showAlert("Error calling emails.delete", "danger");
                 return;
             }
             //set page.deleted to true to remove from list
-            page.deleted = true;
+            item.deleted = true;
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom
             this.changeDetectorRef.detectChanges();
-            showAlert("Page has been deleted.", "success");
+            showAlert("Email has been deleted.", "success");
         })
     }
 

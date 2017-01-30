@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { Subscription } from "rxjs";
-import { Page } from "../../../../both/models/page.model";
+import { Email } from "../../../../both/models/email.model";
 import {showAlert} from "../shared/show-alert";
 import { Roles } from 'meteor/alanning:roles';
 import template from "./create.html";
@@ -15,8 +15,8 @@ import template from "./create.html";
 })
 export class CreateEmailComponent extends MeteorComponent implements OnInit, OnDestroy {
   paramsSub: Subscription;
-  pageId: string;
-  createForm: FormGroup;
+  emailId: string;
+  emailForm: FormGroup;
   error: string;
 
   constructor(
@@ -32,29 +32,32 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
     this.paramsSub = this.route.params
       .map(params => params['id'])
       .subscribe(id => {
-          this.pageId = id;
+          this.emailId = id;
           //console.log("patientId:", patientId);
   
-          if (! this.pageId) {
-            //console.log("no page-id supplied");
+          if (! this.emailId) {
+            //console.log("no email-id supplied");
             return;
           }
 
-          this.call("pages.findOne", id, (err, res)=> {
+          this.call("emails.findOne", id, (err, res)=> {
               if (err) {
                   //console.log("error while fetching patient data:", err);
-                  showAlert("Error while fetching page data.", "danger");
+                  showAlert("Error while fetching email data.", "danger");
+                  this.zone.run(() => {
+                    this.router.navigate(['/email/list']);
+                  });
                   return;
               }
-              this.createForm.controls['title'].setValue(res.title);
-              this.createForm.controls['heading'].setValue(res.heading);
-              this.createForm.controls['summary'].setValue(res.summary);
-              this.createForm.controls['contents'].setValue(res.contents);
+              this.emailForm.controls['title'].setValue(res.title);
+              this.emailForm.controls['heading'].setValue(res.heading);
+              this.emailForm.controls['summary'].setValue(res.summary);
+              this.emailForm.controls['contents'].setValue(res.contents);
           });
 
       });
 
-    this.createForm = this.formBuilder.group({
+    this.emailForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
       heading: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
       summary: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
@@ -67,61 +70,61 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
   }
 
   onSubmit() {
-    if (!this.createForm.valid) {
-      console.log(this.createForm);
+    if (!this.emailForm.valid) {
+      console.log(this.emailForm);
       showAlert("Invalid form-data supplied.", "danger");
       return;
     }
 
-    // insert new page
-    if (!this.pageId) {
-      let pageData = {
-        title: this.createForm.value.title,
-        heading: this.createForm.value.heading,
-        summary: this.createForm.value.summary,
-        contents: this.createForm.value.contents,
+    // insert new email
+    if (!this.emailId) {
+      let emailData = {
+        title: this.emailForm.value.title,
+        heading: this.emailForm.value.heading,
+        summary: this.emailForm.value.summary,
+        contents: this.emailForm.value.contents,
         ownerId: Meteor.userId(),
         active: true,
         deleted: false
       };
-      this.call("pages.insert", pageData, (err, res) => {
+      this.call("emails.insert", emailData, (err, res) => {
         if (err) {
           this.zone.run(() => {
             this.error = err;
           });
         } else {
           //console.log("new user-id:", res);
-          showAlert("New page saved successfully.", "success");
+          showAlert("New email saved successfully.", "success");
           this.zone.run(() => {
-            this.router.navigate(['/page/list']);
+            this.router.navigate(['/email/list']);
           });
         }
       });
     }
-    // finish insert new page
-    // update page data
+    // finish insert new email
+    // update email data
     else {
-      let pageData = {
-        title: this.createForm.value.title,
-        heading: this.createForm.value.heading,
-        summary: this.createForm.value.summary,
-        contents: this.createForm.value.contents,
+      let emailData = {
+        title: this.emailForm.value.title,
+        heading: this.emailForm.value.heading,
+        summary: this.emailForm.value.summary,
+        contents: this.emailForm.value.contents,
       }
-      this.call("pages.update", this.pageId, pageData, (err, res) => {
+      this.call("emails.update", this.emailId, emailData, (err, res) => {
         if (err) {
           this.zone.run(() => {
             this.error = err;
           });
         } else {
           //console.log("new user-id:", res);
-          showAlert("Page data updated successfully.", "success");
+          showAlert("Email data updated successfully.", "success");
           this.zone.run(() => {
-            this.router.navigate(['/page/list']);
+            this.router.navigate(['/email/list']);
           });
         }
       });
     }
-    // finish update page data
+    // finish update email data
   }
 
   ngOnDestroy() {
