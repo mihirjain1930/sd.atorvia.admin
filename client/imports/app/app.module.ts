@@ -19,6 +19,8 @@ import {FileDropModule} from "angular2-file-drop";
 import {DASHBOARD_DECLARATIONS} from "./dashboard/index";
 import {Services_Providers} from "../services/index";
 import {Package_Declarations} from "./package-page/index";
+import {Email_Declarations} from "./email/index";
+
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
 let localStorageServiceConfig = {
@@ -48,7 +50,9 @@ moduleDefinition = {
     ...Subadmin_Declarations,
     ...Page_Declarations,
     ...Practitioner_Declarations,
-    ...Package_Declarations
+    ...Package_Declarations,
+    ...Email_Declarations
+    
   ],
   providers: [
     ...ROUTES_PROVIDERS,
