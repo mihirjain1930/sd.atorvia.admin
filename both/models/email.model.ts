@@ -4,6 +4,8 @@ export interface Email extends CollectionObject {
     ownerId: string;
     title: string;
     heading: string;
+    code: string;
+    senderId:string;
     summary: string;
     contents: string;
     active: boolean;
