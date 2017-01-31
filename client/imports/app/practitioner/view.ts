@@ -103,12 +103,12 @@ export class ViewPractitionerComponent extends MeteorComponent implements OnInit
             sort: { "firstName": nameOrder as number },
             fields: {firstName: 1, lastName: 1, email: 1, phonenumber: 1, gender: 1, dob: 1, address: 1}
         };
-        this.localStorageService.set("patient-list.options", {
+        /*this.localStorageService.set("patient-list.options", {
             pageSize: pageSize,
             curPage: curPage,
             nameOrder: nameOrder,
             searchString: searchString
-        });
+        });*/
 
         this.paginationService.setCurrentPage(this.paginationService.defaultId, curPage as number);
 
@@ -116,7 +116,7 @@ export class ViewPractitionerComponent extends MeteorComponent implements OnInit
         //console.log("searchString:", this.searchString);
         this.searchString = searchString;
         jQuery(".loading").show();
-        this.call("patients.find", options, {}, searchString, (err, res) => {
+        this.call("patients.find", options, {practitioner: this.userId}, searchString, (err, res) => {
             //console.log("patients.find() done");
             jQuery(".loading").hide();
             if (err) {
@@ -137,39 +137,15 @@ export class ViewPractitionerComponent extends MeteorComponent implements OnInit
 
     });
 
-    let options:any = this.localStorageService.get("patient-list.options");
+    //let options:any = this.localStorageService.get("patient-list.options");
     //console.log("patient-list.options:", options);
 
-    if (!!options) {
-        if (! options.pageSize) {
-            options.limit = 10;
-        } else {
-            options.limit = Number(options.pageSize);
-        }
-
-        if (! options.curPage) {
-            options.curPage = 1;
-        } else {
-            options.curPage = Number(options.curPage);
-        }
-
-        if (! options.nameOrder) {
-            options.nameOrder = 1;
-        } else {
-            options.nameOrder = Number(options.nameOrder);
-        }
-
-        if (! options.searchString) {
-            options.searchString = '';
-        }
-    } else {
-        options = {
-            limit: 10,
-            curPage: 1,
-            nameOrder: 1,
-            searchString: '',
-        }
-    }
+    let options = {
+        limit: 10,
+        curPage: 1,
+        nameOrder: 1,
+        searchString: '',
+    };
 
     this.paginationService.register({
     id: this.paginationService.defaultId,

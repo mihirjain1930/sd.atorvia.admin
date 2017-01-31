@@ -8,15 +8,11 @@
     </section>
 </section>
 
-<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
-
-<div *ngIf="pageArr && pageArr.length==0">
-    No records found.
-</div>
-
 <div class="loading">
     Loading...
 </div>
+
+<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
 <table class="bordered striped highlight responsive-table">
     <thead>
@@ -40,6 +36,11 @@
             <a *ngIf="page.active == undefined || page.active === true" class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="deactivate(page)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a>
             <a *ngIf="page.active === false" class="btn-floating waves-effect waves-light green lighten-2 tooltipped" href="javascript:void(0);" (click)="activate(page)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
             <a *ngIf="!page.deleted" class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deletePage(page)" data-position="top" data-delay="0" data-tooltip="Delete Page"><i class="material-icons">delete</i></a>
+        </td>
+    </tr>
+    <tr *ngIf="itemsSize==0">
+        <td colspan="4">
+        No records have been added yet.
         </td>
     </tr>
     </tbody>

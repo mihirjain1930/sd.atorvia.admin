@@ -8,8 +8,8 @@ interface Options {
 }
 
 Meteor.methods({
-    "patients.find": (options: Options, criteria: {roles: [string]}, searchString: string) => {
-        let where:any = [];
+    "patients.find": (options: Options, criteria: any, searchString: string) => {
+        let where:any = [criteria];
         where.push({
             "$or": [{deleted: false}, {deleted: {$exists: false} }]
         });
