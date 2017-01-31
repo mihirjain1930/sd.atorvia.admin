@@ -32,16 +32,19 @@
             <label for="email" style="transform: translateY(-140%);">Email</label>
             <div *ngIf="signupForm.controls['email'].errors && signupForm.controls['email'].touched" class="error">
                 <div [hidden]="!signupForm.controls['email'].errors.required">Email is required.</div>
+                <div [hidden]="!signupForm.controls['email'].errors.minlength">Min 2 characters required.</div>
+                <div [hidden]="!signupForm.controls['email'].errors.maxlength">Max 30 characters allowed.</div>
                 <div [hidden]="!signupForm.controls['email'].errors.validateEmail">Invalid Email address.</div>
             </div>
         </div>
 
         <div class="input-field col s12">
-            <input formControlName="password" type="password"></input> 
+            <input formControlName="password" id="password" type="password"></input> 
             <label for="password">Password</label>
             <div *ngIf="signupForm.controls['password'].errors && signupForm.controls['password'].touched" class="error">
                 <div [hidden]="!signupForm.controls['password'].errors.required">Password is required.</div>
                 <div [hidden]="!signupForm.controls['password'].errors.minlength">Minimum 6 characters required.</div>
+                <div [hidden]="!signupForm.controls['password'].errors.maxlength">Maximum 30 characters allowed.</div>
             </div>
         </div>
 

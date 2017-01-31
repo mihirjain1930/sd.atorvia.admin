@@ -11,6 +11,8 @@
           <label for="email" style="transform: translateY(-140%);">Email</label>
           <div *ngIf="loginForm.controls['email'].errors && loginForm.controls['email'].touched" class="error">
               <div [hidden]="!loginForm.controls['email'].errors.required">Email is required.</div>
+              <div [hidden]="!loginForm.controls['email'].errors.minlength">Min 5 characters required.</div>
+              <div [hidden]="!loginForm.controls['email'].errors.maxlength">Max 50 characters allowed.</div>
               <div [hidden]="!loginForm.controls['email'].errors.validateEmail">Invalid email address.</div>
           </div>
       </div>
@@ -20,6 +22,8 @@
         <label for="password">Password</label>
         <div *ngIf="loginForm.controls['password'].errors && loginForm.controls['password'].touched" class="error">
             <div [hidden]="!loginForm.controls['password'].errors.required" class="error">Password is required.</div>
+            <div [hidden]="!loginForm.controls['password'].errors.minlength">Minimum 8 characters required.</div>
+            <div [hidden]="!loginForm.controls['password'].errors.maxlength">Maximum 30 characters allowed.</div>
         </div>
       </div>
 

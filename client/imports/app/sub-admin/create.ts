@@ -33,9 +33,9 @@ export class CreateSubadminComponent extends MeteorComponent implements OnInit {
 
   ngOnInit() {
     this.createForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, validateEmail])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(8), validatePassword])],
-      repeatPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), validatePassword])],
+      email: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50), validateEmail])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],
+      repeatPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],
       firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
       phoneNum: ['', Validators.compose([Validators.required, Validators.minLength(7), Validators.maxLength(15), validatePhoneNum])],

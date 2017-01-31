@@ -1,10 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
-import {check} from "meteor/check";
-import {Emails} from "../../both/collections/email.collection";
-import {Email} from "../../both/models/email.model";
-import {isValidCode} from "../../both/validators";
+import { check } from "meteor/check";
+import { Emails } from "../../both/collections/email.collection";
+import { Email } from "../../both/models/email.model";
+import { isValidEmail, isValidCode } from "../../both/validators";
 import * as _ from 'underscore';
 
 interface Options {
@@ -100,11 +100,15 @@ function validateEmailData(emailData: Email) {
         throw new Meteor.Error(403, `Invalid contents supplied.`);
     }
     /* validate code */
-     let codeLen = emailData.code.length;
+    let codeLen = emailData.code.length;
     if (codeLen < 8 || codeLen > 255) {
         throw new Meteor.Error(403, `Invalid code supplied.`);
     }
     if (! isValidCode(emailData.code) ) {
+        throw new Meteor.Error(403, `Invalid code ${emailData.code}`);
+    }
+    /* validate sender-id */
+    if (! isValidEmail(emailData.senderId)) {
         throw new Meteor.Error(403, `Invalid code ${emailData.code}`);
     }
 

@@ -5,7 +5,7 @@ export interface Email extends CollectionObject {
     title: string;
     heading: string;
     code: string;
-    senderId:string;
+    senderId: string;
     summary: string;
     contents: string;
     active: boolean;

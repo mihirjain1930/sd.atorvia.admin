@@ -23,8 +23,8 @@ export class PasswordComponent extends MeteorComponent implements OnInit {
   ngOnInit() {
     this.passwordForm = this.formBuilder.group({
       oldpassword: ['', Validators.compose([Validators.required])],
-      newPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), validatePassword])],
-      confirmPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), validatePassword])],
+      newPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],
     }, {validator: matchingPasswords('newPassword', 'confirmPassword')});
 
      this.error = '';

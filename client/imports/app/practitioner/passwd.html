@@ -12,6 +12,7 @@
             <div *ngIf="passwdForm.controls['password'].errors && passwdForm.controls['password'].touched" class="error">
                 <div [hidden]="!passwdForm.controls['password'].errors.required">Password is required.</div>
                 <div [hidden]="!passwdForm.controls['password'].errors.minlength">Minimum 8 characters required.</div>
+                <div [hidden]="!passwdForm.controls['password'].errors.maxlength">Maximum 30 characters allowed.</div>
                 <div [hidden]="!passwdForm.controls['password'].errors.validatePassword">At least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character required.</div>
             </div>
         </div>
@@ -22,6 +23,7 @@
             <div *ngIf="passwdForm.controls['repeatPassword'].errors && passwdForm.controls['repeatPassword'].touched" class="error">
                 <div [hidden]="!passwdForm.controls['repeatPassword'].errors.required">Repeat Password is required.</div>
                 <div [hidden]="!passwdForm.controls['repeatPassword'].errors.minlength">Minimum 8 characters required.</div>
+                <div [hidden]="!passwdForm.controls['repeatPassword'].errors.maxlength">Maximum 30 characters allowed.</div>
                 <div [hidden]="!passwdForm.controls['repeatPassword'].errors.validatePassword">At least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character required.</div>
             </div>
             <div class="error" [hidden]="!(passwdForm.controls['repeatPassword'].touched && passwdForm.hasError('password.mismatch'))">Type correct Repeat Password.</div>

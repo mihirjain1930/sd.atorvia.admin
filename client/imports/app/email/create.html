@@ -28,7 +28,7 @@
 
         <div class="input-field col s12">
               <input formControlName="code" id="code" type="text" [ngClass]="{'invalid':emailForm.controls['code'].touched && !emailForm.controls['code'].valid}"></input>
-              <label for="code" style="transform: translateY(-140%);">code</label>
+              <label for="code" style="transform: translateY(-140%);">Code</label>
               <div *ngIf="emailForm.controls['code'].errors && emailForm.controls['code'].touched" class="error">
                   <div [hidden]="!emailForm.controls['code'].errors.required">Code is required.</div>
                 <div [hidden]="!emailForm.controls['code'].errors.minlength">Min 8 characters required.</div>
@@ -38,10 +38,12 @@
         </div>
         
         <div class="input-field col s12">
-            <input formControlName="senderId" id="senderId" type="text" [ngClass]="{'invalid':emailForm.controls['senderId'].touched && !emailForm.controls['senderId'].valid}"></input>
+            <input formControlName="senderId" id="senderId" type="text" [ngClass]="{'invalid':emailForm.controls['senderId'].touched && !emailForm.controls['senderId'].valid}" placeholder="yourname@domain.com"></input>
             <label for="senderId" style="transform: translateY(-140%);">Sender ID</label>
             <div *ngIf="emailForm.controls['senderId'].errors && emailForm.controls['senderId'].touched" class="error">
                 <div [hidden]="!emailForm.controls['senderId'].errors.required">Email is required.</div>
+                <div [hidden]="!emailForm.controls['senderId'].errors.minlength">Min 5 characters required.</div>
+                <div [hidden]="!emailForm.controls['senderId'].errors.maxlength">Max 50 characters allowed.</div>
                 <div [hidden]="!emailForm.controls['senderId'].errors.validateEmail">Invalid Email address.</div>
             </div>
         </div>

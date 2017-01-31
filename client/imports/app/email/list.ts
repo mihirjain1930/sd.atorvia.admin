@@ -11,7 +11,6 @@ import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Email } from "../../../../both/models/email.model";
 import {showAlert} from "../shared/show-alert";
-import { Roles } from 'meteor/alanning:roles';
 
 import template from "./list.html";
 

@@ -71,7 +71,7 @@ export class ViewPractitionerComponent extends MeteorComponent implements OnInit
   }
 
   get patientArr() {
-    console.log("inside get patientArr");
+    //console.log("inside get patientArr");
     return this.patients;
   }
 
