@@ -8,15 +8,15 @@
     </section>
 </section>
 
-<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
-
-<div *ngIf="items && items.length==0">
-    No records found.
-</div>
-
 <div class="loading">
     Loading...
 </div>
+
+<section *ngIf="itemsSize==0">
+    No records have been added yet.
+</section>
+
+<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
 <section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow" 
 *ngFor="let user of items" 
@@ -34,7 +34,7 @@
         <section class="col s4 detail-btn">
             <ul>
                 <li><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/sub-admin/update', user._id]" data-position="top" data-delay="0" data-tooltip="Edit User"><i class="material-icons">mode_edit</i></a></li>
-                <li><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/sub-admin/passwd', user._id]" data-position="top" data-delay="0" data-tooltip="Password"><i class="material-icons">code</i></a></li>
+                <!--<li><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/sub-admin/passwd', user._id]" data-position="top" data-delay="0" data-tooltip="Password"><i class="material-icons">code</i></a></li>-->
                 <li *ngIf="user.active == undefined || user.active === true"><a class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="deactivate(user)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a></li>
                 <li *ngIf="user.active === false"><a class="btn-floating waves-effect waves-light green lighten-2 tooltipped" href="javascript:void(0);" (click)="activate(user)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
                 <li *ngIf="!user.deleted"><a class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deleteUser(user)" data-position="top" data-delay="0" data-tooltip="Delete User"><i class="material-icons">delete</i></a></li>

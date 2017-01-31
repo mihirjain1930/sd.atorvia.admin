@@ -27,6 +27,28 @@
         </div>
 
         <div class="input-field col s12">
+              <input formControlName="code" id="code" type="text" [ngClass]="{'invalid':emailForm.controls['code'].touched && !emailForm.controls['code'].valid}"></input>
+              <label for="code" style="transform: translateY(-140%);">Code</label>
+              <div *ngIf="emailForm.controls['code'].errors && emailForm.controls['code'].touched" class="error">
+                  <div [hidden]="!emailForm.controls['code'].errors.required">Code is required.</div>
+                <div [hidden]="!emailForm.controls['code'].errors.minlength">Min 8 characters required.</div>
+                <div [hidden]="!emailForm.controls['code'].errors.maxlength">Max 255 characters allowed.</div>
+                <div [hidden]="!emailForm.controls['code'].errors.validateSlug">Only alphanumeric characters and hiphen(-) allowed.</div>
+            </div>
+        </div>
+        
+        <div class="input-field col s12">
+            <input formControlName="senderId" id="senderId" type="text" [ngClass]="{'invalid':emailForm.controls['senderId'].touched && !emailForm.controls['senderId'].valid}" placeholder="yourname@domain.com"></input>
+            <label for="senderId" style="transform: translateY(-140%);">Sender ID</label>
+            <div *ngIf="emailForm.controls['senderId'].errors && emailForm.controls['senderId'].touched" class="error">
+                <div [hidden]="!emailForm.controls['senderId'].errors.required">Email is required.</div>
+                <div [hidden]="!emailForm.controls['senderId'].errors.minlength">Min 5 characters required.</div>
+                <div [hidden]="!emailForm.controls['senderId'].errors.maxlength">Max 50 characters allowed.</div>
+                <div [hidden]="!emailForm.controls['senderId'].errors.validateEmail">Invalid Email address.</div>
+            </div>
+        </div>
+
+        <div class="input-field col s12">
             <textarea formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':emailForm.controls['summary'].touched && !emailForm.controls['summary'].valid}"></textarea>
             <label for="summary" style="transform: translateY(-140%);">Summary</label>
             <div *ngIf="emailForm.controls['summary'].errors && emailForm.controls['summary'].touched" class="error">
@@ -45,7 +67,7 @@
                 <div [hidden]="!emailForm.controls['contents'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
-
+          
         <div class="row">
           <div class="col s12">
             <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!emailForm.valid">Submit

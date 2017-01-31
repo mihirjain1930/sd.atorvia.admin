@@ -8,15 +8,11 @@
     </section>
 </section>
 
-<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
-
-<div *ngIf="packageArr && packageArr.length==0">
-    No records found.
-</div>
-
 <div class="loading">
     Loading...
 </div>
+
+<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
 <table class="bordered striped highlight responsive-table">
     <thead>
@@ -31,7 +27,7 @@
     <tr class=""
         *ngFor="let package of packageArr"
         [attr.data-page-id]="package._id"
-      [ngClass]="{'red accent-1': package.deleted, 'red lighten-4': package.active === false}"
+        [ngClass]="{'red accent-1': package.deleted, 'red lighten-4': package.active === false}"
         [hidden]="package.deleted">
         <td>{{package.title}}</a></h2></td>
         <td>{{package.code}}</td>
@@ -40,6 +36,11 @@
           <a *ngIf="package.active == undefined || package.active === true" class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="deactivate(package)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a>
           <a *ngIf="package.active === false" class="btn-floating waves-effect waves-light green lighten-2 tooltipped" href="javascript:void(0);" (click)="activate(package)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
             <a *ngIf="!package.deleted" class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deletePackage(package)" data-position="top" data-delay="0" data-tooltip="Delete Package"><i class="material-icons">delete</i></a>
+        </td>
+    </tr>
+    <tr *ngIf="itemsSize==0">
+        <td colspan="4">
+        No records have been added yet.
         </td>
     </tr>
     </tbody>

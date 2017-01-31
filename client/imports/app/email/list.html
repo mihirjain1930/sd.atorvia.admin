@@ -9,31 +9,32 @@
     </section>
 </section>
 
-<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
-
-<div *ngIf="pageArr && pageArr.length==0">
-    No records found.
-</div>
-
 <div class="loading">
     Loading...
 </div>
+
+<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
 <table class="bordered striped highlight responsive-table">
     <thead>
         <tr>
             <th data-field="title">Title</th>
             <th data-field="heading">Heading</th>
+            <th data-field="code">Code</th>
             <th data-field="summary">Summary</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr class="" *ngFor="let email of emailArr" [attr.data-email-id]="email._id" [ngClass]="{'red accent-1': email.deleted, 'red lighten-4': email.active === false}"
+        <tr class="" 
+            *ngFor="let email of emailArr" 
+            [attr.data-email-id]="email._id" 
+            [ngClass]="{'red accent-1': email.deleted, 'red lighten-4': email.active === false}"
             [hidden]="email.deleted">
             <td><a [routerLink]="['/email/view', email._id]">{{email.title}}</a></h2>
             </td>
             <td>{{email.heading}}</td>
+            <td>{{email.code}}</td>
             <td>{{email.summary}}</td>
             <td><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/email/update', email._id]"
                     data-position="top" data-delay="0" data-tooltip="Edit Email"><i class="material-icons">mode_edit</i></a>
@@ -43,6 +44,11 @@
                     (click)="activate(email)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
                 <a *ngIf="!email.deleted" class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deleteEmail(email)"
                     data-position="top" data-delay="0" data-tooltip="Delete Email"><i class="material-icons">delete</i></a>
+            </td>
+        </tr>
+        <tr *ngIf="itemsSize==0">
+            <td colspan="4">
+            No records have been added yet.
             </td>
         </tr>
     </tbody>

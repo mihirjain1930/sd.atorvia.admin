@@ -5,8 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { Subscription } from "rxjs";
 import { Email } from "../../../../both/models/email.model";
-import {showAlert} from "../shared/show-alert";
-import { Roles } from 'meteor/alanning:roles';
+import { validateCode, validateEmail } from "../../validators/common";
+import { showAlert } from "../shared/show-alert";
 import template from "./create.html";
 
 @Component({
@@ -51,6 +51,8 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
               }
               this.emailForm.controls['title'].setValue(res.title);
               this.emailForm.controls['heading'].setValue(res.heading);
+              this.emailForm.controls['code'].setValue(res.code);
+              this.emailForm.controls['senderId'].setValue(res.senderId);
               this.emailForm.controls['summary'].setValue(res.summary);
               this.emailForm.controls['contents'].setValue(res.contents);
           });
@@ -60,6 +62,8 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
     this.emailForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
       heading: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
+      code: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(50), validateCode])],
+      senderId:['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50), validateEmail])],
       summary: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
       contents: ['', Validators.compose([Validators.required])],
     });
@@ -81,6 +85,8 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
       let emailData = {
         title: this.emailForm.value.title,
         heading: this.emailForm.value.heading,
+        code: this.emailForm.value.code,
+        senderId:this.emailForm.value.senderId,
         summary: this.emailForm.value.summary,
         contents: this.emailForm.value.contents,
         ownerId: Meteor.userId(),
@@ -107,6 +113,8 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
       let emailData = {
         title: this.emailForm.value.title,
         heading: this.emailForm.value.heading,
+        code: this.emailForm.value.code,
+        senderId:this.emailForm.value.senderId,
         summary: this.emailForm.value.summary,
         contents: this.emailForm.value.contents,
       }

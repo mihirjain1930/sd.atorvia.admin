@@ -84,6 +84,24 @@ export const validateSlug = function(c: FormControl) {
   };
 }
 
+
+
+export const validateCode = function(c: FormControl) {
+  if (isEmptyInputValue(c.value)) {
+    return null;  // don't validate empty values to allow optional controls
+  }
+
+  let REGEXP = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/;
+
+  return REGEXP.test(c.value) ? null : {
+    validateCode: {
+      valid: false
+    }
+  };
+}
+
+
+
 export const validateMinVal = (min: number) => {
   return (c: FormControl) => {
     if (isEmptyInputValue(c.value)) {

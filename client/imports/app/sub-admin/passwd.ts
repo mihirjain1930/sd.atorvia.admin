@@ -47,8 +47,8 @@ export class PasswordSubadminComponent extends MeteorComponent implements OnInit
     });
 
     this.passwdForm = this.formBuilder.group({
-      password: ['', Validators.compose([Validators.required, Validators.minLength(8), validatePassword])],
-      repeatPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), validatePassword])]
+      password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],
+      repeatPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])]
     }, {validator: this.matchPasswords('password', 'repeatPassword')});
 
     this.error = '';

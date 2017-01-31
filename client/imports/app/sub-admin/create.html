@@ -32,6 +32,8 @@
             <label for="email" style="transform: translateY(-140%);">Email</label>
             <div *ngIf="createForm.controls['email'].errors && createForm.controls['email'].touched" class="error">
                 <div [hidden]="!createForm.controls['email'].errors.required">Email is required.</div>
+                <div [hidden]="!createForm.controls['email'].errors.minlength">Min 5 characters required.</div>
+                <div [hidden]="!createForm.controls['email'].errors.maxlength">Max 50 characters allowed.</div>
                 <div [hidden]="!createForm.controls['email'].errors.validateEmail">Invalid Email address.</div>
             </div>
         </div>
@@ -42,6 +44,7 @@
             <div *ngIf="createForm.controls['password'].errors && createForm.controls['password'].touched" class="error">
                 <div [hidden]="!createForm.controls['password'].errors.required">Password is required.</div>
                 <div [hidden]="!createForm.controls['password'].errors.minlength">Minimum 8 characters required.</div>
+                <div [hidden]="!createForm.controls['password'].errors.maxlength">Maximum 30 characters allowed.</div>
                 <div [hidden]="!createForm.controls['password'].errors.validatePassword">At least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character required.</div>
             </div>
         </div>
@@ -52,6 +55,7 @@
             <div *ngIf="createForm.controls['repeatPassword'].errors && createForm.controls['repeatPassword'].touched" class="error">
                 <div [hidden]="!createForm.controls['repeatPassword'].errors.required">Repeat Password is required.</div>
                 <div [hidden]="!createForm.controls['repeatPassword'].errors.minlength">Minimum 8 characters required.</div>
+                <div [hidden]="!createForm.controls['repeatPassword'].errors.maxlength">Maximum 30 characters allowed.</div>
                 <div [hidden]="!createForm.controls['repeatPassword'].errors.validatePassword">At least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character required.</div>
             </div>
             <div class="error" [hidden]="!(createForm.controls['repeatPassword'].touched && createForm.hasError('password.mismatch'))">Type correct Repeat Password.</div>
