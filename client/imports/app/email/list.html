@@ -24,6 +24,7 @@
         <tr>
             <th data-field="title">Title</th>
             <th data-field="heading">Heading</th>
+            <th data-field="code">Code</th>
             <th data-field="summary">Summary</th>
             <th></th>
         </tr>
@@ -34,6 +35,7 @@
             <td><a [routerLink]="['/email/view', email._id]">{{email.title}}</a></h2>
             </td>
             <td>{{email.heading}}</td>
+            <td>{{email.code}}</td>
             <td>{{email.summary}}</td>
             <td><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/email/update', email._id]"
                     data-position="top" data-delay="0" data-tooltip="Edit Email"><i class="material-icons">mode_edit</i></a>
