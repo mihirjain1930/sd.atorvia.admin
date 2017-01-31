@@ -104,10 +104,10 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
         //console.log("patient-list.options:", options);
 
         if (!!options) {
-            if (! options.limit) {
+            if (! options.pageSize) {
                 options.limit = 10;
             } else {
-                options.limit = Number(options.limit);
+                options.limit = Number(options.pageSize);
             }
 
             if (! options.curPage) {
