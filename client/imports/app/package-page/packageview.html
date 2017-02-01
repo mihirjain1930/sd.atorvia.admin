@@ -1,30 +1,42 @@
 <section *ngIf="package">
-     <section class="col s12 pt-detail bt-shadow">
+    <h2>PACKAGE DETAILS</h2>
 
-     <section class="col s12 content-ptdetail" style="padding-top: 15 margin-left: 20px !important;">
-            <h2 style="">{{package.title}}</h2>
+    <section class="col s12 pt-detail bt-shadow">
+
+        
+        <section class="col s9 content-ptdetail" style="padding-top: 0 !important;">
+            <h2 style="margin: 30px">{{package.title}}</h2>
             <div>
-                <section class="user-gendetail row col s12">
+                <section class="user-packdetail row col s12">
                 <ul>
                     <li>
-                        <label style="color:black">Package Code</label>
+                        <label style="color:black">Code</label>
                         <span>{{package.code}}</span>
                     </li>
                     <li>
-                        <label style="color:black">maxDevices</label>
+                        <label style="color:black">Number of devices allowed</label>
                         <span>{{package.maxDevices}}</span>
                     </li>
                     <li>
-                        <label style="color:black">maxPatients</label>
+                        <label style="color:black">Number of patients allowed</label>
                         <span>{{package.maxPatients}}</span>
                     </li>
                     <li>
-                        <label style="color:black"> pricePerPatient </label>
+                        <label style="color:black">Price per patient</label>
                         <span>{{package.pricePerPatient}}</span>
+                    </li>
+                     <li>
+                        <label style="color:black">Price per device</label>
+                        <span>{{package.pricePerDevice}}</span>
+                    </li>
+                    <li>
+                        <label style="color:black">Duration in months</label>
+                        <span>{{package.durationInMonths}}</span>
                     </li>
 
                 </ul>
                 </section>
             </div>
         </section>
-        </section>
+
+    </section>
