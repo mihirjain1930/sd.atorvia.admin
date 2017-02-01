@@ -82,12 +82,12 @@ Meteor.methods({
 function validatePageData(pageData: Page) {
     /* validate title */
     let titleLen = pageData.title.length;
-    if (titleLen < 8 || titleLen > 255) {
+    if (titleLen < 5 || titleLen > 255) {
         throw new Meteor.Error(403, `Invalid title supplied.`);
     }
     /* validate heading */
     let headingLen = pageData.heading.length;
-    if (headingLen < 8 || headingLen > 255) {
+    if (headingLen < 5 || headingLen > 255) {
         throw new Meteor.Error(403, `Invalid heading supplied.`);
     }
     /* validate summary */
@@ -102,7 +102,7 @@ function validatePageData(pageData: Page) {
     }
     /* validate slug */
     let slugLen = pageData.slug.length;
-    if (slugLen < 8 || slugLen > 255) {
+    if (slugLen < 5 || slugLen > 255) {
         throw new Meteor.Error(403, `Invalid slug supplied.`);
     }
     if (! isValidSlug(pageData.slug) ) {
