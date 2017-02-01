@@ -1,10 +1,14 @@
+<h2 class="header red-text text-lighten-1" color="primary">
+    <span>Static Pages</span>
+</h2>
+
 <section class="serach-bg">
     <section class="search col s10">
         <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
         <label class="tooltipped" for="search" (click)="search(searchtext.value)" data-position="top" data-delay="0" data-tooltip="Click to Search"><i class="material-icons">search</i></label>
     </section>
     <section class="download-btn">
-        <a class="waves-effect waves-light btn" [routerLink]="['/page/create']"><i class="zmdi zmdi-plus"></i>Add Page</a>
+        <a class="waves-effect waves-light btn blue accent-2" [routerLink]="['/page/create']"><i class="zmdi zmdi-plus"></i>Add Page</a>
     </section>
 </section>
 

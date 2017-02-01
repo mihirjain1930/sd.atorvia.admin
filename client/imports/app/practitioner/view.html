@@ -1,7 +1,7 @@
 <section *ngIf="user">
-    <h2>User Details</h2>
+    <h2 class="header red-text text-lighten-1" color="primary">User Details</h2>
     <button class="btn pull-left grey lighten-1" type="button" [routerLink]="['/practitioner/list']">&lt;&lt; Back</button>
-    <button class="btn pull-right" type="button" [routerLink]="['/practitioner/passwd', user._id]">Change Password</button>
+    <button class="btn pull-right blue accent-2" type="button" [routerLink]="['/practitioner/passwd', user._id]">Change Password</button>
 
     <section class="col s12 pt-detail bt-shadow">
 
@@ -64,7 +64,8 @@
                     <li><i class="zmdi tooltipped" [ngClass]="{'zmdi-male': patient.gender==1, 'zmdi-female': patient.gender==0}" data-position="top" data-delay="0" data-tooltip="Age"></i> {{patient.dob | age}}</li>
                 </ul>
                 <address class="col s12">
-                    <i class="zmdi zmdi-pin tooltipped" data-position="top" data-delay="0" data-tooltip="Address"></i> {{patient.address}}
+                    <i class="zmdi zmdi-pin tooltipped" data-position="top" data-delay="0" data-tooltip="Address"></i> 
+                    {{patient.address}}, {{patient.city}}, {{patient.pincode}}
                 </address>
             </section>
             <section class="col s4 detail-btn">

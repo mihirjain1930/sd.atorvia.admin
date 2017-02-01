@@ -37,8 +37,8 @@ header nav ul li a:hover, header nav ul li.active { background: none; }
 .search label { background: #ebebeb none repeat scroll 0 0; border-radius: 0px 4px 4px 0px; -webkit-border-radius: 0px 4px 4px 0px; height: 40px; line-height: 40px; position: absolute; right: 0; text-align: center; top: 0; width: 40px; cursor: pointer; }
 .search label i { line-height: 40px; }
 .download-btn { float: left; padding: 0 15px; width: 22%; }
-.download-btn a { font-size: 16px; font-weight: 500; padding: 0 15px; height: 39px; background: #4286f7; width: 100%; text-transform: capitalize; }
-.download-btn a:hover { background: #2668d7; }
+.download-btn a { font-size: 16px; font-weight: 500; padding: 0 15px; height: 39px; /*background: #4286f7;*/ width: 100%; text-transform: capitalize; }
+/*.download-btn a:hover { background: #2668d7; }*/
 .download-btn i { font-size: 24px; padding-right: 10px; }
 .wht-bg { background: #fff; }
 .pateint-list { overflow: hidden; padding: 15px; }
