@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { Subscription } from "rxjs";
 import { Package } from "../../../../both/models/package.model";
-import { DropdownModule } from "ng2-dropdown";
+//import { DropdownModule } from "ng2-dropdown";
 import { showAlert } from "../shared/show-alert";
 import { validateFirstName, validateSlug, validateMinVal, validateMaxVal } from "../../validators/common";
 

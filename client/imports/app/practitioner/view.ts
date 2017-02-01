@@ -101,7 +101,7 @@ export class ViewPractitionerComponent extends MeteorComponent implements OnInit
             limit: pageSize as number,
             skip: ((curPage as number) - 1) * (pageSize as number),
             sort: { "firstName": nameOrder as number },
-            fields: {firstName: 1, lastName: 1, email: 1, phonenumber: 1, gender: 1, dob: 1, address: 1}
+            fields: {firstName: 1, lastName: 1, email: 1, phonenumber: 1, gender: 1, dob: 1, address: 1, city: 1, pincode: 1}
         };
         /*this.localStorageService.set("patient-list.options", {
             pageSize: pageSize,
