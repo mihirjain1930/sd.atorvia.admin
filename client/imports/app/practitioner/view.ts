@@ -35,7 +35,7 @@ export class ViewPractitionerComponent extends MeteorComponent implements OnInit
   curPage: Subject<number> = new Subject<number>();
   nameOrder: Subject<number> = new Subject<number>();
   optionsSub: Subscription;
-  itemsSize: number = 0;
+  itemsSize: number = -1;
   searchSubject: Subject<string> = new Subject<string>();
   searchString: string = "";
 

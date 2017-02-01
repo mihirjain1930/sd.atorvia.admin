@@ -54,6 +54,10 @@
         No records have been added yet.
     </section>
 
+    <section *ngIf="itemsSize<0">
+        Loading...
+    </section>
+
     <section *ngFor="let patient of patientArr" class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow">
         <section class="pateint-list">
             <section class="col s8 mar-tp10">

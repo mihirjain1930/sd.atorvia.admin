@@ -36,7 +36,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
     curPage: Subject<number> = new Subject<number>();
     nameOrder: Subject<number> = new Subject<number>();
     optionsSub: Subscription;
-    itemsSize: number = 0;
+    itemsSize: number = -1;
     searchSubject: Subject<string> = new Subject<string>();
     searchString: string = "";
 
@@ -52,6 +52,60 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
 
     ngOnInit() {
         //console.log("inside init");
+        this.setOptions();
+    }
+
+    private setOptions() {
+        let options:any = this.localStorageService.get("page-list.options");
+        //console.log("patient-list.options:", options);
+
+        if (!!options) {
+            if (! options.pageSize) {
+                options.limit = 10;
+            } else {
+                options.limit = Number(options.pageSize);
+            }
+
+            if (! options.curPage) {
+                options.curPage = 1;
+            } else {
+                options.curPage = Number(options.curPage);
+            }
+
+            if (! options.nameOrder) {
+                options.nameOrder = 1;
+            } else {
+                options.nameOrder = Number(options.nameOrder);
+            }
+
+            if (! options.searchString) {
+                options.searchString = '';
+            }
+        } else {
+            options = {
+                limit: 10,
+                curPage: 1,
+                nameOrder: 1,
+                searchString: '',
+            }
+        }
+
+        this.setOptionsSub();
+
+        this.paginationService.register({
+        id: this.paginationService.defaultId,
+        itemsPerPage: 10,
+        currentPage: options.curPage,
+        totalItems: this.itemsSize
+        });
+        
+        this.pageSize.next(options.limit);
+        this.curPage.next(options.curPage);
+        this.nameOrder.next(options.nameOrder);
+        this.searchSubject.next(options.searchString);
+    }
+
+    private setOptionsSub() {
         this.optionsSub = Observable.combineLatest(
             this.pageSize,
             this.curPage,
@@ -89,62 +143,8 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
                 this.items = res.data;
                 this.itemsSize = res.count;
                 this.paginationService.setTotalItems(this.paginationService.defaultId, this.itemsSize);
-
-                setTimeout(function(){
-                    jQuery(function($){
-                    /*$('.tooltipped').tooltip({delay: 0});*/
-                    });
-                }, 200);
-                //console.log("data:", this.items);
             })
-
         });
-
-        let options:any = this.localStorageService.get("page-list.options");
-        //console.log("patient-list.options:", options);
-
-        if (!!options) {
-            if (! options.pageSize) {
-                options.limit = 10;
-            } else {
-                options.limit = Number(options.pageSize);
-            }
-
-            if (! options.curPage) {
-                options.curPage = 1;
-            } else {
-                options.curPage = Number(options.curPage);
-            }
-
-            if (! options.nameOrder) {
-                options.nameOrder = 1;
-            } else {
-                options.nameOrder = Number(options.nameOrder);
-            }
-
-            if (! options.searchString) {
-                options.searchString = '';
-            }
-        } else {
-            options = {
-                limit: 10,
-                curPage: 1,
-                nameOrder: 1,
-                searchString: '',
-            }
-        }
-
-        this.paginationService.register({
-        id: this.paginationService.defaultId,
-        itemsPerPage: 10,
-        currentPage: options.curPage,
-        totalItems: this.itemsSize
-        });
-
-        this.pageSize.next(options.limit);
-        this.curPage.next(options.curPage);
-        this.nameOrder.next(options.nameOrder);
-        this.searchSubject.next(options.searchString);
     }
 
     get pageArr() {

@@ -2,7 +2,7 @@
     <span>Email Templates</span>
 </h2>
 
-<section class="serach-bg">
+<section class="serach-bg" *ngIf="itemsSize>=0">
     <section class="search col s10">
         <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)"
             [(ngModel)]="searchString" />
@@ -19,7 +19,7 @@
 
 <pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
-<table class="bordered striped highlight responsive-table">
+<table class="bordered striped highlight responsive-table" *ngIf="itemsSize>=0">
     <thead>
         <tr>
             <th data-field="title">Title</th>
