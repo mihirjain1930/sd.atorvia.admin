@@ -51,6 +51,60 @@ export class ListPractitionerComponent extends MeteorComponent implements OnInit
     }
 
     ngOnInit() {
+        this.setOptions();
+    }
+
+    private setOptions() {
+        let options:any = this.localStorageService.get("practitioner.options");
+        //console.log("patient-list.options:", options);
+
+        if (!!options) {
+            if (! options.pageSize) {
+                options.limit = 10;
+            } else {
+                options.limit = Number(options.pageSize);
+            }
+
+            if (! options.curPage) {
+                options.curPage = 1;
+            } else {
+                options.curPage = Number(options.curPage);
+            }
+
+            if (! options.nameOrder) {
+                options.nameOrder = 1;
+            } else {
+                options.nameOrder = Number(options.nameOrder);
+            }
+
+            if (! options.searchString) {
+                options.searchString = '';
+            }
+        } else {
+            options = {
+                limit: 10,
+                curPage: 1,
+                nameOrder: 1,
+                searchString: '',
+            }
+        }
+
+        this.setOptionsSub();
+
+        this.paginationService.register({
+        id: this.paginationService.defaultId,
+        itemsPerPage: 10,
+        currentPage: options.curPage,
+        totalItems: this.itemsSize
+        });
+
+        this.pageSize.next(options.limit);
+        this.curPage.next(options.curPage);
+        this.nameOrder.next(options.nameOrder);
+        this.searchSubject.next(options.searchString);
+    }
+
+    private setOptionsSub() {
         this.optionsSub = Observable.combineLatest(
             this.pageSize,
             this.curPage,
@@ -95,52 +149,6 @@ export class ListPractitionerComponent extends MeteorComponent implements OnInit
             })
 
         });
-
-        let options:any = this.localStorageService.get("practitioner.options");
-        //console.log("patient-list.options:", options);
-
-        if (!!options) {
-            if (! options.pageSize) {
-                options.limit = 10;
-            } else {
-                options.limit = Number(options.pageSize);
-            }
-
-            if (! options.curPage) {
-                options.curPage = 1;
-            } else {
-                options.curPage = Number(options.curPage);
-            }
-
-            if (! options.nameOrder) {
-                options.nameOrder = 1;
-            } else {
-                options.nameOrder = Number(options.nameOrder);
-            }
-
-            if (! options.searchString) {
-                options.searchString = '';
-            }
-        } else {
-            options = {
-                limit: 10,
-                curPage: 1,
-                nameOrder: 1,
-                searchString: '',
-            }
-        }
-
-        this.paginationService.register({
-        id: this.paginationService.defaultId,
-        itemsPerPage: 10,
-        currentPage: options.curPage,
-        totalItems: this.itemsSize
-        });
-
-        this.pageSize.next(options.limit);
-        this.curPage.next(options.curPage);
-        this.nameOrder.next(options.nameOrder);
-        this.searchSubject.next(options.searchString);
     }
 
     search(value: string): void {

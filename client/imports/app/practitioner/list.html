@@ -2,7 +2,7 @@
     <span>Practitioner Users</span>
 </h2>
 
-<section class="serach-bg">
+<section class="serach-bg" *ngIf="itemsSize>=0">
     <section class="search col s10">
         <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
         <label class="tooltipped" for="search" (click)="search(searchtext.value)" data-position="top" data-delay="0" data-tooltip="Click to Search"><i class="material-icons">search</i></label>
