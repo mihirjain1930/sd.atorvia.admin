@@ -33,7 +33,7 @@
         [attr.data-page-id]="package._id"
         [ngClass]="{'red accent-1': package.deleted, 'red lighten-4': package.active === false}"
         [hidden]="package.deleted">
-        <td>{{package.title}}</a></h2></td>
+        <td><a [routerLink]="['/package/view', package._id]">{{package.title}}</a></h2></td>
         <td>{{package.code}}</td>
         <td>{{package.summary}}</td>
         <td><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/package/update', package._id]" data-position="top" data-delay="0" data-tooltip="Edit Package"><i class="material-icons">mode_edit</i></a>
