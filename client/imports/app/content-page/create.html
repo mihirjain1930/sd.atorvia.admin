@@ -12,7 +12,7 @@
             <label for="title" style="transform: translateY(-140%);">Title</label>
             <div *ngIf="createForm.controls['title'].errors && createForm.controls['title'].touched" class="error">
                 <div [hidden]="!createForm.controls['title'].errors.required">Title is required.</div>
-                <div [hidden]="!createForm.controls['title'].errors.minlength">Min 8 characters required.</div>
+                <div [hidden]="!createForm.controls['title'].errors.minlength">Min 5 characters required.</div>
                 <div [hidden]="!createForm.controls['title'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <label for="heading" style="transform: translateY(-140%);">Heading</label>
             <div *ngIf="createForm.controls['heading'].errors && createForm.controls['heading'].touched" class="error">
                 <div [hidden]="!createForm.controls['heading'].errors.required">Heading is required.</div>
-                <div [hidden]="!createForm.controls['heading'].errors.minlength">Min 8 characters required.</div>
+                <div [hidden]="!createForm.controls['heading'].errors.minlength">Min 5 characters required.</div>
                 <div [hidden]="!createForm.controls['heading'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <label for="slug" style="transform: translateY(-140%);">Slug</label>
             <div *ngIf="createForm.controls['slug'].errors && createForm.controls['slug'].touched" class="error">
                 <div [hidden]="!createForm.controls['slug'].errors.required">Slug is required.</div>
-                <div [hidden]="!createForm.controls['slug'].errors.minlength">Min 8 characters required.</div>
+                <div [hidden]="!createForm.controls['slug'].errors.minlength">Min 5 characters required.</div>
                 <div [hidden]="!createForm.controls['slug'].errors.maxlength">Max 255 characters allowed.</div>
                 <div [hidden]="!createForm.controls['slug'].errors.validateSlug">Only alphanumeric characters and hiphen(-) allowed.</div>
             </div>

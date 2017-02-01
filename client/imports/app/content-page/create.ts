@@ -61,10 +61,10 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
       });
 
     this.createForm = this.formBuilder.group({
-      title: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
-      heading: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
+      title: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
+      heading: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
       summary: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
-      slug: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(50), validateSlug])],
+      slug: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50), validateSlug])],
       contents: ['', Validators.compose([Validators.required])],
     });
 
