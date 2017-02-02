@@ -161,6 +161,10 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
     search(value: string): void {
         this.searchSubject.next(value);
     }
+    
+    clearsearch(value: string): void{
+        this.searchSubject.next(value);
+    }
 
     onPageChanged(page: number): void {
         this.curPage.next(page);

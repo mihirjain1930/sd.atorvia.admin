@@ -153,7 +153,13 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
 
     search(value: string): void {
         this.searchSubject.next(value);
+        
     }
+    
+    clearsearch(value: string): void{
+        this.searchSubject.next(value);
+    }
+
 
     onPageChanged(page: number): void {
         this.curPage.next(page);

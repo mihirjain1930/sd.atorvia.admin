@@ -155,6 +155,10 @@ export class ListPractitionerComponent extends MeteorComponent implements OnInit
         this.searchSubject.next(value);
     }
 
+    clearsearch(value: string): void{
+        this.searchSubject.next(value);
+    }
+
     onPageChanged(page: number): void {
         this.curPage.next(page);
     }

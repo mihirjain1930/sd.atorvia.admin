@@ -32,7 +32,7 @@ header .dropdown-content li a:hover { background: #4286f7; color: #fff; }
 header nav ul li a:hover, header nav ul li.active { background: none; }
 /*search bar*/
 .serach-bg { background: #fff none repeat scroll 0 0; overflow: hidden; padding: 15px 20px; margin-bottom: 5px; }
-.search { padding-right: 40px !important; position: relative; width: 78% !important; }
+.search { padding-right: 40px !important; position: relative; /*width: 78% !important;*/ }
 .search input { background: #ebebeb none repeat scroll 0 0; border: 0 none; border-radius: 4px 0px 0px 4px; -webkit-border-radius: 4px 0px 0px 4px; height: 40px; margin: 0; padding: 0 0 0 20px; }
 .search label { background: #ebebeb none repeat scroll 0 0; border-radius: 0px 4px 4px 0px; -webkit-border-radius: 0px 4px 4px 0px; height: 40px; line-height: 40px; position: absolute; right: 0; text-align: center; top: 0; width: 40px; cursor: pointer; }
 .search label i { line-height: 40px; }

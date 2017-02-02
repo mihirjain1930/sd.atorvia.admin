@@ -38,27 +38,27 @@
         </div>
 
         <div class="input-field col s12">
-            <textarea formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':createForm.controls['summary'].touched && !createForm.controls['summary'].valid}"></textarea>
+            <ckeditor formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':createForm.controls['summary'].touched && !createForm.controls['summary'].valid}"></ckeditor>
             <label for="summary" style="transform: translateY(-140%);">Summary</label>
-            <div *ngIf="createForm.controls['summary'].errors && createForm.controls['summary'].touched" class="error">
+            <div *ngIf="createForm.controls['summary'].errors && createForm.controls['summary'].touched" class="error"><br>
                 <div [hidden]="!createForm.controls['summary'].errors.required">Summary is required.</div>
                 <div [hidden]="!createForm.controls['summary'].errors.minlength">Min 8 characters required.</div>
                 <div [hidden]="!createForm.controls['summary'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
-        </div>
-
+            <div>
+         <br>
         <div class="input-field col s12">
-            <textarea formControlName="contents" id="contents" style="height:12rem;" [ngClass]="{'invalid':createForm.controls['contents'].touched && !createForm.controls['contents'].valid}"></textarea>
+            <ckeditor formControlName="contents" id="contents" style="height:12rem;" [ngClass]="{'invalid':createForm.controls['contents'].touched && !createForm.controls['contents'].valid}"></ckeditor>
             <label for="contents" style="transform: translateY(-140%);">Contents</label>
-            <div *ngIf="createForm.controls['contents'].errors && createForm.controls['contents'].touched" class="error">
+            <div *ngIf="createForm.controls['contents'].errors && createForm.controls['contents'].touched" class="error"><br>
                 <div [hidden]="!createForm.controls['contents'].errors.required">Contents is required.</div>
                 <div [hidden]="!createForm.controls['contents'].errors.minlength">Min 8 characters required.</div>
                 <div [hidden]="!createForm.controls['contents'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
-
+  
         <div class="row">
-          <div class="col s12">
+          <div class="col s12"><br>
             <button class="btn waves-effect waves-light blue accent-2" type="submit" name="action" [disabled]="!createForm.valid">Submit
               <i class="material-icons right">send</i>
             </button>
