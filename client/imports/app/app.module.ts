@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AccountsModule } from 'angular2-meteor-accounts-ui';
+import {CKEditorModule} from 'ng2-ckeditor'; /*define module for CKEditor */
 import { Ng2PaginationModule } from 'ng2-pagination';
 import {LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG} from "angular-2-local-storage";
-
 import { AppComponent } from "./app.component.web";
 import { routes, ROUTES_PROVIDERS } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
@@ -38,7 +38,8 @@ moduleDefinition = {
     RouterModule.forRoot(routes),
     AccountsModule,
     Ng2PaginationModule,
-    FileDropModule
+    FileDropModule,
+    CKEditorModule   /*import module for CKEditor */
   ],
   declarations: [
     AppComponent,
@@ -52,7 +53,6 @@ moduleDefinition = {
     ...Practitioner_Declarations,
     ...Package_Declarations,
     ...Email_Declarations
-    
   ],
   providers: [
     ...ROUTES_PROVIDERS,

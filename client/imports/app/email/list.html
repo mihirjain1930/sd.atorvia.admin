@@ -3,12 +3,14 @@
 </h2>
 
 <section class="serach-bg" *ngIf="itemsSize>=0">
-    <section class="search col s10">
-        <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)"
-            [(ngModel)]="searchString" />
+    <section class="col s1 closeSearch" *ngIf="!!searchString">
+        <a class="" (click)="clearsearch(searchString='')"><i class="material-icons">clear</i></a>
+    </section>
+    <section class="search col s9">
+        <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
         <label class="tooltipped" for="search" (click)="search(searchtext.value)" data-position="top" data-delay="0" data-tooltip="Click to Search"><i class="material-icons">search</i></label>
     </section>
-    <section class="download-btn">
+    <section class="download-btn col s2">
         <a class="waves-effect waves-light btn blue accent-2" [routerLink]="['/email/create']"><i class="zmdi zmdi-plus"></i>Add Email</a>
     </section>
 </section>
@@ -39,7 +41,7 @@
             </td>
             <td>{{email.heading}}</td>
             <td>{{email.code}}</td>
-            <td>{{email.summary}}</td>
+            <td [innerHTML]="email.summary">{{email.summary}}</td>
             <td><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/email/update', email._id]"
                     data-position="top" data-delay="0" data-tooltip="Edit Email"><i class="material-icons">mode_edit</i></a>
                 <a *ngIf="email.active == undefined || email.active === true" class="btn-floating waves-effect waves-light red lighten-2 tooltipped"

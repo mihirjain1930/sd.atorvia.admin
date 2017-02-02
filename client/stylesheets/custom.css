@@ -11,3 +11,15 @@
     font-size: 0.9em;
     color: #F44336;
 }
+
+/* CSS for clear search */
+.closeSearch{
+text-align: right;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    margin-top: 8px !important;
+    cursor: pointer;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    width: 20px !important;
+}

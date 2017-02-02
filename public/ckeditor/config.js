@@ -28,4 +28,6 @@ CKEDITOR.editorConfig = function( config ) {
 	];
 
 	config.removeButtons = 'Underline,Subscript,Superscript';
+
+	config.skin = "moono-lisa";
 };

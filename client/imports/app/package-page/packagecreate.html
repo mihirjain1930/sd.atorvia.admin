@@ -30,9 +30,9 @@
         </div>
 
         <div class="input-field col s12">
-            <textarea formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':packageForm.controls['summary'].touched && !packageForm.controls['summary'].valid}"></textarea>
+            <ckeditor formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':packageForm.controls['summary'].touched && !packageForm.controls['summary'].valid}"></ckeditor>
             <label for="summary" style="transform: translateY(-140%);">Summary</label>
-            <div *ngIf="packageForm.controls['summary'].errors && packageForm.controls['summary'].touched" class="error">
+            <div *ngIf="packageForm.controls['summary'].errors && packageForm.controls['summary'].touched" class="error"><br>
                 <div [hidden]="!packageForm.controls['summary'].errors.required">Summary is required.</div>
                 <div [hidden]="!packageForm.controls['summary'].errors.minlength">Min 8 characters required.</div>
                 <div [hidden]="!packageForm.controls['summary'].errors.maxlength">Max 255 characters allowed.</div>

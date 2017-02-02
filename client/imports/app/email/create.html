@@ -49,9 +49,9 @@
         </div>
 
         <div class="input-field col s12">
-            <textarea formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':emailForm.controls['summary'].touched && !emailForm.controls['summary'].valid}"></textarea>
+            <ckeditor formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':emailForm.controls['summary'].touched && !emailForm.controls['summary'].valid}"></ckeditor>
             <label for="summary" style="transform: translateY(-140%);">Summary</label>
-            <div *ngIf="emailForm.controls['summary'].errors && emailForm.controls['summary'].touched" class="error">
+            <div *ngIf="emailForm.controls['summary'].errors && emailForm.controls['summary'].touched" class="error"><br>
                 <div [hidden]="!emailForm.controls['summary'].errors.required">Summary is required.</div>
                 <div [hidden]="!emailForm.controls['summary'].errors.minlength">Min 8 characters required.</div>
                 <div [hidden]="!emailForm.controls['summary'].errors.maxlength">Max 255 characters allowed.</div>
@@ -59,9 +59,9 @@
         </div>
 
         <div class="input-field col s12">
-            <textarea formControlName="contents" id="contents" style="height:12rem;" [ngClass]="{'invalid':emailForm.controls['contents'].touched && !emailForm.controls['contents'].valid}"></textarea>
+            <ckeditor formControlName="contents" id="contents" style="height:12rem;" [ngClass]="{'invalid':emailForm.controls['contents'].touched && !emailForm.controls['contents'].valid}"></ckeditor>
             <label for="contents" style="transform: translateY(-140%);">Contents</label>
-            <div *ngIf="emailForm.controls['contents'].errors && emailForm.controls['contents'].touched" class="error">
+            <div *ngIf="emailForm.controls['contents'].errors && emailForm.controls['contents'].touched" class="error"><br>
                 <div [hidden]="!emailForm.controls['contents'].errors.required">Contents is required.</div>
                 <div [hidden]="!emailForm.controls['contents'].errors.minlength">Min 8 characters required.</div>
                 <div [hidden]="!emailForm.controls['contents'].errors.maxlength">Max 255 characters allowed.</div>
