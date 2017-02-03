@@ -182,6 +182,7 @@ export class ListFAQCategoryComponent extends MeteorComponent implements OnInit,
     /* function for clearing search */
     clearsearch(value: string): void{    
         this.searchSubject.next(value);
+        this.isSetAccordian = false;
     }
 
     changeSortOrder(nameOrder: string): void {
