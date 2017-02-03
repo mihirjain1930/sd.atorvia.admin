@@ -2,7 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import { check } from "meteor/check";
-import { Emails } from "../../both/collections/email.collection";
+import { Emails } from "../../both/collections/emails.collection";
 import { Email } from "../../both/models/email.model";
 import { isValidEmail, isValidCode } from "../../both/validators";
 import * as _ from 'underscore';

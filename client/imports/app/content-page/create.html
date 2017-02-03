@@ -45,8 +45,8 @@
                 <div [hidden]="!createForm.controls['summary'].errors.minlength">Min 8 characters required.</div>
                 <div [hidden]="!createForm.controls['summary'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
-            <div>
-         <br>
+        </div>
+
         <div class="input-field col s12">
             <ckeditor formControlName="contents" id="contents" style="height:12rem;" [ngClass]="{'invalid':createForm.controls['contents'].touched && !createForm.controls['contents'].valid}"></ckeditor>
             <label for="contents" style="transform: translateY(-140%);">Contents</label>
