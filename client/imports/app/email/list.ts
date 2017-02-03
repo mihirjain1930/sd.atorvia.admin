@@ -176,7 +176,7 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
     }
 
     activate(item: Email) {
-        if (! confirm("Are you sure to activate this record?")) {
+        if (! confirm("Are you sure to activate this email?")) {
             return false;
         }
 
@@ -194,7 +194,7 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
     }
 
     deactivate(item: Email) {
-        if (! confirm("Are you sure to deactivate this record?")) {
+        if (! confirm("Are you sure to deactivate this email?")) {
             return false;
         }
 
@@ -212,7 +212,7 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
     }
 
     deleteEmail(item: Email) {
-        if (! confirm("Are you sure to delete this record?")) {
+        if (! confirm("Are you sure to delete this email?")) {
             return false;
         }
 

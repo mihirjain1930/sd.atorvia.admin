@@ -175,7 +175,7 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
     }
 
     activate(item: Package) {
-        if (! confirm("Are you sure to activate this record?")) {
+        if (! confirm("Are you sure to activate this package?")) {
             return false;
         }
 
@@ -193,7 +193,7 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
     }
 
     deactivate(item: Package) {
-        if (! confirm("Are you sure to deactivate this record?")) {
+        if (! confirm("Are you sure to deactivate this package?")) {
             return false;
         }
 
@@ -211,7 +211,7 @@ export class ListPackageComponent extends MeteorComponent implements OnInit, OnD
     }
 
     deletePackage(item: Package) {
-        if (! confirm("Are you sure to delete this record?")) {
+        if (! confirm("Are you sure to delete this package?")) {
             return false;
         }
 
