@@ -168,7 +168,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     }
 
     activate(user: User) {
-        if (! confirm("Are you sure to activate this record?")) {
+        if (! confirm("Are you sure to activate this subadmin?")) {
             return false;
         }
 
@@ -186,7 +186,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     }
 
     deactivate(user: User) {
-        if (! confirm("Are you sure to deactivate this record?")) {
+        if (! confirm("Are you sure to deactivate this subadmin?")) {
             return false;
         }
 
@@ -204,7 +204,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     }
 
     deleteUser(user: User) {
-        if (! confirm("Are you sure to delete this record?")) {
+        if (! confirm("Are you sure to delete this subadmin?")) {
             return false;
         }
 

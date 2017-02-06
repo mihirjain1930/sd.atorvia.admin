@@ -12,12 +12,13 @@ import {routes as packageRoutes} from "./package-page/routes";
 import {routes as practitionerRoutes} from "./practitioner/routes";
 import {routes as accountRoutes} from "./myaccount/route";
 import {routes as emailRoutes} from "./email/routes";
+import {routes as faqcategoryRoutes} from "./faq/routes";
  
 let mainRoutes = [
     { path: '', component: LandingComponent/*, canActivate: ['canActivateForLogoff']*/ },
     { path: 'dashboard', component: DashboardComponent, canActivate: ['canActivateForLoggedIn'] },
     { path: 'login', component: LoginComponent },
-    //{ path: 'signup', component: SignupComponent },
+    { path: 'signup', component: SignupComponent },
     { path: 'recover', component: RecoverComponent }
 ];
 
@@ -28,7 +29,8 @@ export const routes: Route[] = [
     ...practitionerRoutes,
     ...packageRoutes,
     ...accountRoutes, 
-    ...emailRoutes 
+    ...emailRoutes,
+    ...faqcategoryRoutes 
 ];
 
 export const ROUTES_PROVIDERS = [
