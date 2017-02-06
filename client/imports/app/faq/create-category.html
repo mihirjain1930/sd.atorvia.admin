@@ -18,7 +18,7 @@
         </div>
      
         <div class="input-field col s12">
-            <ckeditor formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':faqcategoryForm.controls['summary'].touched && !faqcategoryForm.controls['summary'].valid}"></ckeditor>
+            <ckeditor [config]="{extraPlugins: 'divarea'}" formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':faqcategoryForm.controls['summary'].touched && !faqcategoryForm.controls['summary'].valid}"></ckeditor>
             <label for="summary" style="transform: translateY(-140%);">Summary</label>
             <div *ngIf="faqcategoryForm.controls['summary'].errors && faqcategoryForm.controls['summary'].touched" class="error"><br>
                 <div [hidden]="!faqcategoryForm.controls['summary'].errors.required">Summary is required.</div>
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-           <div class="row">
+        <div class="row">
           <div class="col s12"><br>
             <button class="btn waves-effect waves-light blue accent-2" type="submit" name="action" [disabled]="!faqcategoryForm.valid">Submit
               <i class="material-icons right">send</i>
@@ -45,4 +45,4 @@
       </div>
 
     </div>
-    </div>
+</div>

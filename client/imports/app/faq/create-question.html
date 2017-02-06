@@ -33,7 +33,7 @@
         </div>
      
         <div class="input-field col s12">
-            <ckeditor formControlName="answer" id="answer" style="height:8rem;" [ngClass]="{'invalid':createForm.controls['answer'].touched && !createForm.controls['answer'].valid}"></ckeditor>
+            <ckeditor [config]="{extraPlugins: 'divarea'}" formControlName="answer" id="answer" style="height:8rem;" [ngClass]="{'invalid':createForm.controls['answer'].touched && !createForm.controls['answer'].valid}"></ckeditor>
             <label for="answer" style="transform: translateY(-140%);">Answer</label>
             <div *ngIf="createForm.controls['answer'].errors && createForm.controls['answer'].touched" class="error"><br>
                 <div [hidden]="!createForm.controls['answer'].errors.required">Answer is required.</div>
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-           <div class="row">
+        <div class="row">
           <div class="col s12"><br>
             <button class="btn waves-effect waves-light blue accent-2" type="submit" name="action" [disabled]="!createForm.valid">Submit
               <i class="material-icons right">send</i>
@@ -60,4 +60,4 @@
       </div>
 
     </div>
-    </div>
+</div>
