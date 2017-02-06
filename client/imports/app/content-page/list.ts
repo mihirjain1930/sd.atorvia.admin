@@ -155,8 +155,8 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
         this.searchSubject.next(value);
         
     }
-    
-    clearsearch(value: string): void{
+    /* function for clearing search */
+    clearsearch(value: string): void{    
         this.searchSubject.next(value);
     }
 
@@ -170,7 +170,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
     }
 
     activate(page: Page) {
-        if (! confirm("Are you sure to activate this record?")) {
+        if (! confirm("Are you sure to activate this page?")) {
             return false;
         }
 
@@ -188,7 +188,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
     }
 
     deactivate(page: Page) {
-        if (! confirm("Are you sure to deactivate this record?")) {
+        if (! confirm("Are you sure to deactivate this page?")) {
             return false;
         }
 
@@ -206,7 +206,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
     }
 
     deletePage(page: Page) {
-        if (! confirm("Are you sure to delete this record?")) {
+        if (! confirm("Are you sure to delete this page?")) {
             return false;
         }
 

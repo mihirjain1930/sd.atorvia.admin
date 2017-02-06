@@ -9,10 +9,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
-import { Email } from "../../../../both/models/email.model";
+import { FAQ, FAQCategory } from "../../../../both/models/faq.model";
 import {showAlert} from "../shared/show-alert";
+import { Roles } from 'meteor/alanning:roles';
 
-import template from "./list.html";
+import template from "./list-category.html";
 
 interface Pagination {
   limit: number;
@@ -29,8 +30,10 @@ declare var jQuery:any;
   selector: '',
   template
 })
-export class ListEmailComponent extends MeteorComponent implements OnInit, OnDestroy {
-    items: Email[];
+
+export class ListFAQCategoryComponent extends MeteorComponent implements OnInit, OnDestroy {
+    items: FAQCategory[];
+    faqs: FAQ[];
     pageSize: Subject<number> = new Subject<number>();
     curPage: Subject<number> = new Subject<number>();
     nameOrder: Subject<number> = new Subject<number>();
@@ -38,6 +41,7 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
     itemsSize: number = -1;
     searchSubject: Subject<string> = new Subject<string>();
     searchString: string = "";
+    isSetAccordian: boolean = false;
 
     constructor(private router: Router, 
         private route: ActivatedRoute,
@@ -49,13 +53,13 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
         super();
     }
 
-    ngOnInit() {
-        //console.log("inside init");
+    ngOnInit() {   
+      //console.log("inside init");
         this.setOptions();
     }
 
     private setOptions() {
-        let options:any = this.localStorageService.get("email-list.options");
+        let options:any = this.localStorageService.get("faqcategory-list.options");
         //console.log("patient-list.options:", options);
 
         if (!!options) {
@@ -82,7 +86,7 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
             }
         } else {
             options = {
-                limit: 10,
+                limit: 0,
                 curPage: 1,
                 nameOrder: 1,
                 searchString: '',
@@ -90,14 +94,7 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
         }
 
         this.setOptionsSub();
-
-        this.paginationService.register({
-        id: this.paginationService.defaultId,
-        itemsPerPage: 10,
-        currentPage: options.curPage,
-        totalItems: this.itemsSize
-        });
-
+        
         this.pageSize.next(options.limit);
         this.curPage.next(options.curPage);
         this.nameOrder.next(options.nameOrder);
@@ -117,108 +114,125 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
                 skip: ((curPage as number) - 1) * (pageSize as number),
                 sort: { "title": nameOrder as number }
             };
-            this.localStorageService.set("page-list.options", {
+            this.localStorageService.set("faqcategory-list.options", {
                 pageSize: pageSize,
                 curPage: curPage,
                 nameOrder: nameOrder,
                 searchString: searchString
             });
 
-            this.paginationService.setCurrentPage(this.paginationService.defaultId, curPage as number);
-
             //console.log("options:", options);
             //console.log("searchString:", this.searchString);
             this.searchString = searchString;
             jQuery(".loading").show();
             //console.log("call pages.find()");
-            this.call("emails.find", options, {}, searchString, (err, res) => {
+            this.call("faqcategories.find", options, {}, searchString, (err, res) => {
                 //console.log("patients.find() done");
                 jQuery(".loading").hide();
                 if (err) {
                     //console.log("error while fetching patient list:", err);
-                    showAlert("Error while fetching emails list.", "danger");
+                    showAlert("Error while fetching categories list.", "danger");
                     return;
                 }
                 this.items = res.data;
                 this.itemsSize = res.count;
-                this.paginationService.setTotalItems(this.paginationService.defaultId, this.itemsSize);
+            });
 
-                setTimeout(function(){
-                    jQuery(function($){
-                    /*$('.tooltipped').tooltip({delay: 0});*/
-                    });
-                }, 200);
-                //console.log("data:", this.items);
+            this.call("faqs.find", {limit: 0, skip: 0, sort: {"categoryId": 1} }, {}, "", (err, res) => {
+                if (err) {
+                    showAlert("Error while fetching FAQs data.", "danger");
+                    return;
+                }
+                this.faqs = res.data;
+
+                /*Meteor.setTimeout(function() {
+                    jQuery('.collapsible').collapsible();
+                }, 1000);*/
             })
-
         });
     }
 
-    get emailArr() {
+    get faqcategoryArr() {
         return this.items;
+    }
+
+    getFAQs(categoryId: string) {
+        //console.log("inside faqs");
+        let retArr:FAQ[] = [];
+
+        if (typeof this.faqs == "undefined" || this.faqs.length==0) {
+            return retArr;
+        }
+
+        for (let i=0; i<this.faqs.length; i++) {
+            if (this.faqs[i].categoryId == categoryId) {
+                retArr.push(this.faqs[i]);
+            }
+        }
+
+        //jQuery('.collapsible').collapsible();
+        return retArr;
     }
 
     search(value: string): void {
         this.searchSubject.next(value);
+        this.isSetAccordian = false;
     }
-    
-    clearsearch(value: string): void{
+
+    /* function for clearing search */
+    clearsearch(value: string): void{    
         this.searchSubject.next(value);
-    }
-
-
-    onPageChanged(page: number): void {
-        this.curPage.next(page);
+        this.isSetAccordian = false;
     }
 
     changeSortOrder(nameOrder: string): void {
         this.nameOrder.next(parseInt(nameOrder));
     }
 
-    activate(item: Email) {
-        if (! confirm("Are you sure to activate this email?")) {
+    activateFAQCategory(item: FAQCategory) {
+        if (! confirm("Are you sure to activate this FAQ Category?")) {
             return false;
         }
 
-        Meteor.call("emails.activate", item._id, (err, res) => {
+        Meteor.call("faqcategories.activate", item._id, (err, res) => {
             if (err) {
-                showAlert("Error calling page.activate", "danger");
+                showAlert("Error calling faqcategory.activate", "danger");
                 return;
             }
             item.active = true;
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom
             this.changeDetectorRef.detectChanges();
-            showAlert("Email has been activated.", "success");
+            showAlert("FAQ Category has been activated.", "success");
         })
     }
 
-    deactivate(item: Email) {
-        if (! confirm("Are you sure to deactivate this email?")) {
+    deactivateFAQCategory(item: FAQCategory) {
+        if (! confirm("Are you sure to deactivate this FAQ Category?")) {
             return false;
         }
 
-        Meteor.call("emails.deactivate", item._id, (err, res) => {
+        Meteor.call("faqcategories.deactivate", item._id, (err, res) => {
             if (err) {
-                showAlert("Error calling email.deactivate", "danger");
+                showAlert("Error calling faqcategory.deactivate", "danger");
                 return;
             }
             item.active = false;
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom
             this.changeDetectorRef.detectChanges();
-            showAlert("Email has been deactivated.", "success");
+            showAlert("FAQ Category has been deactivated.", "success");
         })
     }
 
-    deleteEmail(item: Email) {
-        if (! confirm("Are you sure to delete this email?")) {
+    deleteFAQCategory(item: FAQCategory) {
+        if (! confirm("Are you sure to delete this FAQ Category?")) {
             return false;
         }
 
-        Meteor.call("emails.delete", item._id, (err, res) => {
+        Meteor.call("faqcategories.delete", item._id, (err, res) => {
             if (err) {
-                showAlert("Error calling emails.delete", "danger");
+                showAlert("Error calling faqcategories.delete", "danger");
                 return;
             }
             //set page.deleted to true to remove from list
@@ -226,7 +240,62 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
             //angular2 waits for dom event to detect changes automatically
             //so trigger change detection manually to update dom
             this.changeDetectorRef.detectChanges();
-            showAlert("Email has been deleted.", "success");
+            showAlert("FAQ Category has been deleted.", "success");
+        })
+    }
+
+    activateFAQ(item: FAQ) {
+        if (! confirm("Are you sure to activate this FAQ?")) {
+            return false;
+        }
+
+        Meteor.call("faqs.activate", item._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling faqs.activate", "danger");
+                return;
+            }
+            item.active = true;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("FAQ has been activated.", "success");
+        })
+    }
+
+    deactivateFAQ(item: FAQ) {
+        if (! confirm("Are you sure to deactivate this FAQ?")) {
+            return false;
+        }
+
+        Meteor.call("faqs.deactivate", item._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling faqs.deactivate", "danger");
+                return;
+            }
+            item.active = false;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("FAQ has been deactivated.", "success");
+        })
+    }
+
+    deleteFAQ(item: FAQ) {
+        if (! confirm("Are you sure to delete this FAQ?")) {
+            return false;
+        }
+
+        Meteor.call("faqs.delete", item._id, (err, res) => {
+            if (err) {
+                showAlert("Error calling faqs.delete", "danger");
+                return;
+            }
+            //set page.deleted to true to remove from list
+            item.deleted = true;
+            //angular2 waits for dom event to detect changes automatically
+            //so trigger change detection manually to update dom
+            this.changeDetectorRef.detectChanges();
+            showAlert("FAQ has been deleted.", "success");
         })
     }
 
@@ -238,6 +307,20 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
         jQuery(function($){
         /*$('select').material_select();
         $('.tooltipped').tooltip({delay: 50});*/
+        $(document).ready(function(){
+            $('.collapsible').collapsible();
+        });
         })
+    }
+
+    initializeJS() {
+        if (this.isSetAccordian === true) {
+            return;
+        }
+        console.log("inside initializeJS");
+        Meteor.setTimeout(function() {
+            jQuery('.collapsible').collapsible();
+        }, 500);
+        this.isSetAccordian = true;
     }
 }
