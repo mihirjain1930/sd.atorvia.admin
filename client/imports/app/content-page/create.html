@@ -34,6 +34,7 @@
                 <div [hidden]="!createForm.controls['slug'].errors.minlength">Min 5 characters required.</div>
                 <div [hidden]="!createForm.controls['slug'].errors.maxlength">Max 255 characters allowed.</div>
                 <div [hidden]="!createForm.controls['slug'].errors.validateSlug">Only alphanumeric characters and hiphen(-) allowed.</div>
+                <div [hidden]="!createForm.controls['slug'].errors.isUnique">Already in use. Please type unique value.</div>
             </div>
         </div>
 

@@ -20,6 +20,7 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
   pageId: string;
   createForm: FormGroup;
   error: string;
+  slugs: string[];
 
   constructor(
       private router: Router, 
@@ -64,13 +65,12 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
       title: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
       heading: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(255)])],
       summary: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
-      slug: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50), validateSlug])],
+      slug: [''],
       contents: ['', Validators.compose([Validators.required])],
     });
 
     this.error = '';
-
-    // CKEDITOR.replace( 'contents' );
+    this.populateSlugs();
   }
 
   onSubmit() {
@@ -131,6 +131,58 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
       });
     }
     // finish update page data
+  }
+
+  private populateSlugs() {
+    let where = {};
+    if (!! this.pageId) {
+      where = {_id: {$ne: this.pageId}};
+    }
+    this.call("pages.find", {limit: 0, skip: 0, fields: {slug: 1} }, where, "", (err, res) => {
+      if (err) {
+        /*showAlert("Error while fetching data.", "danger");*/
+        return;
+      }
+      let items:Page[] = res.data;
+      let slugs:string[] = [];
+      for(let i=0; i<items.length; i++) {
+        slugs.push(items[i].slug);
+      }
+      this.slugs = slugs;
+      this.createForm.controls["slug"].setValidators(
+        Validators.compose([
+          Validators.required, 
+          Validators.minLength(5), 
+          Validators.maxLength(50), 
+          validateSlug, 
+          this.isUniqueSlug()
+        ])
+      );
+      //console.log("slugs:", this.slugs);
+    })
+  }
+
+  private isUniqueSlug() {
+     return (c: FormControl) => {
+       let value = c.value;
+       
+       // don't validate empty values to allow optional controls
+       if (value == null || typeof value === 'string' && value.length === 0) {
+         return null;
+       }
+
+       if (value!==this.slugs.find((key)=>{
+         return key==value;
+       })) {
+         return null;
+       }
+
+       return {
+        isUnique: {
+          valid: false
+        }
+      };
+     }
   }
 
   ngOnDestroy() {
