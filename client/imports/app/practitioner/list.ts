@@ -129,7 +129,7 @@ export class ListPractitionerComponent extends MeteorComponent implements OnInit
             //console.log("searchString:", this.searchString);
             this.searchString = searchString;
             jQuery(".loading").show();
-            this.call("users.find", options, {roles: ["practitioner"]}, searchString, (err, res) => {
+            this.call("users.find", options, {"roles": {$in: ["practitioner"]} }, searchString, (err, res) => {
                 //console.log("patients.find() done");
                 jQuery(".loading").hide();
                 if (err) {
