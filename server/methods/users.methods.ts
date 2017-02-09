@@ -49,15 +49,20 @@ Meteor.methods({
 
         return userId;
     },
-    "users.find": (options: Options, criteria: { roles: [string] }, searchString: string) => {
-        let where: any = [];
+
+    "users.find": (options: Options, criteria: any, searchString: string) => {
+        let where:any = [];
+        
+        // exclude deleted items
         where.push({
             "$or": [{ deleted: false }, { deleted: { $exists: false } }]
         });
-        // match user roles
-        if (typeof criteria.roles !== "undefined") {
-            where.push({ "roles": { $in: criteria.roles } });
+
+        // merge criteria to where
+        if (! _.isEmpty(criteria)) {
+            where.push(criteria);
         }
+
         // match search string
         if (typeof searchString === 'string' && searchString.length) {
             // allow search on firstName, lastName
