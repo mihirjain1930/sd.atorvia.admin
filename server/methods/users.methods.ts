@@ -84,7 +84,7 @@ Meteor.methods({
     "users.count": (criteria: any, searchString: string): number => {
         let where: any = [];
         where.push({
-            "$or": [{ deleted: true }, { deleted: { $exists: false } }]
+            "$or": [{ deleted: false }, { deleted: { $exists: false } }]
         });
         // match user roles
         if (!_.isEmpty(criteria)) {
