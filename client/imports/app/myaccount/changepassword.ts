@@ -1,10 +1,11 @@
-import {Component, OnInit, NgZone} from '@angular/core';
+import { Meteor } from "meteor/meteor";
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Accounts } from 'meteor/accounts-base';
-import {MeteorComponent} from 'angular2-meteor';
+import { MeteorComponent } from 'angular2-meteor';
 import { matchingPasswords, validatePassword } from '../../validators/common';
-import {showAlert} from "../shared/show-alert";
+import { showAlert } from "../shared/show-alert";
 
 import template from './changepassword.html';
 
@@ -25,13 +26,13 @@ export class PasswordComponent extends MeteorComponent implements OnInit {
       oldpassword: ['', Validators.compose([Validators.required])],
       newPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],
-    }, {validator: matchingPasswords('newPassword', 'confirmPassword')});
+    }, { validator: matchingPasswords('newPassword', 'confirmPassword') });
 
-     this.error = '';
+    this.error = '';
   }
 
   changePassword() {
-    if (! this.passwordForm.valid) {
+    if (!this.passwordForm.valid) {
       showAlert("Invalid formData supplied.", "danger");
       return;
     }
@@ -43,7 +44,7 @@ export class PasswordComponent extends MeteorComponent implements OnInit {
         showAlert(err.message, "danger");
       } else {
         showAlert("Password updated successfully.", "success");
-          this.router.navigate( ['/account/viewprofile'] );
+        this.router.navigate(['/account/viewprofile']);
       }
     });
   }

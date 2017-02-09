@@ -4,6 +4,5 @@ import {PasswordComponent} from "./changepassword";
 
 export const ACCOUNT_DECLARATIONS = [
   UserDetailsComponent,
-  PasswordComponent
-
+  PasswordComponent,
 ]
