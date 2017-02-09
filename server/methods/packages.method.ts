@@ -19,7 +19,7 @@ Meteor.methods({
             let errMesg = err.reason || `Invalid formData supplied.`;
             throw new Meteor.Error(403, errMesg);
         }
-        
+
         let packageId = Packages.collection.insert(packageData);
 
         return packageId;
@@ -59,23 +59,52 @@ Meteor.methods({
         let cursor = Packages.collection.find({ $and: where }, options);
         return { count: cursor.count(), data: cursor.fetch() };
     },
+
+    "packages.count": (criteria: any, searchString: string) : number => {
+        let where: any = [];
+        where.push({
+            "$or": [{ deleted: false }, { deleted: { $exists: false } }]
+        });
+        if (!_.isEmpty(criteria)) {
+            where.push(criteria);
+        }
+        if (typeof searchString === 'string' && searchString.length) {
+            where.push({
+                "$or": [
+                    { "title": { $regex: `.*${searchString}.*` } },
+                    { "heading": { $regex: `.*${searchString}.*` } },
+
+                ]
+
+            });
+        }
+
+        return Packages.collection.find({ $and: where }).count();
+    },
+
     "packages.findOne": (packageId: string) => {
         return Packages.collection.findOne({ _id: packageId });
     },
     "packages.delete": (packageId: string) => {
-        return Packages.collection.update({_id: packageId}, {$set: {
-            deleted: true
-        } });
+        return Packages.collection.update({ _id: packageId }, {
+            $set: {
+                deleted: true
+            }
+        });
     },
     "packages.activate": (packageId: string) => {
-        return Packages.collection.update({_id: packageId}, {$set: {
-            active: true
-        } });
+        return Packages.collection.update({ _id: packageId }, {
+            $set: {
+                active: true
+            }
+        });
     },
     "packages.deactivate": (packageId: string) => {
-        return Packages.collection.update({_id: packageId}, {$set: {
-            active: false
-        } });
+        return Packages.collection.update({ _id: packageId }, {
+            $set: {
+                active: false
+            }
+        });
     }
 });
 
@@ -85,7 +114,7 @@ function validatePackageData(item: Package) {
     if (titleLen < 8 || titleLen > 255) {
         throw new Meteor.Error(403, `Invalid title supplied.`);
     }
-    if (! isValidFirstName(item.title)) {
+    if (!isValidFirstName(item.title)) {
         throw new Meteor.Error(403, `Invalid title supplied.`);
     }
     /* validate summary */
@@ -98,32 +127,32 @@ function validatePackageData(item: Package) {
     if (codeLen < 8 || codeLen > 255) {
         throw new Meteor.Error(403, `Invalid code supplied.`);
     }
-    if (! isValidSlug(item.code)) {
+    if (!isValidSlug(item.code)) {
         throw new Meteor.Error(403, `Invalid code supplied.`);
     }
     /* validate maxDevices */
     item.maxDevices = Number(item.maxDevices);
-    if ( ! item.maxDevices || item.maxDevices < 1 || item.maxDevices > 25) {
+    if (!item.maxDevices || item.maxDevices < 1 || item.maxDevices > 25) {
         throw new Meteor.Error(403, `Invalid maxDevices supplied.`);
     }
     /* validate maxPatients */
     item.maxPatients = Number(item.maxPatients);
-    if ( ! item.maxPatients || item.maxPatients < 1 || item.maxPatients > 50) {
+    if (!item.maxPatients || item.maxPatients < 1 || item.maxPatients > 50) {
         throw new Meteor.Error(403, `Invalid maxPatients supplied.`);
     }
     /* validate pricePerPatient */
     item.pricePerPatient = Number(item.pricePerPatient);
-    if ( ! item.pricePerPatient || item.pricePerPatient < 0.25 || item.pricePerPatient > 10) {
+    if (!item.pricePerPatient || item.pricePerPatient < 0.25 || item.pricePerPatient > 10) {
         throw new Meteor.Error(403, `Invalid pricePerPatient supplied.`);
     }
     /* validate pricePerDevice */
     item.pricePerDevice = Number(item.pricePerDevice);
-    if ( ! item.pricePerDevice || item.pricePerDevice < 25 || item.pricePerDevice > 500) {
+    if (!item.pricePerDevice || item.pricePerDevice < 25 || item.pricePerDevice > 500) {
         throw new Meteor.Error(403, `Invalid pricePerDevice supplied.`);
     }
     /* validate durationInMonths */
     item.durationInMonths = Number(item.durationInMonths);
-    if ( ! item.durationInMonths || item.durationInMonths < 1 || item.durationInMonths > 36) {
+    if (!item.durationInMonths || item.durationInMonths < 1 || item.durationInMonths > 36) {
         throw new Meteor.Error(403, `Invalid durationInMonths supplied.`);
     }
     /* validate durationInDays */
