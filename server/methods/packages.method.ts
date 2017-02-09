@@ -5,6 +5,7 @@ import { check } from "meteor/check";
 import { Packages } from "../../both/collections/packages.collection";
 import { Package } from "../../both/models/package.model";
 import { isValidFirstName, isValidSlug } from "../../both/validators";
+import * as _ from 'underscore';
 
 interface Options {
     [key: string]: any;
@@ -34,10 +35,18 @@ Meteor.methods({
     },
     "packages.find": (options: Options, criteria: any, searchString: string) => {
         let where: any = [];
+        
+        // exclude deleted items
         where.push({
             "$or": [{ deleted: false }, { deleted: { $exists: false } }]
         });
 
+        // merge criteria to where
+        if (! _.isEmpty(criteria)) {
+            where.push(criteria);
+        }
+
+        // match search string
         if (typeof searchString === 'string' && searchString.length) {
             where.push({
                 "$or": [

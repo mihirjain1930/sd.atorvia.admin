@@ -129,7 +129,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
             //console.log("searchString:", this.searchString);
             this.searchString = searchString;
             jQuery(".loading").show();
-            this.call("users.find", options, {roles: ["sub-admin", "moderator"]}, searchString, (err, res) => {
+            this.call("users.find", options, {"roles": {$in: ["sub-admin", "moderator"]} }, searchString, (err, res) => {
                 //console.log("patients.find() done");
                 jQuery(".loading").hide();
                 if (err) {
