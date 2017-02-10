@@ -1,10 +1,11 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
-import {check} from "meteor/check";
-import {Pages} from "../../both/collections/pages.collection";
-import {Page} from "../../both/models/page.model";
-import {isValidSlug} from "../../both/validators";
+import { check } from "meteor/check";
+import { Pages } from "../../both/collections/pages.collection";
+import { Page } from "../../both/models/page.model";
+import { isValidSlug } from "../../both/validators";
+import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
 interface Options {
@@ -13,6 +14,8 @@ interface Options {
 
 Meteor.methods({
     "pages.insert": (pageData: Page) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+
         try {
             validatePageData(pageData);
         } catch (err) {
@@ -24,6 +27,8 @@ Meteor.methods({
         return pageId;
     },
     "pages.update": (pageId: string, pageData: Page) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+        
         try {
             validatePageData(pageData);
         } catch (err) {
@@ -70,16 +75,22 @@ Meteor.methods({
         return Pages.collection.findOne({_id: pageId});
     },
     "pages.delete": (pageId: string) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+        
         return Pages.collection.update({_id: pageId}, {$set: {
             deleted: true
         } });
     },
     "pages.activate": (pageId: string) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+
         return Pages.collection.update({_id: pageId}, {$set: {
             active: true
         } });
     },
     "pages.deactivate": (pageId: string) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+
         return Pages.collection.update({_id: pageId}, {$set: {
             active: false
         } });

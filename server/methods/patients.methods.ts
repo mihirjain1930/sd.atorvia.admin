@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Patients } from "../../both/collections/patients.collection";
 import { Patient } from "../../both/models/patient.model";
+import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
 interface Options {
@@ -8,7 +9,10 @@ interface Options {
 }
 
 Meteor.methods({
+    /* find patients or search patients */
     "patients.find": (options: Options, criteria: any, searchString: string) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+
         let where:any = [criteria];
         where.push({
             "$or": [{deleted: false}, {deleted: {$exists: false} }]

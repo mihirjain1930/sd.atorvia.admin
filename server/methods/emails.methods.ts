@@ -5,6 +5,7 @@ import { check } from "meteor/check";
 import { Emails } from "../../both/collections/emails.collection";
 import { Email } from "../../both/models/email.model";
 import { isValidEmail, isValidCode } from "../../both/validators";
+import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
 interface Options {
@@ -12,7 +13,10 @@ interface Options {
 }
 
 Meteor.methods({
+    /* insert new email template */
     "emails.insert": (emailData: Email) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+
         try {
             validateEmailData(emailData);
         } catch (err) {
@@ -23,7 +27,10 @@ Meteor.methods({
 
         return emailId;
     },
+    /* update email template */
     "emails.update": (emailId: string, emailData: Email) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+        
         try {
             validateEmailData(emailData);
         } catch (err) {
@@ -32,7 +39,10 @@ Meteor.methods({
         }
         return Emails.collection.update({_id: emailId}, {$set: emailData});
     },
+    /* find email templates or search */
     "emails.find": (options: Options, criteria: any, searchString: string) => {
+        isLoggedIn();
+
         let where:any = [];
         where.push({
             "$or": [{deleted: false}, {deleted: {$exists: false} }]
@@ -58,20 +68,32 @@ Meteor.methods({
         let cursor = Emails.collection.find({$and: where}, options);
         return {count: cursor.count(), data: cursor.fetch()};
     },
+    /* find single email template */
     "emails.findOne": (emailId: string) => {
+        isLoggedIn();
+
         return Emails.collection.findOne({_id: emailId});
     },
+    /* delete a email template */
     "emails.delete": (emailId: string) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+
         return Emails.collection.update({_id: emailId}, {$set: {
             deleted: true
         } });
     },
+    /* activate email template */
     "emails.activate": (emailId: string) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+
         return Emails.collection.update({_id: emailId}, {$set: {
             active: true
         } });
     },
+    /* deactivate email template */
     "emails.deactivate": (emailId: string) => {
+        userIsInRole(["super-admin", "sub-admin"]);
+
         return Emails.collection.update({_id: emailId}, {$set: {
             active: false
         } });

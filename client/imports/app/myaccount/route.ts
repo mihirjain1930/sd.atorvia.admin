@@ -6,5 +6,5 @@ import {PasswordComponent} from "./changepassword";
 
 export const routes = [
     {path: "account/viewprofile", component: UserDetailsComponent},
-    {path: "account/changepassword", component: PasswordComponent}
+    {path: "account/changepassword", component: PasswordComponent},
 ];

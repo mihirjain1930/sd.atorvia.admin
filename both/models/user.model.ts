@@ -12,6 +12,8 @@ export interface User extends Meteor.User {
         firstName: string;
         lastName: string;
         contact: string;
+        imageId: string;
+        imageUrl: string;
     },
     active: boolean,
     deleted: boolean;
