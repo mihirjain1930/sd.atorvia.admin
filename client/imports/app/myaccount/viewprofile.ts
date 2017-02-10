@@ -96,4 +96,20 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
                 showAlert(error.reason, "danger");
             });
     }
+      /* deleting user image */
+    deleteImage(image:Image){
+        if (! confirm("Are you sure to delete this image?")) {
+            return false;
+        }
+
+         Meteor.call("users.deleteImage",this.userId,(err, res) => {
+            if (err) {
+                showAlert("Error calling image.delete", "danger");
+                return;
+            }
+            this.user.profile.imageUrl = null;
+            showAlert("Image has been deleted.", "success");
+        })
+    }
+
 }

@@ -3,6 +3,8 @@ import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import { check } from "meteor/check";
 import { isValidEmail, isValidFirstName, isValidPhoneNum, isValidSSN, isValidPasswd } from "../../both/validators";
+import { Images, Thumbs } from "../../both/collections/images.collection";
+import { Image, Thumb } from "../../both/models/image.model";
 import * as _ from 'underscore';
 
 interface Options {
@@ -10,6 +12,7 @@ interface Options {
 }
 
 Meteor.methods({
+    /* insert a new user */
     "users.insert": (userData: { email: string, passwd: string, profile?: any }, roles: [string]): string => {
         /* validate email */
         check(userData.email, String);
@@ -49,7 +52,7 @@ Meteor.methods({
 
         return userId;
     },
-
+    /* find users and search */
     "users.find": (options: Options, criteria: any, searchString: string) => {
         let where:any = [];
         
@@ -86,6 +89,7 @@ Meteor.methods({
         return { count: cursor.count(), data: cursor.fetch() };
 
     },
+    /* get users count */
     "users.count": (criteria: any, searchString: string): number => {
         let where: any = [];
         where.push({
@@ -108,9 +112,11 @@ Meteor.methods({
 
         return Meteor.users.find({ $and: where }).count();
     },
+    /* find single user */
     "users.findOne": (userId: string) => {
         return Meteor.users.findOne({ _id: userId });
     },
+    /* update user data */
     "users.update": (userId: string, userData: any) => {
         // validate firstName if present in userData
         if (typeof userData["profile.firstName"] !== "undefined") {
@@ -138,6 +144,7 @@ Meteor.methods({
 
         return Meteor.users.update({ _id: userId }, { $set: userData });
     },
+    /* delete a user */
     "users.delete": (userId: string) => {
         return Meteor.users.update({ _id: userId }, {
             $set: {
@@ -145,6 +152,7 @@ Meteor.methods({
             }
         });
     },
+    /* deactivate a user */
     "users.deactivate": (userId: string) => {
         return Meteor.users.update({ _id: userId }, {
             $set: {
@@ -152,6 +160,7 @@ Meteor.methods({
             }
         });
     },
+    /* activate a user */
     "users.activate": (userId: string) => {
         return Meteor.users.update({ _id: userId }, {
             $set: {
@@ -159,11 +168,53 @@ Meteor.methods({
             }
         });
     },
+    /* reset password of a user */
     "users.resetPasswd": (userId: string, newPasswd: string) => {
         /* validate password */
         if (!isValidPasswd(newPasswd)) {
             throw new Meteor.Error(`Invalid password supplied.`);
         }
         return Accounts.setPassword(userId, newPasswd);
+    },
+    /* delete image of a user */
+    "users.deleteImage": (userId: string) => {
+        let user = Meteor.call("users.findOne", userId);
+        /* check user */
+        if (typeof user == "undefined" || user._id !== userId) {
+            throw new Meteor.Error(`Invalid user-id "${userId}"`);
+        }
+
+        /* check if image exists for user */
+        if (typeof user.profile.imageId == "undefined" || !user.profile.imageId) {
+            throw new Meteor.Error(`Invalid image-id for user "${userId}"`);
+        }
+
+        let fs = require('fs');
+        /* remove original image */
+        let image = Images.collection.findOne({_id: user.profile.imageId});
+        if (typeof image == "undefined" || !image._id) {
+            throw new Meteor.Error(`Invalid image-id "${user.profile.imageId}"`);
+        }
+        let imagePath = process.env.PWD + '/uploads/images/' + image._id + '.' + image.extension;
+        fs.unlink(imagePath, (res) => {
+            //console.log("unlink.img:", res);
+        });
+        /* reset data in collections */
+        Images.collection.remove({_id: image._id});
+        Meteor.call("users.update", userId, {"profile.imageId": null, "profile.imageUrl": null});
+
+        /* remove thumb */
+        let thumb = Thumbs.collection.findOne({originalId: image._id});
+        if (typeof thumb == "undefined" || !thumb._id) {
+            return true;
+        }
+
+        let thumbPath = process.env.PWD + '/uploads/thumbs/' + thumb._id + '.' + thumb.extension;
+        fs.unlink(thumbPath, (res) => {
+            //console.log("unlink.thumb:", res);
+        });
+        Thumbs.collection.remove({_id: thumb._id});
+
+        return true;
     }
 });

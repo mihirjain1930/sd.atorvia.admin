@@ -10,13 +10,13 @@
 
             <div>
             <span class="item item-input">
-                <input type="file" (change)="onFileSelect($event)" accept="image/*">
+                <input type="file" (change)="onFileSelect($event)" accept="image/* ">
+                <input type="button"(click)="deleteImage(image)" value="Delete File"/>
             </span>
             </div>
 
         </section>
         
-
 
         <section class="col s9 content-ptdetail" style="padding-top: 0 !important;">
             <h2 style="">{{user.profile.firstName}} {{user.profile.lastName}}</h2>
