@@ -5,6 +5,7 @@ import { check } from "meteor/check";
 import { Packages } from "../../both/collections/packages.collection";
 import { Package } from "../../both/models/package.model";
 import { isValidFirstName, isValidSlug } from "../../both/validators";
+import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
 interface Options {
@@ -12,7 +13,10 @@ interface Options {
 }
 
 Meteor.methods({
+    /* insert a new package */
     "packages.insert": (packageData: Package) => {
+        userIsInRole(["super-admin"]);
+
         try {
             validatePackageData(packageData);
         } catch (err) {
@@ -24,7 +28,10 @@ Meteor.methods({
 
         return packageId;
     },
+    /* update a package */
     "packages.update": (packageId: string, packageData: Package) => {
+        userIsInRole(["super-admin"]);
+        
         try {
             validatePackageData(packageData);
         } catch (err) {
@@ -33,7 +40,10 @@ Meteor.methods({
         }
         return Packages.collection.update({ _id: packageId }, { $set: packageData });
     },
+    /* find packages or search packages */
     "packages.find": (options: Options, criteria: any, searchString: string) => {
+        isLoggedIn();
+
         let where: any = [];
         
         // exclude deleted items
@@ -59,8 +69,10 @@ Meteor.methods({
         let cursor = Packages.collection.find({ $and: where }, options);
         return { count: cursor.count(), data: cursor.fetch() };
     },
-
+    /* get packages count */
     "packages.count": (criteria: any, searchString: string) : number => {
+        isLoggedIn();
+
         let where: any = [];
         where.push({
             "$or": [{ deleted: false }, { deleted: { $exists: false } }]
@@ -81,25 +93,36 @@ Meteor.methods({
 
         return Packages.collection.find({ $and: where }).count();
     },
-
+    /* find single package */
     "packages.findOne": (packageId: string) => {
+        isLoggedIn();
+
         return Packages.collection.findOne({ _id: packageId });
     },
+    /* delete a package */
     "packages.delete": (packageId: string) => {
+        userIsInRole(["super-admin"]);
+        
         return Packages.collection.update({ _id: packageId }, {
             $set: {
                 deleted: true
             }
         });
     },
+    /* activate a package */
     "packages.activate": (packageId: string) => {
+        userIsInRole(["super-admin"]);
+
         return Packages.collection.update({ _id: packageId }, {
             $set: {
                 active: true
             }
         });
     },
+    /* deactivate a package */
     "packages.deactivate": (packageId: string) => {
+        userIsInRole(["super-admin"]);
+
         return Packages.collection.update({ _id: packageId }, {
             $set: {
                 active: false

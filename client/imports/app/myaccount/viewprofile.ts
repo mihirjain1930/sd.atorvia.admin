@@ -70,39 +70,40 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
         this.isUploading = true;
 
         upload(file)
-            .then((res) => {
-                this.isUploading = false;
-                this.isUploaded = true;
-                this.image = res;
-                this.imageId = res._id;
-                console.log("image upload done.")
-                console.log("file id:", res._id);
-                let userData = {
-                    "profile.imageId": this.imageId,
-                    "profile.imageUrl": this.image.url
-                };
-                this.call("users.update", this.userId, userData, (err, res) => {
-                    if (err) {
-                        console.log("Error while updating user picture");
-                        return;
-                    }
-                    this.user.profile.imageUrl = this.image.url;
-                    showAlert("Profile picture updated successfully.", "success");
-                });
-            })
-            .catch((error) => {
-                this.isUploading = false;
-                console.log('Error in file upload:', error);
-                showAlert(error.reason, "danger");
+        .then((res) => {
+            this.isUploading = false;
+            this.isUploaded = true;
+            this.image = res;
+            this.imageId = res._id;
+            console.log("image upload done.")
+            console.log("file id:", res._id);
+            let userData = {
+                "profile.imageId": this.imageId,
+                "profile.imageUrl": this.image.url
+            };
+            this.call("users.update", this.userId, userData, (err, res) => {
+                if (err) {
+                    console.log("Error while updating user picture");
+                    return;
+                }
+                this.user.profile.imageUrl = this.image.url;
+                showAlert("Profile picture updated successfully.", "success");
             });
+        })
+        .catch((error) => {
+            this.isUploading = false;
+            console.log('Error in file upload:', error);
+            showAlert(error.reason, "danger");
+        });
     }
-      /* deleting user image */
-    deleteImage(image:Image){
-        if (! confirm("Are you sure to delete this image?")) {
+
+    /* deleting user image */
+    deleteImage(image: Image) {
+        if (!confirm("Are you sure to delete this image?")) {
             return false;
         }
 
-         Meteor.call("users.deleteImage",this.userId,(err, res) => {
+        Meteor.call("users.deleteImage", (err, res) => {
             if (err) {
                 showAlert("Error calling image.delete", "danger");
                 return;

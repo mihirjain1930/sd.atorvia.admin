@@ -5,6 +5,7 @@ import { check } from "meteor/check";
 import { isValidEmail, isValidFirstName, isValidPhoneNum, isValidSSN, isValidPasswd } from "../../both/validators";
 import { Images, Thumbs } from "../../both/collections/images.collection";
 import { Image, Thumb } from "../../both/models/image.model";
+import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
 interface Options {
@@ -54,6 +55,8 @@ Meteor.methods({
     },
     /* find users and search */
     "users.find": (options: Options, criteria: any, searchString: string) => {
+        userIsInRole(["super-admin"]);
+
         let where:any = [];
         
         // exclude deleted items
@@ -91,6 +94,7 @@ Meteor.methods({
     },
     /* get users count */
     "users.count": (criteria: any, searchString: string): number => {
+        userIsInRole(["super-admin", "sub-admin"]);
         let where: any = [];
         where.push({
             "$or": [{ deleted: false }, { deleted: { $exists: false } }]
@@ -118,6 +122,7 @@ Meteor.methods({
     },
     /* update user data */
     "users.update": (userId: string, userData: any) => {
+        userIsInRole(["super-admin"]);
         // validate firstName if present in userData
         if (typeof userData["profile.firstName"] !== "undefined") {
             check(userData["profile.firstName"], String);
@@ -146,6 +151,8 @@ Meteor.methods({
     },
     /* delete a user */
     "users.delete": (userId: string) => {
+        userIsInRole(["super-admin"]);
+
         return Meteor.users.update({ _id: userId }, {
             $set: {
                 "deleted": true
@@ -154,6 +161,8 @@ Meteor.methods({
     },
     /* deactivate a user */
     "users.deactivate": (userId: string) => {
+        userIsInRole(["super-admin"]);
+
         return Meteor.users.update({ _id: userId }, {
             $set: {
                 "active": false
@@ -162,6 +171,8 @@ Meteor.methods({
     },
     /* activate a user */
     "users.activate": (userId: string) => {
+        userIsInRole(["super-admin"]);
+
         return Meteor.users.update({ _id: userId }, {
             $set: {
                 "active": true
@@ -170,6 +181,8 @@ Meteor.methods({
     },
     /* reset password of a user */
     "users.resetPasswd": (userId: string, newPasswd: string) => {
+        userIsInRole(["super-admin"]);
+
         /* validate password */
         if (!isValidPasswd(newPasswd)) {
             throw new Meteor.Error(`Invalid password supplied.`);
@@ -177,12 +190,15 @@ Meteor.methods({
         return Accounts.setPassword(userId, newPasswd);
     },
     /* delete image of a user */
-    "users.deleteImage": (userId: string) => {
-        let user = Meteor.call("users.findOne", userId);
+    "users.deleteImage": () => {
+        isLoggedIn();
+
+        let user = Meteor.user();
+        let userId = Meteor.userId();
         /* check user */
-        if (typeof user == "undefined" || user._id !== userId) {
+        /*if (typeof user == "undefined" || user._id !== userId) {
             throw new Meteor.Error(`Invalid user-id "${userId}"`);
-        }
+        }*/
 
         /* check if image exists for user */
         if (typeof user.profile.imageId == "undefined" || !user.profile.imageId) {

@@ -10,8 +10,8 @@
 
             <div>
             <span class="item item-input">
-                <input type="file" (change)="onFileSelect($event)" accept="image/* ">
-                <input type="button"(click)="deleteImage(image)" value="Delete File"/>
+                <input type="file" (change)="onFileSelect($event)" accept="image/*" *ngIf="!user.profile.imageUrl" />
+                <input type="button"(click)="deleteImage(image)" value="Delete File" *ngIf="!!user.profile.imageUrl" />
             </span>
             </div>
 
