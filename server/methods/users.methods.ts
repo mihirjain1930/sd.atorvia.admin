@@ -35,9 +35,11 @@ Meteor.methods({
             throw new Meteor.Error(`Invalid last name ${userData.profile.lastName}`);
         }
         /* valiate contact */
-        check(userData.profile.contact, String);
-        if (!isValidPhoneNum(userData.profile.contact)) {
-            throw new Meteor.Error(`Invalid contact ${userData.profile.contact}`);
+        if (typeof userData.profile.contact !== "undefined") {
+          check(userData.profile.contact, String);
+          if (!isValidPhoneNum(userData.profile.contact)) {
+              throw new Meteor.Error(`Invalid contact ${userData.profile.contact}`);
+          }
         }
 
         let userId = Accounts.createUser({
@@ -58,7 +60,7 @@ Meteor.methods({
         userIsInRole(["super-admin"]);
 
         let where:any = [];
-        
+
         // exclude deleted items
         where.push({
             "$or": [{ deleted: false }, { deleted: { $exists: false } }]
