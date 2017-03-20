@@ -13,12 +13,10 @@ import {AUTH_DECLARATIONS} from "./auth/index";
 import {ACCOUNT_DECLARATIONS} from "./myaccount/index";
 import { LAYOUT_DECLARATIONS } from "./layout/index";
 import { Subadmin_Declarations } from "./sub-admin/index";
-import { Practitioner_Declarations } from "./practitioner/index";
 import { Page_Declarations } from "./content-page/index";
 import {FileDropModule} from "angular2-file-drop";
 import {DASHBOARD_DECLARATIONS} from "./dashboard/index";
 import {Services_Providers} from "../services/index";
-import {Package_Declarations} from "./package-page/index";
 import {Faq_Declarations} from "./faq/index";
 import {Email_Declarations} from "./email/index";
 
@@ -51,8 +49,6 @@ moduleDefinition = {
     ...ACCOUNT_DECLARATIONS,
     ...Subadmin_Declarations,
     ...Page_Declarations,
-    ...Practitioner_Declarations,
-    ...Package_Declarations,
     ...Email_Declarations,
     ...Faq_Declarations
   ],
