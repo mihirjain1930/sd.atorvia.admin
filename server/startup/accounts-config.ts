@@ -16,16 +16,11 @@ Accounts.onCreateUser(function(options, user) {
     return user;
 });
 
-// assign super-admin role on signup
-// const setUserRolesOnSignUp = (userId, info) => {
-//  Roles.addUsersToRoles(userId, ['super-admin']);
-// };
-
 // remove login attempt limit
 // Accounts.removeDefaultRateLimit();
 
 // validate user role before login
-/*Accounts.validateLoginAttempt(function (options) {
+Accounts.validateLoginAttempt(function (options) {
    if (options.user && options.allowed) {
        var isAdmin = Roles.userIsInRole(options.user, ['super-admin'])
        if (!isAdmin) {
@@ -33,4 +28,4 @@ Accounts.onCreateUser(function(options, user) {
        }
    }
    return true;
-});*/
+});
