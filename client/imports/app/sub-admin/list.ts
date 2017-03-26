@@ -40,10 +40,10 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     searchSubject: Subject<string> = new Subject<string>();
     searchString: string = "";
 
-    constructor(private router: Router, 
+    constructor(private router: Router,
         private route: ActivatedRoute,
-        private paginationService: PaginationService, 
-        private ngZone: NgZone, 
+        private paginationService: PaginationService,
+        private ngZone: NgZone,
         private changeDetectorRef: ChangeDetectorRef,
         private localStorageService: LocalStorageService
     ) {
@@ -92,7 +92,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
         this.setOptionsSub();
 
         this.paginationService.register({
-        id: this.paginationService.defaultId,
+        id: "sub-admins",
         itemsPerPage: 10,
         currentPage: options.curPage,
         totalItems: this.itemsSize
@@ -123,7 +123,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
                 searchString: searchString
             });
 
-            this.paginationService.setCurrentPage(this.paginationService.defaultId, curPage as number);
+            this.paginationService.setCurrentPage("sub-admins", curPage as number);
 
             //console.log("options:", options);
             //console.log("searchString:", this.searchString);
@@ -139,7 +139,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
                 }
                 this.items = res.data;
                 this.itemsSize = res.count;
-                this.paginationService.setTotalItems(this.paginationService.defaultId, this.itemsSize);
+                this.paginationService.setTotalItems("sub-admins", this.itemsSize);
 
                 setTimeout(function(){
                     jQuery(function($){
@@ -154,7 +154,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     search(value: string): void {
         this.searchSubject.next(value);
     }
-     
+
      clearsearch(value: string): void{
         this.searchSubject.next(value);
     }

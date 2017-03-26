@@ -1,16 +1,16 @@
 import { Meteor } from "meteor/meteor";
-import {Component, OnInit, OnDestroy, NgZone, AfterViewInit} from "@angular/core";
-import {Observable, Subscription, Subject, BehaviorSubject} from "rxjs";
-import {PaginationService} from "ng2-pagination";
-import {MeteorObservable} from "meteor-rxjs";
-import {InjectUser} from "angular2-meteor-accounts-ui";
+import { Component, OnInit, OnDestroy, NgZone, AfterViewInit } from "@angular/core";
+import { Observable, Subscription, Subject, BehaviorSubject } from "rxjs";
+import { PaginationService } from "ng2-pagination";
+import { MeteorObservable } from "meteor-rxjs";
+import { InjectUser } from "angular2-meteor-accounts-ui";
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Page } from "../../../../both/models/page.model";
-import {showAlert} from "../shared/show-alert";
+import { showAlert } from "../shared/show-alert";
 import { Roles } from 'meteor/alanning:roles';
 
 import template from "./list.html";
@@ -40,10 +40,10 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
     searchSubject: Subject<string> = new Subject<string>();
     searchString: string = "";
 
-    constructor(private router: Router, 
+    constructor(private router: Router,
         private route: ActivatedRoute,
-        private paginationService: PaginationService, 
-        private ngZone: NgZone, 
+        private paginationService: PaginationService,
+        private ngZone: NgZone,
         private changeDetectorRef: ChangeDetectorRef,
         private localStorageService: LocalStorageService
     ) {
@@ -93,12 +93,12 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
         this.setOptionsSub();
 
         this.paginationService.register({
-        id: this.paginationService.defaultId,
+        id: "pages",
         itemsPerPage: 10,
         currentPage: options.curPage,
         totalItems: this.itemsSize
         });
-        
+
         this.pageSize.next(options.limit);
         this.curPage.next(options.curPage);
         this.nameOrder.next(options.nameOrder);
@@ -125,7 +125,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
                 searchString: searchString
             });
 
-            this.paginationService.setCurrentPage(this.paginationService.defaultId, curPage as number);
+            this.paginationService.setCurrentPage("pages", curPage as number);
 
             //console.log("options:", options);
             //console.log("searchString:", this.searchString);
@@ -142,7 +142,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
                 }
                 this.items = res.data;
                 this.itemsSize = res.count;
-                this.paginationService.setTotalItems(this.paginationService.defaultId, this.itemsSize);
+                this.paginationService.setTotalItems("pages", this.itemsSize);
             })
         });
     }
@@ -153,10 +153,10 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
 
     search(value: string): void {
         this.searchSubject.next(value);
-        
+
     }
     /* function for clearing search */
-    clearsearch(value: string): void{    
+    clearsearch(value: string): void{
         this.searchSubject.next(value);
     }
 
