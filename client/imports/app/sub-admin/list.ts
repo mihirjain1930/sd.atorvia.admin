@@ -40,10 +40,10 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     searchSubject: Subject<string> = new Subject<string>();
     searchString: string = "";
 
-    constructor(private router: Router, 
+    constructor(private router: Router,
         private route: ActivatedRoute,
-        private paginationService: PaginationService, 
-        private ngZone: NgZone, 
+        private paginationService: PaginationService,
+        private ngZone: NgZone,
         private changeDetectorRef: ChangeDetectorRef,
         private localStorageService: LocalStorageService
     ) {
@@ -129,7 +129,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
             //console.log("searchString:", this.searchString);
             this.searchString = searchString;
             jQuery(".loading").show();
-            this.call("users.find", options, {"roles": {$in: ["sub-admin", "moderator"]} }, searchString, (err, res) => {
+            this.call("users.find", options, {"roles": {$in: ["supplier"]} }, searchString, (err, res) => {
                 //console.log("patients.find() done");
                 jQuery(".loading").hide();
                 if (err) {
@@ -154,7 +154,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     search(value: string): void {
         this.searchSubject.next(value);
     }
-     
+
      clearsearch(value: string): void{
         this.searchSubject.next(value);
     }

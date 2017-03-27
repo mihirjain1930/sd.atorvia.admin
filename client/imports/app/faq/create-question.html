@@ -21,7 +21,7 @@
                 <div [hidden]="!createForm.controls['categoryId'].errors.required">Category ID is required.</div>
             </div>
         </div>
-        
+
         <div class="input-field col s12">
             <input formControlName="question" id="question" type="text" [ngClass]="{'invalid':createForm.controls['question'].touched && !createForm.controls['question'].valid}"></input>
             <label for="question" style="transform: translateY(-140%);">Question</label>
@@ -31,7 +31,7 @@
                 <div [hidden]="!createForm.controls['question'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
-     
+
         <div class="input-field col s12">
             <ckeditor [config]="{extraPlugins: 'divarea'}" formControlName="answer" id="answer" style="height:8rem;" [ngClass]="{'invalid':createForm.controls['answer'].touched && !createForm.controls['answer'].valid}"></ckeditor>
             <label for="answer" style="transform: translateY(-140%);">Answer</label>
@@ -47,7 +47,7 @@
             <button class="btn waves-effect waves-light blue accent-2" type="submit" name="action" [disabled]="!createForm.valid">Submit
               <i class="material-icons right">send</i>
             </button>
-            <button class="btn waves-effect waves-light grey lighten-2" type="submit" name="action" [routerLink]="['/faqcategory/list']">Cancel</button>
+            <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action" [routerLink]="['/faqcategory/list']">Cancel</button>
           </div>
         </div>
 

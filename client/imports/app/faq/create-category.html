@@ -16,7 +16,7 @@
                 <div [hidden]="!faqcategoryForm.controls['title'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
-     
+
         <div class="input-field col s12">
             <ckeditor [config]="{extraPlugins: 'divarea'}" formControlName="summary" id="summary" style="height:8rem;" [ngClass]="{'invalid':faqcategoryForm.controls['summary'].touched && !faqcategoryForm.controls['summary'].valid}"></ckeditor>
             <label for="summary" style="transform: translateY(-140%);">Summary</label>
@@ -32,7 +32,7 @@
             <button class="btn waves-effect waves-light blue accent-2" type="submit" name="action" [disabled]="!faqcategoryForm.valid">Submit
               <i class="material-icons right">send</i>
             </button>
-            <button class="btn waves-effect waves-light grey lighten-2" type="submit" name="action" [routerLink]="['/faqcategory/list']">Cancel</button>
+            <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action" [routerLink]="['/faqcategory/list']">Cancel</button>
           </div>
         </div>
 

@@ -23,7 +23,10 @@ text-align: right;
     margin-left: 0 !important;
     width: 20px !important;
 }
-
+.input-field .cke {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
 .collapsible-body .collection .collection-item {
     background-color: #f1f1f1;
 }

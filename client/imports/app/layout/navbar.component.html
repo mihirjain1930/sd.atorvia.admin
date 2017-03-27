@@ -7,11 +7,11 @@
 
     <ul class="collapsible collapsible-accordion">
         <li class="bold"><a href="javascript:void(0);" [routerLink]="['/dashboard']" class="collapsible-header waves-effect waves-tea"><i class="zmdi zmdi-view-dashboard"></i> Dashboard</a></li>
-        <!--<li class="bold"><a href="javascript:void(0);" [routerLink]="['/sub-admin/list']" class="collapsible-header waves-effect waves-tea"><i class="zmdi zmdi-accounts"></i> Sub-admin</a></li>-->
-        <li class="bold"><a href="javascript:void(0);" [routerLink]="['/page/list']" class="collapsible-header waves-effect waves-tea"><i class="zmdi zmdi-edit"></i> Static Page</a></li>
+        <li class="bold"><a href="javascript:void(0);" [routerLink]="['/sub-admin/list']" class="collapsible-header waves-effect waves-tea"><i class="zmdi zmdi-accounts"></i> Users</a></li>
+        <li class="bold"><a href="javascript:void(0);" [routerLink]="['/page/list']" class="collapsible-header waves-effect waves-tea"><i class="zmdi zmdi-edit"></i> Static Pages</a></li>
         <li class="bold"><a href="javascript:void(0);" [routerLink]="['/account/viewprofile']" class="collapsible-header waves-effect waves-tea"><i class="material-icons">perm_identity</i> My Account</a></li>
-        <li class="bold"><a href="javascript:void(0);" [routerLink]="['/email/list']" class="collapsible-header waves-effect waves-tea"><i class="material-icons">email</i> Email</a></li>
-        <li class="bold"><a href="javascript:void(0);" [routerLink]="['faqcategory/list']" class="collapsible-header waves-effect waves-tea"><i class="material-icons">email</i> FAQ</a></li>
+        <li class="bold"><a href="javascript:void(0);" [routerLink]="['/email/list']" class="collapsible-header waves-effect waves-tea"><i class="material-icons">email</i> Email Templates</a></li>
+        <li class="bold"><a href="javascript:void(0);" [routerLink]="['faqcategory/list']" class="collapsible-header waves-effect waves-tea"><i class="material-icons">email</i> FAQs</a></li>
     </ul>
 
     <li class="bold"><a href="javascript:void(0);" class="waves-effect" [hidden]="!user" (click)="logout()">

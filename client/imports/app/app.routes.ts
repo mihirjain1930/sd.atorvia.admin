@@ -16,7 +16,7 @@ let mainRoutes = [
     { path: '', component: LandingComponent/*, canActivate: ['canActivateForLogoff']*/ },
     { path: 'dashboard', component: DashboardComponent, canActivate: ['canActivateForLoggedIn'] },
     { path: 'login', component: LoginComponent },
-    /*{ path: 'signup', component: SignupComponent },*/
+    // { path: 'signup', component: SignupComponent },
     { path: 'recover', component: RecoverComponent }
 ];
 

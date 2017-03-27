@@ -36,7 +36,7 @@
                 <div [hidden]="!emailForm.controls['code'].errors.validateSlug">Only alphanumeric characters and hiphen(-) allowed.</div>
             </div>
         </div>
-        
+
         <div class="input-field col s12">
             <input formControlName="senderId" id="senderId" type="text" [ngClass]="{'invalid':emailForm.controls['senderId'].touched && !emailForm.controls['senderId'].valid}" placeholder="yourname@domain.com"></input>
             <label for="senderId" style="transform: translateY(-140%);">Sender ID</label>
@@ -67,13 +67,13 @@
                 <div [hidden]="!emailForm.controls['contents'].errors.maxlength">Max 255 characters allowed.</div>
             </div>
         </div>
-          
+
         <div class="row">
           <div class="col s12">
             <button class="btn waves-effect waves-light blue accent-2" type="submit" name="action" [disabled]="!emailForm.valid">Submit
               <i class="material-icons right">send</i>
             </button>
-            <button class="btn waves-effect waves-light grey lighten-2" type="submit" name="action" [routerLink]="['/email/list']">Cancel</button>
+            <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action" [routerLink]="['/email/list']">Cancel</button>
           </div>
         </div>
 
