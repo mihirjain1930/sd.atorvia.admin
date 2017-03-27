@@ -93,7 +93,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
         this.setOptionsSub();
 
         this.paginationService.register({
-        id: this.paginationService.defaultId,
+        id: "pages",
         itemsPerPage: 10,
         currentPage: options.curPage,
         totalItems: this.itemsSize
@@ -125,7 +125,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
                 searchString: searchString
             });
 
-            this.paginationService.setCurrentPage(this.paginationService.defaultId, curPage as number);
+            this.paginationService.setCurrentPage("pages", curPage as number);
 
             //console.log("options:", options);
             //console.log("searchString:", this.searchString);
@@ -142,7 +142,7 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
                 }
                 this.items = res.data;
                 this.itemsSize = res.count;
-                this.paginationService.setTotalItems(this.paginationService.defaultId, this.itemsSize);
+                this.paginationService.setTotalItems("pages", this.itemsSize);
             })
         });
     }
