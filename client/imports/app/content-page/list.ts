@@ -30,7 +30,7 @@ declare var jQuery:any;
   selector: '',
   template
 })
-export class ListPageComponent extends MeteorComponent implements OnInit, OnDestroy {
+export class ListPageComponent extends MeteorComponent implements OnInit, OnDestroy, AfterViewInit {
     items: Page[];
     pageSize: Subject<number> = new Subject<number>();
     curPage: Subject<number> = new Subject<number>();

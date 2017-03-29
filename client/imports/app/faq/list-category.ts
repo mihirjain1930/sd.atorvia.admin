@@ -31,7 +31,7 @@ declare var jQuery:any;
   template
 })
 
-export class ListFAQCategoryComponent extends MeteorComponent implements OnInit, OnDestroy {
+export class ListFAQCategoryComponent extends MeteorComponent implements OnInit, OnDestroy, AfterViewInit {
     items: FAQCategory[];
     faqs: FAQ[];
     pageSize: Subject<number> = new Subject<number>();
