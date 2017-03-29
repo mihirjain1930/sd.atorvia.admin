@@ -232,6 +232,6 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
           /*$('select').material_select();*/
           $('.tooltipped').tooltip({delay: 50});
         });
-      }, 200);
+      }, 500);
     }
 }

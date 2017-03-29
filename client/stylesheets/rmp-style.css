@@ -152,7 +152,7 @@ input:focus:not([type]):not([readonly]) + label, input[type="text"]:focus:not([r
 .pt-detail { background: #fff; padding-top: 20px !important; padding-bottom: 20px !important;}
 .detail-pic-pateint { text-align: left; }
 .detail-pic-pateint img { border-radius: 100px; -webkit-border-radius: 100px; border: 2px solid #707070; }
-.content-ptdetail h2 { color: #101010; font-size: 26px; font-weight: 600; margin: 0px 0px 10px 0px; }
+.content-ptdetail h2 { color: #101010; font-size: 26px; font-weight: 600; margin: 0px 0px 10px 0px; padding-left: 45px; }
 .content-ptdetail h2 a { color: #101010; text-decoration: none; }
 .content-ptdetail ul { margin: 0; padding: 0; }
 .content-ptdetail ul li { display: block; margin: 0px; padding: 0 0 5px 35px; position: relative; color: #979797; font-size: 18px; font-weight: 500; }

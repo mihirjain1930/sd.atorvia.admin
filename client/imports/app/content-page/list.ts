@@ -234,6 +234,6 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
           /*$('select').material_select();*/
           $('.tooltipped').tooltip({delay: 50});
         });
-      }, 200);
+      }, 500);
     }
 }

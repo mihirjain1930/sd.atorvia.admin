@@ -240,6 +240,6 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
           /*$('select').material_select();*/
           $('.tooltipped').tooltip({delay: 50});
         });
-      }, 200);
+      }, 500);
     }
 }
