@@ -235,9 +235,11 @@ export class ListEmailComponent extends MeteorComponent implements OnInit, OnDes
     }
 
     ngAfterViewInit() {
+      Meteor.setTimeout(function() {
         jQuery(function($){
-        /*$('select').material_select();
-        $('.tooltipped').tooltip({delay: 50});*/
-        })
+          /*$('select').material_select();*/
+          $('.tooltipped').tooltip({delay: 50});
+        });
+      }, 200);
     }
 }

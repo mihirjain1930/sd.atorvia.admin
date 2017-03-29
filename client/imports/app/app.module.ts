@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AccountsModule } from 'angular2-meteor-accounts-ui';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { Ng2PaginationModule } from 'ng2-pagination';
-import { LocalStorageService } from "angular-2-local-storage";
+import { LocalStorageModule } from "angular-2-local-storage";
 import { AppComponent } from "./app.component.web";
 import { routes, ROUTES_PROVIDERS } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
@@ -21,10 +21,10 @@ import { Email_Declarations } from "./email/index";
 
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
-let localStorageServiceConfig = {
+/*let localStorageServiceConfig = {
     prefix: 'my-app',
     storageType: 'sessionStorage'
-};
+};*/
 
 let moduleDefinition;
 
@@ -36,7 +36,11 @@ moduleDefinition = {
     RouterModule.forRoot(routes),
     AccountsModule,
     Ng2PaginationModule,
-    CKEditorModule
+    CKEditorModule,
+    LocalStorageModule.withConfig({
+        prefix: 'my-app',
+        storageType: 'sessionStorage'
+    })
   ],
   declarations: [
     AppComponent,
@@ -52,8 +56,7 @@ moduleDefinition = {
   ],
   providers: [
     ...ROUTES_PROVIDERS,
-    ...Services_Providers,
-    LocalStorageService
+    ...Services_Providers
   ],
   bootstrap: [
     AppComponent

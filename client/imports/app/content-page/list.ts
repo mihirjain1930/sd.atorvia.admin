@@ -229,9 +229,11 @@ export class ListPageComponent extends MeteorComponent implements OnInit, OnDest
     }
 
     ngAfterViewInit() {
+      Meteor.setTimeout(function() {
         jQuery(function($){
-        /*$('select').material_select();
-        $('.tooltipped').tooltip({delay: 50});*/
-        })
+          /*$('select').material_select();*/
+          $('.tooltipped').tooltip({delay: 50});
+        });
+      }, 200);
     }
 }

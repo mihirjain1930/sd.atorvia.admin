@@ -30,7 +30,7 @@ declare var jQuery:any;
   selector: '',
   template
 })
-export class ListSubadminComponent extends MeteorComponent implements OnInit {
+export class ListSubadminComponent extends MeteorComponent implements OnInit, AfterViewInit {
     items: User[];
     pageSize: Subject<number> = new Subject<number>();
     curPage: Subject<number> = new Subject<number>();
@@ -227,9 +227,11 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit {
     }
 
     ngAfterViewInit() {
+      Meteor.setTimeout(function() {
         jQuery(function($){
-        /*$('select').material_select();
-        $('.tooltipped').tooltip({delay: 50});*/
-        })
+          /*$('select').material_select();*/
+          $('.tooltipped').tooltip({delay: 50});
+        });
+      }, 200);
     }
 }

@@ -19,7 +19,7 @@
     Loading...
 </div>
 
-<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<pagination-controls id="emails" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
 <table class="bordered striped highlight responsive-table" *ngIf="itemsSize>=0">
     <thead>
@@ -32,9 +32,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr class="" 
-            *ngFor="let email of emailArr" 
-            [attr.data-email-id]="email._id" 
+        <tr class=""
+            *ngFor="let email of emailArr"
+            [attr.data-email-id]="email._id"
             [ngClass]="{'red accent-1': email.deleted, 'red lighten-4': email.active === false}"
             [hidden]="email.deleted">
             <td>{{email.title}}
@@ -60,4 +60,4 @@
     </tbody>
 </table>
 
-<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<pagination-controls id="emails" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>

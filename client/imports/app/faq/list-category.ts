@@ -43,17 +43,17 @@ export class ListFAQCategoryComponent extends MeteorComponent implements OnInit,
     searchString: string = "";
     isSetAccordian: boolean = false;
 
-    constructor(private router: Router, 
+    constructor(private router: Router,
         private route: ActivatedRoute,
-        private paginationService: PaginationService, 
-        private ngZone: NgZone, 
+        private paginationService: PaginationService,
+        private ngZone: NgZone,
         private changeDetectorRef: ChangeDetectorRef,
         private localStorageService: LocalStorageService
     ) {
         super();
     }
 
-    ngOnInit() {   
+    ngOnInit() {
       //console.log("inside init");
         this.setOptions();
     }
@@ -94,7 +94,7 @@ export class ListFAQCategoryComponent extends MeteorComponent implements OnInit,
         }
 
         this.setOptionsSub();
-        
+
         this.pageSize.next(options.limit);
         this.curPage.next(options.curPage);
         this.nameOrder.next(options.nameOrder);
@@ -180,7 +180,7 @@ export class ListFAQCategoryComponent extends MeteorComponent implements OnInit,
     }
 
     /* function for clearing search */
-    clearsearch(value: string): void{    
+    clearsearch(value: string): void{
         this.searchSubject.next(value);
         this.isSetAccordian = false;
     }
@@ -304,20 +304,23 @@ export class ListFAQCategoryComponent extends MeteorComponent implements OnInit,
     }
 
     ngAfterViewInit() {
+      Meteor.setTimeout(function() {
         jQuery(function($){
-        /*$('select').material_select();
-        $('.tooltipped').tooltip({delay: 50});*/
-        $(document).ready(function(){
-            $('.collapsible').collapsible();
+          /*$('select').material_select();*/
+          $('.tooltipped').tooltip({delay: 50});
         });
-        })
+      }, 200);
+      jQuery(function($){
+      $(document).ready(function(){
+          $('.collapsible').collapsible();
+      });
+      })
     }
 
     initializeJS() {
         if (this.isSetAccordian === true) {
             return;
         }
-        console.log("inside initializeJS");
         Meteor.setTimeout(function() {
             jQuery('.collapsible').collapsible();
         }, 500);

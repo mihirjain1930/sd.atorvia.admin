@@ -21,7 +21,7 @@
   Loading...
 </div>
 
-<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<pagination-controls id="pages" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
 <table class="bordered striped highlight responsive-table" *ngIf="itemsSize>=0">
   <thead>
@@ -55,4 +55,4 @@
 </tbody>
 </table>
 
-<pagination-controls *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<pagination-controls id="pages" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
