@@ -20,9 +20,9 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
   error: string;
 
   constructor(
-      private router: Router, 
-      private route: ActivatedRoute, 
-      private zone: NgZone, 
+      private router: Router,
+      private route: ActivatedRoute,
+      private zone: NgZone,
       private formBuilder: FormBuilder
   ) {
     super();
@@ -34,7 +34,7 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
       .subscribe(id => {
           this.emailId = id;
           //console.log("patientId:", patientId);
-  
+
           if (! this.emailId) {
             //console.log("no email-id supplied");
             return;
@@ -42,12 +42,11 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
 
           this.call("emails.findOne", id, (err, res)=> {
               if (err) {
-                  //console.log("error while fetching patient data:", err);
+                this.zone.run(() => {
                   showAlert("Error while fetching email data.", "danger");
-                  this.zone.run(() => {
-                    this.router.navigate(['/email/list']);
-                  });
-                  return;
+                  this.router.navigate(['/email/list']);
+                });
+                return;
               }
               this.emailForm.controls['title'].setValue(res.title);
               this.emailForm.controls['heading'].setValue(res.heading);
@@ -94,17 +93,14 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
         deleted: false
       };
       this.call("emails.insert", emailData, (err, res) => {
-        if (err) {
-          this.zone.run(() => {
-            this.error = err;
-          });
-        } else {
-          //console.log("new user-id:", res);
-          showAlert("New email saved successfully.", "success");
-          this.zone.run(() => {
-            this.router.navigate(['/email/list']);
-          });
-        }
+        this.zone.run(() => {
+          if (err) {
+              this.error = err;
+          } else {
+            showAlert("New email saved successfully.", "success");
+              this.router.navigate(['/email/list']);
+          }
+        });
       });
     }
     // finish insert new email
@@ -119,17 +115,14 @@ export class CreateEmailComponent extends MeteorComponent implements OnInit, OnD
         contents: this.emailForm.value.contents,
       }
       this.call("emails.update", this.emailId, emailData, (err, res) => {
-        if (err) {
-          this.zone.run(() => {
-            this.error = err;
-          });
-        } else {
-          //console.log("new user-id:", res);
-          showAlert("Email data updated successfully.", "success");
-          this.zone.run(() => {
+        this.zone.run(() => {
+          if (err) {
+              this.error = err;
+          } else {
+            showAlert("Email data updated successfully.", "success");
             this.router.navigate(['/email/list']);
-          });
-        }
+          }
+        });
       });
     }
     // finish update email data

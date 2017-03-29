@@ -3,7 +3,7 @@ import { MeteorComponent } from 'angular2-meteor';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Meteor } from 'meteor/meteor';
-import {validateEmail, validatePhoneNum, validateFirstName} from "../../validators/common";
+import {validateEmail, validatePhoneNum, validateFirstName, validatePassword} from "../../validators/common";
 
 import template from './login.component.web.html';
 
@@ -32,13 +32,13 @@ export class LoginComponent extends MeteorComponent implements OnInit {
     login() {
         if (this.loginForm.valid) {
             Meteor.loginWithPassword(this.loginForm.value.email, this.loginForm.value.password, (err) => {
+              this.zone.run(() => {
                 if (err) {
-                    this.zone.run(() => {
                       this.error = err;
-                    });
                 } else {
                     this.router.navigate(['/dashboard']);
                 }
+              });
             });
         }
     }

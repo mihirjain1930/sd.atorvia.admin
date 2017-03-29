@@ -46,10 +46,9 @@ export class CreateFAQCategoryComponent extends MeteorComponent implements OnIni
 
                 this.call("faqcategories.findOne", id, (err, res) => {
                     if (err || typeof res == "undefined" || res._id !== id) {
-                        //console.log("error while fetching patient data:", err);
-                        showAlert("Error while fetching faq data.", "danger");
                         this.zone.run(() => {
-                            this.router.navigate(['/faqcategory/list']);
+                          showAlert("Error while fetching faq data.", "danger");
+                          this.router.navigate(['/faqcategory/list']);
                         });
                         return;
                     }
@@ -84,17 +83,14 @@ export class CreateFAQCategoryComponent extends MeteorComponent implements OnIni
                 deleted: false
             };
             this.call("faqcategories.insert", faqcategoryData, (err, res) => {
+              this.zone.run(() => {
                 if (err) {
-                    this.zone.run(() => {
-                        this.error = err;
-                    });
+                  this.error = err;
                 } else {
-                    //console.log("new user-id:", res);
-                    showAlert("New faqcategory saved successfully.", "success");
-                    this.zone.run(() => {
-                        this.router.navigate(['/faqcategory/list']);
-                    });
+                  showAlert("New faqcategory saved successfully.", "success");
+                  this.router.navigate(['/faqcategory/list']);
                 }
+              });
             });
         }
         // finish insert new faq
@@ -105,17 +101,14 @@ export class CreateFAQCategoryComponent extends MeteorComponent implements OnIni
                 summary: this.faqcategoryForm.value.summary,
             }
             this.call("faqcategories.update", this.faqcategoryId, faqcategoryData, (err, res) => {
+              this.zone.run(() => {
                 if (err) {
-                    this.zone.run(() => {
-                        this.error = err;
-                    });
+                  this.error = err;
                 } else {
-                    //console.log("new user-id:", res);
-                    showAlert("Faqcategory data updated successfully.", "success");
-                    this.zone.run(() => {
-                        this.router.navigate(['/faqcategory/list']);
-                    });
+                  showAlert("Faqcategory data updated successfully.", "success");
+                  this.router.navigate(['/faqcategory/list']);
                 }
+              });
             });
         }
         // finish update faq data

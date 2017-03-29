@@ -23,9 +23,9 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
   slugs: string[];
 
   constructor(
-      private router: Router, 
-      private route: ActivatedRoute, 
-      private zone: NgZone, 
+      private router: Router,
+      private route: ActivatedRoute,
+      private zone: NgZone,
       private formBuilder: FormBuilder
   ) {
     super();
@@ -37,7 +37,7 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
       .subscribe(id => {
           this.pageId = id;
           //console.log("patientId:", patientId);
-  
+
           if (! this.pageId) {
             //console.log("no page-id supplied");
             return;
@@ -45,9 +45,8 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
 
           this.call("pages.findOne", id, (err, res)=> {
               if (err || typeof res == "undefined" || res._id !== id) {
-                  //console.log("error while fetching patient data:", err);
-                  showAlert("Error while fetching page data.", "danger");
                   this.zone.run(() => {
+                    showAlert("Error while fetching page data.", "danger");
                     this.router.navigate(['/page/list']);
                   });
                   return;
@@ -93,17 +92,14 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
         deleted: false
       };
       this.call("pages.insert", pageData, (err, res) => {
-        if (err) {
-          this.zone.run(() => {
-            this.error = err;
-          });
-        } else {
-          //console.log("new user-id:", res);
-          showAlert("New page saved successfully.", "success");
-          this.zone.run(() => {
+        this.zone.run(() => {
+          if (err) {
+              this.error = err;
+          } else {
+            showAlert("New page saved successfully.", "success");
             this.router.navigate(['/page/list']);
-          });
-        }
+          }
+        });
       });
     }
     // finish insert new page
@@ -117,17 +113,14 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
         slug: this.createForm.value.slug
       }
       this.call("pages.update", this.pageId, pageData, (err, res) => {
-        if (err) {
-          this.zone.run(() => {
-            this.error = err;
-          });
-        } else {
-          //console.log("new user-id:", res);
-          showAlert("Page data updated successfully.", "success");
-          this.zone.run(() => {
+        this.zone.run(() => {
+          if (err) {
+              this.error = err;
+          } else {
+            showAlert("Page data updated successfully.", "success");
             this.router.navigate(['/page/list']);
-          });
-        }
+          }
+        });
       });
     }
     // finish update page data
@@ -151,10 +144,10 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
       this.slugs = slugs;
       this.createForm.controls["slug"].setValidators(
         Validators.compose([
-          Validators.required, 
-          Validators.minLength(5), 
-          Validators.maxLength(50), 
-          validateSlug, 
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(50),
+          validateSlug,
           this.isUniqueSlug()
         ])
       );
@@ -165,7 +158,7 @@ export class CreatePageComponent extends MeteorComponent implements OnInit, OnDe
   private isUniqueSlug() {
      return (c: FormControl) => {
        let value = c.value;
-       
+
        // don't validate empty values to allow optional controls
        if (value == null || typeof value === 'string' && value.length === 0) {
          return null;

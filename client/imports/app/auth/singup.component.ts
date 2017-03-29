@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Accounts } from 'meteor/accounts-base';
 import {MeteorComponent} from 'angular2-meteor';
-import {validateEmail, validatePhoneNum, validateFirstName} from "../../validators/common";
+import {validateEmail, validatePhoneNum, validateFirstName, validatePassword} from "../../validators/common";
 
 import template from './signup.component.html';
 
@@ -22,11 +22,11 @@ export class SignupComponent extends MeteorComponent implements OnInit {
     ngOnInit() {
         this.signupForm = this.formBuilder.group({
           email: ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50), validateEmail])],
-          password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30)])],
+          password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],
           firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
           lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(30), validateFirstName])],
         });
-  
+
         this.error = '';
     }
 
@@ -41,14 +41,14 @@ export class SignupComponent extends MeteorComponent implements OnInit {
             }
           };
           this.call("users.insert", userData, ['super-admin'], (err, res) => {
-            if (err) {
-              this.zone.run(() => {
-                this.error = err;
-              });
-            } else {
-              console.log("new user-id:", res);
-              this.router.navigate(['/login']);
-            }
+            this.zone.run(() => {
+              if (err) {
+                  this.error = err;
+              } else {
+                console.log("new user-id:", res);
+                this.router.navigate(['/login']);
+              }
+            });
           });
         }
     }

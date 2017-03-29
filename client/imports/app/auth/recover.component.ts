@@ -15,7 +15,7 @@ export class RecoverComponent implements OnInit {
 
   constructor(private router: Router, private zone: NgZone, private formBuilder: FormBuilder) {}
 
-  ngOnInit() { 
+  ngOnInit() {
     var emailRegex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})";
     this.recoverForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.pattern(emailRegex)])]
@@ -29,13 +29,13 @@ export class RecoverComponent implements OnInit {
       Accounts.forgotPassword({
         email: this.recoverForm.value.email
       }, (err) => {
-        if (err) {
-          this.zone.run(() => {
-            this.error = err;
-          });
-        } else {
-          this.router.navigate(['/']);
-        }
+        this.zone.run(() => {
+          if (err) {
+              this.error = err;
+          } else {
+            this.router.navigate(['/']);
+          }
+        });
       });
     }
   }

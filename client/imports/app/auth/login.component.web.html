@@ -24,6 +24,7 @@
             <div [hidden]="!loginForm.controls['password'].errors.required" class="error">Password is required.</div>
             <div [hidden]="!loginForm.controls['password'].errors.minlength">Minimum 8 characters required.</div>
             <div [hidden]="!loginForm.controls['password'].errors.maxlength">Maximum 30 characters allowed.</div>
+            <div [hidden]="!loginForm.controls['password'].errors.validatePassword">At least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character required.</div>
         </div>
       </div>
 

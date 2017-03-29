@@ -39,12 +39,13 @@
         </div>
 
         <div class="input-field col s12">
-            <input formControlName="password" id="password" type="password"></input> 
+            <input formControlName="password" id="password" type="password"></input>
             <label for="password">Password</label>
             <div *ngIf="signupForm.controls['password'].errors && signupForm.controls['password'].touched" class="error">
                 <div [hidden]="!signupForm.controls['password'].errors.required">Password is required.</div>
-                <div [hidden]="!signupForm.controls['password'].errors.minlength">Minimum 6 characters required.</div>
+                <div [hidden]="!signupForm.controls['password'].errors.minlength">Minimum 8 characters required.</div>
                 <div [hidden]="!signupForm.controls['password'].errors.maxlength">Maximum 30 characters allowed.</div>
+                <div [hidden]="!signupForm.controls['password'].errors.validatePassword">At least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character required.</div>
             </div>
         </div>
 

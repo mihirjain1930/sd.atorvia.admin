@@ -53,9 +53,9 @@ export class CreateFAQComponent extends MeteorComponent implements OnInit, After
 
                 this.call("faqcategories.findOne", this.faqcategoryId, (err, res) => {
                     if (err || typeof res == "undefined" || res._id !== this.faqcategoryId) {
-                        showAlert("Error while fetching faq category.", "danger");
                         this.zone.run(() => {
-                            this.router.navigate(['/faqcategory/list']);
+                          showAlert("Error while fetching faq category.", "danger");
+                          this.router.navigate(['/faqcategory/list']);
                         });
                         return;
                     }
@@ -65,9 +65,9 @@ export class CreateFAQComponent extends MeteorComponent implements OnInit, After
                 if (!!this.questionId) {
                     this.call("faqs.findOne", this.questionId, (err, res) => {
                         if (err || typeof res == "undefined" || res._id !== this.questionId) {
-                            showAlert("Error while fetching FAQ data.", "danger");
                             this.zone.run(() => {
-                                this.router.navigate(['/faqcategory/list']);
+                              showAlert("Error while fetching FAQ data.", "danger");
+                              this.router.navigate(['/faqcategory/list']);
                             });
                             return;
                         }
@@ -123,17 +123,14 @@ export class CreateFAQComponent extends MeteorComponent implements OnInit, After
                 deleted: false
             };
             this.call("faqs.insert", formData, (err, res) => {
+              this.zone.run(() => {
                 if (err) {
-                    this.zone.run(() => {
-                        this.error = err;
-                    });
+                  this.error = err;
                 } else {
-                    //console.log("new user-id:", res);
-                    showAlert("New FAQ saved successfully.", "success");
-                    this.zone.run(() => {
-                        this.router.navigate(['/faqcategory/list']);
-                    });
+                  showAlert("New FAQ saved successfully.", "success");
+                  this.router.navigate(['/faqcategory/list']);
                 }
+              });
             });
         }
         // finish insert new faq
@@ -145,17 +142,14 @@ export class CreateFAQComponent extends MeteorComponent implements OnInit, After
                 categoryId: this.createForm.value.categoryId,
             }
             this.call("faqs.update", this.questionId, formData, (err, res) => {
+              this.zone.run(() => {
                 if (err) {
-                    this.zone.run(() => {
-                        this.error = err;
-                    });
+                  this.error = err;
                 } else {
-                    //console.log("new user-id:", res);
-                    showAlert("FAQ data updated successfully.", "success");
-                    this.zone.run(() => {
-                        this.router.navigate(['/faqcategory/list']);
-                    });
+                  showAlert("FAQ data updated successfully.", "success");
+                  this.router.navigate(['/faqcategory/list']);
                 }
+              });
             });
         }
         // finish update faq data
