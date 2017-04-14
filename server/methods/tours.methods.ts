@@ -39,14 +39,17 @@ Meteor.methods({
         let cursor = Tours.collection.find({$and: where}, options);
         return {count: cursor.count(), data: cursor.fetch()};
     },
-    "tours.findOne": (slug: string) => {
+    "tours.findOne": (criteria: any) => {
       let where:any = [];
       where.push({
           "$or": [{deleted: false}, {deleted: {$exists: false} }]
       }, {
         "$or": [{active: true}, {active: {$exists: false} }]
       });
-      where.push({slug: slug});
+      if (_.isEmpty(criteria)) {
+        criteria = { };
+      }
+      where.push(criteria);
 
       return Tours.collection.findOne({$and: where});
     },
@@ -88,21 +91,6 @@ Meteor.methods({
       count["pendingCount"] = pendingCount;
       return count;
     },
-    "tours.insert": (data: Tour) => {
-      if (! Meteor.userId()) {
-        throw new Meteor.Error(403, "Not authorized!");
-      }
-      let owner = { };
-      owner["id"] = Meteor.userId();
-      owner["companyName"] = Meteor.user().profile.companyName;
-      data.owner = owner;
-      data.active = true;
-      data.approved = false;
-      data.deleted = false;
-      data.createdAt = new Date();
-      let tourId = Tours.collection.insert(data);
-      return tourId;
-    },
     "tours.delete": (id: string) => {
       let tour = Tours.collection.findOne({_id: id});
       if (typeof tour == "undefined" || !tour._id) {
@@ -111,9 +99,6 @@ Meteor.methods({
 
       /* reset data in collections */
       Tours.collection.update({_id: tour._id}, {$set : {deleted: true } });
-    },
-    "toursEdit.findOne": (id: string) => {
-      return Tours.collection.findOne({_id: id});
     },
     "tours.update": (data: Tour, id: string) => {
       data.modifiedAt = new Date();
