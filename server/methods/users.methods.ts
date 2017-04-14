@@ -234,5 +234,41 @@ Meteor.methods({
         Thumbs.collection.remove({_id: thumb._id});
 
         return true;
+    },
+    "verifyAgentCertificate": (id: string) => {
+      userIsInRole(["super-admin"]);
+
+      return Meteor.users.update({ _id: id}, {
+        $set: {
+            "profile.agentCertificate.verified": true
+        }
+      });
+    },
+    "verifyAgentIdentity": (id: string) => {
+      userIsInRole(["super-admin"]);
+
+      return Meteor.users.update({ _id: id}, {
+        $set: {
+            "profile.agentIdentity.verified": true
+        }
+      });
+    },
+    "unverifyAgentIdentity": (id: string) => {
+      userIsInRole(["super-admin"]);
+
+      return Meteor.users.update({ _id: id}, {
+        $set: {
+            "profile.agentIdentity.verified": false
+        }
+      });
+    },
+    "unverifyAgentCertificate": (id: string) => {
+      userIsInRole(["super-admin"]);
+
+      return Meteor.users.update({ _id: id}, {
+        $set: {
+            "profile.agentCertificate.verified": false
+        }
+      });
     }
 });
