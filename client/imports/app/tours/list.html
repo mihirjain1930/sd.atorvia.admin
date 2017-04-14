@@ -1,0 +1,55 @@
+<h2 class="header red-text text-lighten-1" color="primary">
+    <span>Tours</span>
+</h2>
+
+<section class="serach-bg" *ngIf="itemsSize>=0">
+    <section class="col s1 closeSearch" *ngIf="!!searchString">
+        <a class="" (click)="clearsearch(searchString='')"><i class="material-icons">clear</i></a>
+    </section>
+    <section class="search col s9">
+        <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
+        <label class="tooltipped" for="search" (click)="search(searchtext.value)" data-position="top" data-delay="0" data-tooltip="Click to Search"><i class="material-icons">search</i></label>
+    </section>
+</section>
+
+<div class="loading">
+    Loading...
+</div>
+
+<section *ngIf="itemsSize==0">
+    No records have been added yet.
+</section>
+
+<pagination-controls id="tours" *ngIf="itemsSize>0" class="pagination" (itemChange)="onitemChanged($event)"></pagination-controls>
+
+<section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow"
+*ngFor="let item of items"
+[attr.data-item-id]="item._id"
+[ngClass]="{'red accent-1': item.deleted, 'red lighten-4': item.approved === false}"
+[hidden]="item.deleted">
+    <section class="pateint-list">
+        <section class="col s8 mar-tp10">
+            <h2 class="pateint-name"><a href="javascript:void(0)">{{item.name}} [{{item?.owner?.companyName}}]</a></h2>
+            <ul class="pateint-deatil">
+              <span *ngIf="!item.images?.length"><img class="img-class" src="images/random.png" /></span>
+              <span *ngIf="item.images?.length > 0 && item.featuredImage?.url"><img class="img-class" [src]="item.featuredImage?.url" /></span>
+              <span *ngIf="item.images?.length > 0 && !item.featuredImage?.url"><img class="img-class" [src]="item.images[0]?.url" /></span>
+                <li style="width: 50%; float: left;">Departure: {{item.departure}}</li>
+                <li style="float: right">Destination: {{item.destination}}</li>
+                <li style="width: 50%; float: left;">Tour Pace: {{item.tourPace}}</li>
+                <li style="float: right;">Tour Type: {{item.tourType}}</li>
+                <li style="width:100%;float: left; margin-left: 65px;">Description : {{item.description}}</li>
+                <li style="width:100%;float: left; margin-left: 65px;">Starts From: AUD ${{item.dateRange[0]?.price[0]?.adult}}</li>
+            </ul>
+        </section>
+        <section class="col s4 detail-btn">
+            <ul>
+                <li *ngIf="item.approved == undefined || item.approved === true"><a class="btn-floating waves-effect green waves-light  lighten-2 tooltipped" href="javascript:void(0);" (click)="disapproveTour(item)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a></li>
+                <li *ngIf="item.approved === false"><a class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="approveTour(item)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
+                <li *ngIf="!item.deleted"><a class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deleteTour(item)" data-position="top" data-delay="0" data-tooltip="Delete Tour"><i class="material-icons">delete</i></a></li>
+            </ul>
+        </section>
+    </section>
+</section>
+
+<pagination-controls id="tours" *ngIf="itemsSize>0" class="pagination" (itemChange)="onitemChanged($event)"></pagination-controls>
