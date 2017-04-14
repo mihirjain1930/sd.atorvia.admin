@@ -21,10 +21,10 @@ export class PasswordSubadminComponent extends MeteorComponent implements OnInit
   passwdForm: FormGroup;
   error: string;
 
-  constructor(private router: Router, 
-    private route: ActivatedRoute, 
-    private zone: NgZone, 
-    private formBuilder: FormBuilder) 
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private zone: NgZone,
+    private formBuilder: FormBuilder)
   {
     super();
   }
@@ -74,7 +74,7 @@ export class PasswordSubadminComponent extends MeteorComponent implements OnInit
 
   onSubmit() {
     if (!this.passwdForm.valid) {
-      console.log(this.passwdForm);
+      // console.log(this.passwdForm);
       showAlert("Invalid form-data supplied.", "danger");
       return;
     }

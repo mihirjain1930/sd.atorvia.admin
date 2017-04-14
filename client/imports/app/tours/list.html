@@ -17,7 +17,7 @@
 </div>
 
 <section *ngIf="itemsSize==0">
-    No records have been added yet.
+    No tours have been added yet.
 </section>
 
 <pagination-controls id="tours" *ngIf="itemsSize>0" class="pagination" (itemChange)="onitemChanged($event)"></pagination-controls>
