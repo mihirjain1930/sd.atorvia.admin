@@ -152,7 +152,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
   }
 
   disapproveTour(tour: Tour) {
-    if (! confirm("Are you sure to deny this tour?")) {
+    if (! confirm("Are you sure to disapprove this tour?")) {
       return false;
     }
 

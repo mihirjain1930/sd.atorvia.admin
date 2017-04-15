@@ -32,7 +32,7 @@
 [hidden]="user.deleted">
     <section class="pateint-list">
         <section class="col s8 mar-tp10">
-            <h2 class="pateint-name"><a [routerLink]="['/sub-admin/view', user._id]">{{user.profile.companyName}}</a></h2>
+            <h2 class="pateint-name"><a [routerLink]="['/sub-admin/view', user._id]">{{user.supplier.companyName}}</a></h2>
             <ul class="pateint-deatil">
                 <li><i class="zmdi zmdi-email tooltipped" data-position="top" data-delay="0" data-tooltip="Email"></i> {{user.emails[0].address}}</li>
                 <!-- <li><i class="zmdi zmdi-phone tooltipped" data-position="top" data-delay="0" data-tooltip="Contact"></i> {{user.profile.contact}}</li>

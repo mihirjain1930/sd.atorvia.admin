@@ -240,7 +240,7 @@ Meteor.methods({
 
       return Meteor.users.update({ _id: id}, {
         $set: {
-            "profile.agentCertificate.verified": true
+            "supplier.agentCertificate.verified": true
         }
       });
     },
@@ -249,7 +249,7 @@ Meteor.methods({
 
       return Meteor.users.update({ _id: id}, {
         $set: {
-            "profile.agentIdentity.verified": true
+            "supplier.agentIdentity.verified": true
         }
       });
     },
@@ -258,7 +258,7 @@ Meteor.methods({
 
       return Meteor.users.update({ _id: id}, {
         $set: {
-            "profile.agentIdentity.verified": false
+            "supplier.agentIdentity.verified": false
         }
       });
     },
@@ -267,7 +267,7 @@ Meteor.methods({
 
       return Meteor.users.update({ _id: id}, {
         $set: {
-            "profile.agentCertificate.verified": false
+            "supplier.agentCertificate.verified": false
         }
       });
     }

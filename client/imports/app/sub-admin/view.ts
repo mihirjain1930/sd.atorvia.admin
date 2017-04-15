@@ -54,7 +54,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
       if (! err) {
         showAlert("Agent Certificate has been verified successfully.", "success");
 
-        user.profile.agentCertificate.verified = true;
+        user.supplier.agentCertificate.verified = true;
       } else {
         showAlert("Error verifying agent certificate.", "danger");
       }
@@ -70,7 +70,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
       if (! err) {
         showAlert("Agent Certificate has been unverified successfully.", "success");
 
-        user.profile.agentCertificate.verified = false;
+        user.supplier.agentCertificate.verified = false;
       } else {
         console.log(err);
         showAlert("Error verifying agent certificate.", "danger");
@@ -87,7 +87,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
       if (! err) {
         showAlert("Agent Certificate has been verified successfully.", "success");
 
-        user.profile.agentIdentity.verified = true;
+        user.supplier.agentIdentity.verified = true;
       } else {
         showAlert("Error verifying agent certificate.", "danger");
       }
@@ -103,7 +103,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
       if (! err) {
         showAlert("Agent Certificate has been unverified successfully.", "success");
 
-        user.profile.agentIdentity.verified = false;
+        user.supplier.agentIdentity.verified = false;
       } else {
         console.log(err);
         showAlert("Error verifying agent certificate.", "danger");
