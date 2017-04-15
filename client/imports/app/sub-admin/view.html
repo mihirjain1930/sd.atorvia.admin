@@ -11,30 +11,34 @@
           <ul class="ul-level">
             <li>
               <label style="color:black">Manager Name</label>
-              <span>{{user.supplier.ownerName}}</span>
+              <span>{{user.supplier?.ownerName}}</span>
             </li>
             <li>
               <label style="color:black">Email Address</label>
-              <span>{{user.emails[0].address}}</span>
+              <span>{{user.emails[0]?.address}}</span>
             </li>
             <li>
               <label style="color:black">Contact Number</label>
-              <span>{{user.profile.contact}}</span>
+              <span>{{user.profile?.contact}}</span>
             </li>
             <li>
               <label style="color:black">Agent Certificate</label>
-              <a href="{{user.supplier.agentCertificate.url}}" download><span>{{user.supplier.agentCertificate.name}}</span></a>
+              <a href="{{user.supplier?.agentCertificate?.url}}" download><span>{{user.supplier?.agentCertificate?.name}}</span></a>
             </li>
             <li>
               <label style="color:black">Agent Identity</label>
-              <a href="{{user.supplier.agentIdentity.url}}" download><span>{{user.supplier.agentIdentity.name}}</span></a>
+              <a href="{{user.supplier?.agentIdentity?.url}}" download><span>{{user.supplier?.agentIdentity?.name}}</span></a>
             </li>
           </ul>
           <span class="level-link"><a href="javascript:void(0);" [routerLink]="['/sub-admin/passwd', user._id]">Change Password</a></span>
-          <span class="level-link" *ngIf="!user.supplier.agentCertificate.verified"><a href="javascript:void(0);" (click)="verifyCertificate(user)">Verify Agent Certificate</a></span>
-          <span class="level-link" *ngIf="user.supplier.agentCertificate.verified"><a href="javascript:void(0);" (click)="unverifyCertificate(user)">UnVerify Agent Certificate</a></span>
-          <span class="level-link" *ngIf="!user.supplier.agentIdentity.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Agent Identity</a></span>
-          <span class="level-link" *ngIf="user.supplier.agentIdentity.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">UnVerify Agent Identity</a></span>
+          <span *ngIf="user.supplier?.agentCertificate?.id">
+            <span class="level-link" *ngIf="!user.supplier?.agentCertificate?.verified"><a href="javascript:void(0);" (click)="verifyCertificate(user)">Verify Agent Certificate</a></span>
+            <span class="level-link" *ngIf="user.supplier?.agentCertificate?.verified"><a href="javascript:void(0);" (click)="unverifyCertificate(user)">UnVerify Agent Certificate</a></span>
+          </span>
+          <span *ngIf="user.supplier?.agentIdentity?.id">
+            <span class="level-link" *ngIf="!user.supplier?.agentIdentity?.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Agent Identity</a></span>
+            <span class="level-link" *ngIf="user.supplier?.agentIdentity?.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">UnVerify Agent Identity</a></span>
+          </span>
         </section>
       </div>
     </section>

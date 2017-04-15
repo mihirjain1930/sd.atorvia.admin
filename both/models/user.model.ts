@@ -7,7 +7,7 @@ export interface User extends Meteor.User {
             address: string;
             verified: boolean;
         }
-    ]
+    ];
     profile: {
         firstName: string;
         lastName: string;
@@ -30,7 +30,7 @@ export interface User extends Meteor.User {
         name: string;
         verified: boolean;
       };
-    }
+    };
     active: boolean,
     deleted: boolean;
 }
