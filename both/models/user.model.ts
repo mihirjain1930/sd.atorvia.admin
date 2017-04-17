@@ -11,26 +11,30 @@ export interface User extends Meteor.User {
     profile: {
         firstName: string;
         lastName: string;
+        fullName: string;
         contact: string;
-        imageId: string;
-        imageUrl: string;
+        image: {
+          id: string;
+          url: string;
+          name: string;
+        };
+        supplier: {
+          companyName: string;
+          ownerName: string;
+          agentIdentity: {
+            id: string;
+            url: string;
+            name: string;
+            verified: boolean;
+          };
+          agentCertificate: {
+            id: string;
+            url: string;
+            name: string;
+            verified: boolean;
+          };
+        };
     },
-    supplier: {
-      companyName: string;
-      ownerName: string;
-      agentIdentity: {
-        id: string;
-        url: string;
-        name: string;
-        verified: boolean;
-      };
-      agentCertificate: {
-        id: string;
-        url: string;
-        name: string;
-        verified: boolean;
-      };
-    };
     active: boolean,
     deleted: boolean;
 }
