@@ -29,13 +29,13 @@
 [hidden]="item.deleted">
     <section class="pateint-list">
         <section class="col s8 mar-tp10">
-            <h2 class="pateint-name"><a href="javascript:void(0)">{{item.name}} [{{item?.owner?.companyName}}]</a></h2>
+            <h2 class="pateint-name"><a href="{{customerAppUrl}}/tours/{{item.slug}}" target="_blank">{{item.name}} [{{item?.owner?.companyName}}]</a></h2>
             <ul class="pateint-deatil">
               <span *ngIf="!item.images?.length"><img class="img-class" src="images/random.png" /></span>
               <span *ngIf="item.images?.length > 0 && item.featuredImage?.url"><img class="img-class" [src]="item.featuredImage?.url" /></span>
               <span *ngIf="item.images?.length > 0 && !item.featuredImage?.url"><img class="img-class" [src]="item.images[0]?.url" /></span>
                 <li style="width: 45%; float: left;">Departure: {{item.departure}}</li>
-                <li style="float: left">Destination: {{item.destination}}</li>
+                <li>Destination: {{item.destination}}</li>
                 <li style="width: 45%; float: left;">Tour Pace: {{item.tourPace}}</li>
                 <li style="float: left;">Tour Type: {{item.tourType}}</li>
                 <li style="width:100%;float: left; margin-left: 65px;">Description : {{item.description}}</li>

@@ -38,6 +38,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
                   return;
               }
               this.user = res;
+              console.log(this.user);
           });
       });
 

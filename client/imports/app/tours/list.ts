@@ -40,6 +40,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
   itemsSize: number = -1;
   searchSubject: Subject<string> = new Subject<string>();
   searchString: string = "";
+  customerAppUrl: string;
   constructor(private router: Router,
     private route: ActivatedRoute,
     private paginationService: PaginationService,
@@ -52,6 +53,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
 
   ngOnInit() {
     this.setOptions();
+    this.customerAppUrl = Meteor.settings.public.customerAppUrl;
   }
 
   private setOptions() {
