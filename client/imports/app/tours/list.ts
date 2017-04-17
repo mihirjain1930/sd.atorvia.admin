@@ -100,7 +100,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
 
       this.searchString = searchString;
       jQuery(".loading").show();
-      this.call("tours.find", options, {}, searchString, (err, res) => {
+      this.call("tours.find", options, {requestApprovalSentAt: {$exists: true}}, searchString, (err, res) => {
         jQuery(".loading").hide();
         if (err) {
           showAlert("Error while fetching tours list.", "danger");
