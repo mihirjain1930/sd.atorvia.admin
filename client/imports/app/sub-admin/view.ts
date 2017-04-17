@@ -86,7 +86,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
 
     this.call("verifyAgentIdentity", this.userId, (err, res) => {
       if (! err) {
-        showAlert("Agent Certificate has been verified successfully.", "success");
+        showAlert("Agent Identity has been verified successfully.", "success");
 
         user.profile.supplier.agentIdentity.verified = true;
       } else {
@@ -102,7 +102,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
 
     this.call("unverifyAgentIdentity", this.userId, (err, res) => {
       if (! err) {
-        showAlert("Agent Certificate has been unverified successfully.", "success");
+        showAlert("Agent Identity has been unverified successfully.", "success");
 
         user.profile.supplier.agentIdentity.verified = false;
       } else {
