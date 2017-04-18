@@ -37,7 +37,7 @@
           </span>
           <span *ngIf="user.profile.supplier?.agentIdentity?.id">
             <span class="level-link" *ngIf="!user.profile.supplier?.agentIdentity?.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Agent Identity</a></span>
-            <span class="level-link" *ngIf="user.profile.supplier?.agentIdentity?.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">UnVerify Agent Identity</a></span>
+            <span class="level-link" *ngIf="user.profile.supplier?.agentIdentity?.verified"><a href="javascript:void(0);" (click)="unverifyIdentity(user)">UnVerify Agent Identity</a></span>
           </span>
         </section>
       </div>
