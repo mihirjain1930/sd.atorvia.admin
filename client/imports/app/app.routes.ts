@@ -12,6 +12,7 @@ import {routes as accountRoutes} from "./myaccount/route";
 import {routes as emailRoutes} from "./email/routes";
 import {routes as faqcategoryRoutes} from "./faq/routes";
 import {routes as toursRoutes} from "./tours/routes";
+import {routes as placesRoutes } from "./places/routes";
 
 let mainRoutes = [
     { path: '', component: LandingComponent/*, canActivate: ['canActivateForLogoff']*/ },
@@ -28,7 +29,8 @@ export const routes: Route[] = [
     ...accountRoutes,
     ...emailRoutes,
     ...faqcategoryRoutes,
-    ...toursRoutes
+    ...toursRoutes,
+    ...placesRoutes
 ];
 
 export const ROUTES_PROVIDERS = [
