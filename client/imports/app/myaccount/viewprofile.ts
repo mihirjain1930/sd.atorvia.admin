@@ -78,14 +78,18 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
             console.log("image upload done.")
             console.log("file id:", res._id);
             let userData = {
-                "profile.imageId": this.imageId,
-                "profile.imageUrl": this.image.url
+              "profile.image":{
+                  id: this.imageId,
+                  url: this.image.url,
+                  name: this.image.name
+                }
             };
             this.call("users.update", this.userId, userData, (err, res) => {
                 if (err) {
                     console.log("Error while updating user picture");
                     return;
                 }
+                $("#inputFile").val("");
                 this.user.profile.imageUrl = this.image.url;
                 showAlert("Profile picture updated successfully.", "success");
             });
