@@ -79,5 +79,42 @@ Meteor.methods({
     },
     "places.delete": (placeId: string) => {
       return Places.collection.update({_id: placeId}, {$set: {deleted: true}});
+    },
+    "places.import": () => {
+      let csv = require('csv-parser');
+      let fs = require('fs');
+
+      fs.createReadStream('/Users/rahul.sethi/Downloads/worldcitiespop.txt')
+      .pipe(csv())
+      .on('data', function (data) {
+        if (typeof data.AccentCity !== "string") {
+          return;
+        }
+        let formData = {
+          name: data.AccentCity,
+          slug: slugify(data.AccentCity),
+          geometry: {
+            lat: data.Latitude,
+            lng: data.Longitude
+          },
+          country: data.Country.toUpperCase(),
+          active: true,
+          createdAt: new Date()
+        };
+        Meteor.wrapAsync(function(formData){
+          Places.collection.insert(formData);
+        });
+        console.log(data.AccentCity);
+      })
     }
 });
+
+function slugify(text)
+  {
+    return text.toString().toLowerCase()
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+      .replace(/^-+/, '')             // Trim - from start of text
+      .replace(/-+$/, '');            // Trim - from end of text
+  }
