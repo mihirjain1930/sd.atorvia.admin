@@ -53,7 +53,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
 
   ngOnInit() {
     this.setOptions();
-    this.customerAppUrl = Meteor.settings.public.customerAppUrl;
+    this.customerAppUrl = Meteor.settings.public["customerAppUrl"];
   }
 
   private setOptions() {

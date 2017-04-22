@@ -80,33 +80,35 @@ Meteor.methods({
     "places.delete": (placeId: string) => {
       return Places.collection.update({_id: placeId}, {$set: {deleted: true}});
     },
-    "places.import": () => {
+    /*"places.import": () => {
       let csv = require('csv-parser');
       let fs = require('fs');
 
-      fs.createReadStream('/Users/rahul.sethi/Downloads/worldcitiespop.txt')
+      fs.createReadStream('/home/rahul/Downloads/simplemaps-worldcities-basic.csv')
       .pipe(csv())
-      .on('data', function (data) {
-        if (typeof data.AccentCity !== "string") {
+      .on('data', Meteor.bindEnvironment((data) => {
+        if (typeof data.city_ascii !== "string") {
           return;
         }
         let formData = {
-          name: data.AccentCity,
-          slug: slugify(data.AccentCity),
+          name: data.city_ascii,
+          slug: slugify(data.city_ascii),
           geometry: {
-            lat: data.Latitude,
-            lng: data.Longitude
+            lat: data.lat,
+            lng: data.lng
           },
-          country: data.Country.toUpperCase(),
+          province: data.province,
+          country: data.iso3,
           active: true,
           createdAt: new Date()
         };
-        Meteor.wrapAsync(function(formData){
-          Places.collection.insert(formData);
-        });
-        console.log(data.AccentCity);
-      })
-    }
+        
+        console.log("insert ", data.city_ascii);
+        Places.collection.insert(formData);
+        
+        })
+      )
+    }*/
 });
 
 function slugify(text)

@@ -8,6 +8,7 @@ export interface Place extends CollectionObject {
     lng: number;
   },
   address?: string;
+  province?: string;
   country?: string;
   active: boolean;
   deleted?: boolean;

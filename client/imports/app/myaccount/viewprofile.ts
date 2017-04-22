@@ -22,8 +22,6 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
     user: User;
     isUploading: boolean = false;
     isUploaded: boolean = false;
-    imageId: string;
-    image: Image;
     searchString: string;
     paramsSub: Subscription;
 
@@ -73,15 +71,13 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
         .then((res) => {
             this.isUploading = false;
             this.isUploaded = true;
-            this.image = res;
-            this.imageId = res._id;
             console.log("image upload done.")
             console.log("file id:", res._id);
             let userData = {
               "profile.image":{
-                  id: this.imageId,
-                  url: this.image.url,
-                  name: this.image.name
+                  id: res._id,
+                  url: res.url,
+                  name: res.name
                 }
             };
             this.call("users.update", this.userId, userData, (err, res) => {
@@ -90,7 +86,7 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
                     return;
                 }
                 $("#inputFile").val("");
-                this.user.profile.imageUrl = this.image.url;
+                this.user.profile.image.url = res.url;
                 showAlert("Profile picture updated successfully.", "success");
             });
         })
@@ -112,7 +108,7 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
                 showAlert("Error calling image.delete", "danger");
                 return;
             }
-            this.user.profile.imageUrl = null;
+            this.user.profile.image.url = null;
             showAlert("Image has been deleted.", "success");
         })
     }

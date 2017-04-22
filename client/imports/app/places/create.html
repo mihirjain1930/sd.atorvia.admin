@@ -24,7 +24,7 @@
 
         <div class="input-field col s12">
             <input formControlName="lng" type="number" id="lng" step="any" [ngClass]="{'invalid':createForm.controls['lng'].touched && !createForm.controls['lng'].valid}"></input>
-            <label for="lng">Longitude</label>
+            <label for="lng" style="transform: translateY(-140%);">Longitude</label>
             <div *ngIf="createForm.controls['lng'].errors && createForm.controls['lng'].touched" class="error">
                 <div [hidden]="!createForm.controls['lng'].errors.required">Longitude is required.</div>
             </div>
@@ -43,7 +43,7 @@
             <button class="btn waves-effect waves-light blue accent-2" type="submit" name="action" [disabled]="!createForm.valid">Submit
               <i class="material-icons right">send</i>
             </button>
-            <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action" [routerLink]="['/sub-admin/list']">Cancel</button>
+            <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action" [routerLink]="['/places/list']">Cancel</button>
           </div>
         </div>
 
