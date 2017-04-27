@@ -41,15 +41,15 @@
         </section>
         <section class="col s5 detail-btn">
             <ul>
-                <!-- <li><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/sub-admin/update', user._id]" data-position="top" data-delay="0" data-tooltip="Edit User"><i class="material-icons">mode_edit</i></a></li> -->
-                <!--<li><a class="btn-floating waves-effect waves-light blue tooltipped" href="javascript:void(0);" [routerLink]="['/sub-admin/passwd', user._id]" data-position="top" data-delay="0" data-tooltip="Password"><i class="material-icons">code</i></a></li>-->
-                <li *ngIf="user.profile.supplier.agentCertificate.verified"><a class="btn-floating waves-effect teal lighten-1 waves-light tooltipped" href="javascript:void(0);" (click)="unverifyCertificate(user)" data-position="top" data-delay="0" data-tooltip="Unverify Certificate"><i class="material-icons">check_circle</i></a></li>
-                <li *ngIf="! user.profile.supplier.agentCertificate.verified"><a class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="verifyCertificate(user)" data-position="top" data-delay="0" data-tooltip="Verify Certificate"><i class="material-icons">check_circle</i></a></li>
-                <li *ngIf="user.profile.supplier.agentIdentity.verified"><a class="btn-floating waves-effect teal lighten-1 waves-light tooltipped" href="javascript:void(0);" (click)="unverifyIdentity(user)" data-position="top" data-delay="0" data-tooltip="Unverify Identity"><i class="material-icons">check_circle</i></a></li>
-                <li *ngIf="! user.profile.supplier.agentIdentity.verified"><a class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="verifyIdentity(user)" data-position="top" data-delay="0" data-tooltip="Verify Identity"><i class="material-icons">check_circle</i></a></li>
-                <li *ngIf="user.active == undefined || user.active === true"><a class="btn-floating waves-effect green waves-light  lighten-2 tooltipped" href="javascript:void(0);" (click)="deactivate(user)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a></li>
-                <li *ngIf="user.active === false"><a class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="activate(user)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
-                <li *ngIf="!user.deleted"><a class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deleteUser(user)" data-position="top" data-delay="0" data-tooltip="Delete User"><i class="material-icons">delete</i></a></li>
+                <!-- <li><a href="javascript:void(0);" [routerLink]="['/sub-admin/update', user._id]" >Edit User</a></li> -->
+                <!--<li><a href="javascript:void(0);" [routerLink]="['/sub-admin/passwd', user._id]" >Change Password</a></li>-->
+                <li *ngIf="user.profile.supplier.agentCertificate.verified"><a href="javascript:void(0);" (click)="unverifyCertificate(user)">Unverify Certificate</a></li>
+                <li *ngIf="! user.profile.supplier.agentCertificate.verified"><a href="javascript:void(0);" (click)="verifyCertificate(user)">Verify Certificate</a></li>
+                <li *ngIf="user.profile.supplier.agentIdentity.verified"><a href="javascript:void(0);" (click)="unverifyIdentity(user)">Unverify Identity</a></li>
+                <li *ngIf="! user.profile.supplier.agentIdentity.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Identity</a></li>
+                <li *ngIf="user.active == undefined || user.active === true"><a href="javascript:void(0);" (click)="deactivate(user)">Deactivate</a></li>
+                <li *ngIf="user.active === false"><a href="javascript:void(0);" (click)="activate(user)">Activate</a></li>
+                <li *ngIf="!user.deleted"><a href="javascript:void(0);" (click)="deleteUser(user)">Delete</a></li>
             </ul>
         </section>
     </section>
