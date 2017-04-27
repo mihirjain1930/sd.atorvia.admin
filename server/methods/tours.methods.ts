@@ -14,11 +14,11 @@ Meteor.methods({
     "tours.find": (options: Options, criteria: any, searchString: string) => {
         let where:any = [];
         let userId = Meteor.userId();
-        where.push({
-            "$or": [{deleted: false}, {deleted: {$exists: false} }]
-        }, {
-          "$or": [{active: true}, {active: {$exists: false} }]
-        });
+        // where.push({
+        //     "$or": [{deleted: false}, {deleted: {$exists: false} }]
+        // }, {
+        //   "$or": [{active: true}, {active: {$exists: false} }]
+        // });
 
         if (!_.isEmpty(criteria)) {
           where.push(criteria);
@@ -113,13 +113,22 @@ Meteor.methods({
       /* reset data in collections */
       Tours.collection.update({_id: tour._id}, {$set : {approved: true } });
     },
-    "tours.disapprove": (id: string) => {
+    "tours.deactivate": (id: string) => {
       let tour = Tours.collection.findOne({_id: id});
       if (typeof tour == "undefined" || !tour._id) {
           throw new Meteor.Error(`Invalid tour-id "${id}"`);
       }
 
       /* reset data in collections */
-      Tours.collection.update({_id: tour._id}, {$set : {approved: false } });
+      Tours.collection.update({_id: tour._id}, {$set : {active: false } });
+    },
+    "tours.activate": (id: string) => {
+      let tour = Tours.collection.findOne({_id: id});
+      if (typeof tour == "undefined" || !tour._id) {
+          throw new Meteor.Error(`Invalid tour-id "${id}"`);
+      }
+
+      /* reset data in collections */
+      Tours.collection.update({_id: tour._id}, {$set : {active: true } });
     }
 });

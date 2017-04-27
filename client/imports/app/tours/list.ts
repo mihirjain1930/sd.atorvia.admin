@@ -135,6 +135,24 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
       this.nameOrder.next(parseInt(nameOrder));
   }
 
+  activate(tour: Tour) {
+    if (! confirm("Are you sure to activate this tour?")) {
+      return false;
+    }
+
+    Meteor.call("tours.activate", tour._id, (err, res) => {
+      if (err) {
+        showAlert("Error calling tours.activate", "danger");
+        return;
+      }
+      tour.active = true;
+      //angular2 waits for dom event to detect changes automatically
+      //so trigger change detection manually to update dom
+      this.changeDetectorRef.detectChanges();
+      showAlert("Tour has been activated.", "success");
+    })
+  }
+
   approveTour(tour: Tour) {
     if (! confirm("Are you sure to approve this tour?")) {
       return false;
@@ -153,21 +171,21 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
     })
   }
 
-  disapproveTour(tour: Tour) {
-    if (! confirm("Are you sure to disapprove this tour?")) {
+  deactivate(tour: Tour) {
+    if (! confirm("Are you sure to deactivate this tour?")) {
       return false;
     }
 
-    Meteor.call("tours.disapprove", tour._id, (err, res) => {
+    Meteor.call("tours.deactivate", tour._id, (err, res) => {
       if (err) {
-        showAlert("Error calling tours.deny", "danger");
+        showAlert("Error calling tours.deactivate", "danger");
         return;
       }
-      tour.approved = false;
+      tour.active = false;
       //angular2 waits for dom event to detect changes automatically
       //so trigger change detection manually to update dom
       this.changeDetectorRef.detectChanges();
-      showAlert("Tour has been disapproved.", "success");
+      showAlert("Tour has been deactivated.", "success");
     })
   }
 

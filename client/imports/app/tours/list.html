@@ -25,11 +25,11 @@
 <section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow"
 *ngFor="let item of items"
 [attr.data-item-id]="item._id"
-[ngClass]="{'red accent-1': item.deleted, 'red lighten-4': item.approved === false}"
+[ngClass]="{'red accent-1': item.deleted, 'red lighten-4': item.active === false}"
 [hidden]="item.deleted">
     <section class="pateint-list">
         <section class="col s8 mar-tp10">
-            <h2 class="pateint-name"><a href="{{customerAppUrl}}/tours/{{item.slug}}" target="_blank">{{item.name}} [{{item?.owner?.companyName}}]</a></h2>
+            <h2 class="pateint-name"><a [routerLink]="['/tours/view', item._id]">{{item.name}} [{{item?.owner?.companyName}}]</a></h2>
             <ul class="pateint-deatil">
               <span *ngIf="!item.images?.length"><img class="img-class" src="images/random.png" /></span>
               <span *ngIf="item.images?.length > 0 && item.featuredImage?.url"><img class="img-class" [src]="item.featuredImage?.url" /></span>
@@ -44,8 +44,9 @@
         </section>
         <section class="col s4 detail-btn">
             <ul>
-                <li *ngIf="item.approved == undefined || item.approved === true"><a class="btn-floating waves-effect green waves-light  lighten-2 tooltipped" href="javascript:void(0);" (click)="disapproveTour(item)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a></li>
-                <li *ngIf="item.approved === false"><a class="btn-floating waves-effect waves-light red lighten-2 tooltipped" href="javascript:void(0);" (click)="approveTour(item)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
+                <li *ngIf="item.approved === true && item.active === false"><a class="btn-floating waves-effect red waves-light  lighten-2 tooltipped" href="javascript:void(0);" (click)="activate(item)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
+                <li *ngIf="item.approved === true && item.active === true"><a class="btn-floating waves-effect green waves-light  lighten-2 tooltipped" href="javascript:void(0);" (click)="deactivate(item)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a></li>
+                <li *ngIf="item.approved === false"><a class="btn-floating waves-effect waves-light teal lighten-1 tooltipped" href="javascript:void(0);" (click)="approveTour(item)" data-position="top" data-delay="0" data-tooltip="Approve"><i class="material-icons">check_circle</i></a></li>
                 <li *ngIf="!item.deleted"><a class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deleteTour(item)" data-position="top" data-delay="0" data-tooltip="Delete Tour"><i class="material-icons">delete</i></a></li>
             </ul>
         </section>

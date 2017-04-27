@@ -234,4 +234,70 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
         });
       }, 500);
     }
+
+    verifyCertificate (user: User) {
+      if (! confirm("Are you sure to verify the supplier's certificate?")) {
+          return false;
+      }
+
+      this.call("verifyAgentCertificate", user._id, (err, res) => {
+        if (! err) {
+          showAlert("Agent Certificate has been verified successfully.", "success");
+
+          user.profile.supplier.agentCertificate.verified = true;
+        } else {
+          showAlert("Error verifying agent certificate.", "danger");
+        }
+      })
+    }
+
+    unverifyCertificate (user: User) {
+      if (! confirm("Are you sure to unverify the supplier's certificate?")) {
+          return false;
+      }
+
+      this.call("unverifyAgentCertificate", user._id, (err, res) => {
+        if (! err) {
+          showAlert("Agent Certificate has been unverified successfully.", "success");
+
+          user.profile.supplier.agentCertificate.verified = false;
+        } else {
+          console.log(err);
+          showAlert("Error verifying agent certificate.", "danger");
+        }
+      })
+    }
+
+    verifyIdentity(user: User) {
+      if (! confirm("Are you sure to verify the supplier's identity?")) {
+        return false;
+      }
+
+      this.call("verifyAgentIdentity", user._id, (err, res) => {
+        if (! err) {
+          showAlert("Agent Identity has been verified successfully.", "success");
+
+          user.profile.supplier.agentIdentity.verified = true;
+        } else {
+          showAlert("Error verifying agent certificate.", "danger");
+        }
+      })
+    }
+
+    unverifyIdentity(user: User) {
+      if (! confirm("Are you sure to unverify the supplier's identity?")) {
+        return false;
+      }
+
+      this.call("unverifyAgentIdentity", user._id, (err, res) => {
+        if (! err) {
+          showAlert("Agent Identity has been unverified successfully.", "success");
+
+          user.profile.supplier.agentIdentity.verified = false;
+        } else {
+          console.log(err);
+          showAlert("Error verifying agent certificate.", "danger");
+        }
+      })
+    }
 }
