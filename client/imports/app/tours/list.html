@@ -29,7 +29,7 @@
 [hidden]="item.deleted">
     <section class="pateint-list">
         <section class="col s8 mar-tp10">
-            <h2 class="pateint-name"><a [routerLink]="['/tours/view', item._id]">{{item.name}} [{{item?.owner?.companyName}}]</a></h2>
+            <h2 class="pateint-name"><a [routerLink]="['/tours/view', item._id]">{{item.name}}</a></h2>
             <ul class="pateint-deatil">
               <span *ngIf="!item.images?.length"><img class="img-class" src="images/random.png" /></span>
               <span *ngIf="item.images?.length > 0 && item.featuredImage?.url"><img class="img-class" [src]="item.featuredImage?.url" /></span>

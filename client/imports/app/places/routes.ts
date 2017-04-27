@@ -6,7 +6,7 @@ import { UpdateSubadminComponent } from "./update";
 import { ListSubadminComponent } from "./list";
 
 export const routes = [
-    {path: "places/create", component: CreateSubadminComponent },
+    /*{path: "places/create", component: CreateSubadminComponent },
     {path: "places/list", component: ListSubadminComponent },
-    {path: "places/update/:id", component: UpdateSubadminComponent }
+    {path: "places/update/:id", component: UpdateSubadminComponent }*/
 ];

@@ -1,5 +1,5 @@
 <section *ngIf="!! tour">
-  <h2 class="header red-text text-lighten-1" color="primary">TOUR'S DETAILS</h2>
+  <h2 class="header red-text text-lighten-1" color="primary">TOUR DETAILS</h2>
   <div class="row">
     <!-- left col starts -->
     <div class="col s4">
@@ -14,28 +14,39 @@
       <div class="row pt-detail">
         <div class="col s12">
           <div class="center-img">
-            <img *ngIf="!! tour.owner?.image?.url" src="images/user.png" class="img-class">
-            <img *ngIf="! tour.owner?.image?.url" src="images/user.png" class="img-class">
+            <img *ngIf="!! owner.profile.image?.url" [src]="owner.profile.image?.url" class="img-class">
+            <img *ngIf="! owner.profile.image?.url" src="images/user.png" class="img-class">
           </div>
         </div>
-        <p class="col s12" style="font-size: 20px;">{{owner.profile.supplier.companyName}}</p>
+
         <div class="col s12">
-          <div class="col s8">
-            <label>Agent Certificate</label>
-          </div>
-          <div class="col s4">
-            <a href="{{owner.profile.supplier.agentCertificate.url}}" download title="{{owner.profile.supplier.agentCertificate.name}}">
-              <h5 style="overflow: hidden">{{owner.profile.supplier.agentCertificate?.name}}<h5>
+            <h3>{{owner.profile.supplier?.companyName}}</h3>
+
+            <h4>Agent Certificate</h4>
+
+            <a href="{{owner.profile.supplier?.agentCertificate.url}}" download title="{{owner.profile.supplier?.agentCertificate.name}}">
+              <h5 style="overflow: hidden">{{owner.profile.supplier?.agentCertificate?.name}}</h5>
             </a>
-            </div>
+
+            <label>Verified</label>:
+            <span *ngIf="owner.profile.supplier?.agentCertificate.verified">Yes</span>
+            <span *ngIf="!owner.profile.supplier?.agentCertificate.verified">No</span>
+
         </div>
         <div class="col s12">
-          <div class="col s8">
-            <label>Agent Identity</label>
-          </div>
-          <div class="col s4">
-            <h5>{{owner?.profile.supplier?.ownerName}}<h5>
-          </div>
+
+            <h4>Agent Identity</h4>
+
+
+            <h5>{{owner.profile.supplier?.ownerName}}</h5>
+            <a href="{{owner.profile.supplier?.agentIdentity.url}}" download title="{{owner.profile.supplier?.agentIdentity.name}}">
+              <h5 style="overflow: hidden">{{owner.profile.supplier?.agentIdentity?.name}}</h5>
+            </a>
+
+            <label>Verified</label>:
+            <span *ngIf="owner.profile.supplier?.agentIdentity.verified">Yes</span>
+            <span *ngIf="!owner.profile.supplier?.agentIdentity.verified">No</span>
+
         </div>
       </div>
     </div>
@@ -44,13 +55,15 @@
     <!-- right col starts -->
     <div class= "col s8">
       <div class="pt-detail row"><div class="col s12">
-          <h2>Tour Name: {{tour.name}}</h2>
+          <h2>{{tour.name}}</h2>
           <p class="col s6">Departure: {{tour.departure}}</p>
           <p class="col s6">Destination: {{tour.destination}}</p>
           <p class="col s6">No. of Days: {{tour.noOfDays}}</p>
           <p class="col s6">No. of Nights: {{tour.noOfNights}}</p>
           <p class="col s6">Tour Type: {{tour.tourType}}</p>
           <p class="col s6">Tour Pace: {{tour.tourPace}}</p>
+          <p class="col s6">Guide Included: <span [innerHTML]="tour.hasGuide == true ? 'Yes' : 'No'"></span></p>
+          <p class="col s6">Flight Included: <span [innerHTML]="tour.hasFlight == true ? 'Yes' : 'No'"></span></p>
       </div></div>
 
       <div class="row pt-detail"><div class="col s12">
@@ -80,11 +93,11 @@
           <h4>Day <span [innerHTML]="i+1"></span> {{itenerary.title}}</h4>
           <p [innerHTML]="itenerary.description"></p>
           <div class="sub-head">
-            <label>Hotel</label>
-            <p>{{itenerary.hotelName || itenerary.hotelType}}</p>
+            <label>Hotel</label>:
+            <span>{{itenerary.hotelName || itenerary.hotelType}}</span>
           </div>
           <div class="sub-head">
-            <label>Meals</label>
+            <h5>Meals</h5>
             <p>
               <span class="radio-wrap">
                 <img src="images/imgpsh_fullsize.png" alt="" *ngIf="!itenerary.hasBreakfast">
@@ -118,6 +131,16 @@
             <ul>
               <li *ngFor="let text of tour.exclusions">{{text}}</li>
             </ul>
+
+            <h4>Attached Policies</h4>
+            <p *ngIf="tour.cancellationPolicy">
+              <span><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+              <a href="{{tour.cancellationPolicy.url}}" download>{{tour.cancellationPolicy.name}}</a>
+            </p>
+            <p *ngIf="tour.refundPolicy">
+              <span><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+              <a href="{{tour.refundPolicy.url}}" download>{{tour.refundPolicy.name}}</a>
+            </p>
         </div>
       </div>
 
