@@ -18,27 +18,26 @@
             <img *ngIf="! tour.owner?.image?.url" src="images/user.png" class="img-class">
           </div>
         </div>
-        <p class="col s12" style="font-size: 20px;">{{tour.owner.companyName}}</p>
+        <p class="col s12" style="font-size: 20px;">{{owner.profile.supplier.companyName}}</p>
         <div class="col s12">
           <div class="col s8">
-            <label>Agent Certificate Status</label>
+            <label>Agent Certificate</label>
           </div>
           <div class="col s4">
-            <label *ngIf="! tour.owner.agentCertificate?.verified">Pending</label>
-            <label *ngIf="tour.owner.agentCertificate?.verified">Verified</label>
-          </div>
+            <a href="{{owner.profile.supplier.agentCertificate.url}}" download title="{{owner.profile.supplier.agentCertificate.name}}">
+              <h5 style="overflow: hidden">{{owner.profile.supplier.agentCertificate?.name}}<h5>
+            </a>
+            </div>
         </div>
         <div class="col s12">
           <div class="col s8">
-            <label>Agent Identity Status</label>
+            <label>Agent Identity</label>
           </div>
           <div class="col s4">
-            <label *ngIf="! tour.owner.agentIdentity?.verified">Pending</label>
-            <label *ngIf="tour.owner.agentIdentity?.verified">Verified</label>
+            <h5>{{owner?.profile.supplier?.ownerName}}<h5>
           </div>
         </div>
       </div>
-
     </div>
     <!-- left col ends -->
 

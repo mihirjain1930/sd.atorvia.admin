@@ -4,6 +4,7 @@ import { Subscription } from "rxjs";
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { Tour } from "../../../../both/models/tour.model";
+import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
 
 import template from './view.html';
@@ -18,6 +19,7 @@ export class ViewTourComponent extends MeteorComponent {
   tour: Tour;
   paramsSub: Subscription;
   tourId: string;
+  owner: User;
   error: string;
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -33,15 +35,16 @@ export class ViewTourComponent extends MeteorComponent {
           this.tourId = id;
           //console.log("patientId:", patientId);
 
-          this.call("tours.findOne", {_id: id}, (err, res)=> {
-              if (err || typeof res == "undefined" || res._id !== id) {
+          this.call("tours.findOne", {_id: id}, {with: {owner: true}}, (err, res)=> {
+              if (err || typeof res == "undefined" || typeof res.tour == "undefined" || res.tour._id !== id) {
                   showAlert("Error while fetching tour data.", "danger");
                   this.zone.run(() => {
                     this.router.navigate(['/tours/list']);
                   });
                   return;
               }
-              this.tour = res;
+              this.tour = <Tour>res.tour;
+              this.owner = <User>res.owner;
           });
       });
 
