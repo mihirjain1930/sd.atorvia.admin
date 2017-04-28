@@ -5,17 +5,21 @@
     <div class="col s4">
 
       <div class="row pt-detail">
-        <div class="col s6 pt-detail" *ngFor="let image of tour.images">
-          <img *ngIf="! image.url" class="img-class" src="images/random.png" style="width: 100%;" />
-          <a *ngIf="!! image.url" href="image.url" target="_blank"><img class="img-class" [src]="image.url" style="width: 100%;" />
-        </div>
+        <div class="col s12">
+          <h2>Tour Gallery</h2>
+          <div class="col s6 pt-detail" *ngFor="let image of tour.images">
+            <img *ngIf="! image.url" class="img-class" src="images/random.png" style="width: 100%;" />
+            <a *ngIf="!! image.url" [href]="image.url" target="_blank"><img class="img-class" [src]="image.url" style="width: 100%;" />
+          </div>
+      </div>
       </div>
 
       <div class="row pt-detail">
         <div class="col s12">
+          <h2> Supplier's Details</h2>
           <div class="center-img">
-            <img *ngIf="!! owner.profile.image?.url" [src]="owner.profile.image?.url" class="img-class">
             <img *ngIf="! owner.profile.image?.url" src="images/user.png" class="img-class">
+            <img *ngIf="!! owner.profile.image?.url" [src]="owner.profile.image?.url" class="img-class">
           </div>
         </div>
 

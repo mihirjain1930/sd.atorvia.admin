@@ -1,0 +1,47 @@
+<h2 class="header red-text text-lighten-1" color="primary">
+    <span>Bookings</span>
+</h2>
+
+<section class="serach-bg" *ngIf="itemsSize>=0">
+    <section class="col s1 closeSearch" *ngIf="!!searchString">
+        <a class="" (click)="clearsearch(searchString='')"><i class="material-icons">clear</i></a>
+    </section>
+    <section class="search col s9">
+        <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
+        <label class="tooltipped" for="search" (click)="search(searchtext.value)" data-position="top" data-delay="0" data-tooltip="Click to Search"><i class="material-icons">search</i></label>
+    </section>
+</section>
+
+<div class="loading">
+    Loading...
+</div>
+
+<section *ngIf="itemsSize==0">
+    No tours have been added yet.
+</section>
+
+<pagination-controls id="tours" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+
+<section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow"
+*ngFor="let item of items"
+[attr.data-item-id]="item._id"
+[ngClass]="{'red accent-1': item.deleted, 'red lighten-4': item.active === false}"
+[hidden]="item.deleted">
+    <section class="pateint-list">
+        <section class="col s8 mar-tp10">
+            <h2 class="pateint-name"><a [routerLink]="['/bookings/view', item._id]">{{item.tour?.name}}</a></h2>
+            <ul class="pateint-deatil">
+              <span *ngIf="!item.tour.featuredImage?.url"><img class="img-class" src="images/random.png" /></span>
+              <span *ngIf="item.tour.featuredImage?.url"><img class="img-class" [src]="item.tour.featuredImage?.url" /></span>
+                <li style="width: 45%; float: left;">Departure: {{item.tour.departure}}</li>
+                <li>Destination: {{item.tour.destination}}</li>
+                <li style="width: 45%; float: left;">Customer: {{item.user.firstName}} {{item.user.lastName}}</li>
+                <li *ngIf="!! item.tour.supplier?.companyName">Supplier: {{item.tour.supplier?.companyName}}</li>
+                <li style="width:100%;float: left; margin-left: 65px;">Booking Date : {{item.bookingDate | date}}</li>
+                <li style="width:100%;float: left; margin-left: 65px;">Total Price: AUD ${{item.totalPrice}}</li>
+            </ul>
+        </section>
+    </section>
+</section>
+
+<pagination-controls id="tours" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
