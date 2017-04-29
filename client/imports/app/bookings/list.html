@@ -20,7 +20,7 @@
     No tours have been added yet.
 </section>
 
-<pagination-controls id="tours" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<pagination-controls id="bookings" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
 <section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow"
 *ngFor="let item of items"
@@ -28,20 +28,38 @@
 [ngClass]="{'red accent-1': item.deleted, 'red lighten-4': item.active === false}"
 [hidden]="item.deleted">
     <section class="pateint-list">
-        <section class="col s8 mar-tp10">
+        <section class="col s12 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/bookings/view', item._id]">{{item.tour?.name}}</a></h2>
-            <ul class="pateint-deatil">
-              <span *ngIf="!item.tour.featuredImage?.url"><img class="img-class" src="images/random.png" /></span>
-              <span *ngIf="item.tour.featuredImage?.url"><img class="img-class" [src]="item.tour.featuredImage?.url" /></span>
-                <li style="width: 45%; float: left;">Departure: {{item.tour.departure}}</li>
-                <li>Destination: {{item.tour.destination}}</li>
-                <li style="width: 45%; float: left;">Customer: {{item.user.firstName}} {{item.user.lastName}}</li>
-                <li *ngIf="!! item.tour.supplier?.companyName">Supplier: {{item.tour.supplier?.companyName}}</li>
-                <li style="width:100%;float: left; margin-left: 65px;">Booking Date : {{item.bookingDate | date}}</li>
-                <li style="width:100%;float: left; margin-left: 65px;">Total Price: AUD ${{item.totalPrice}}</li>
-            </ul>
+            <div class="row">
+              <div class="col s4">
+                <span *ngIf="!item.tour.featuredImage?.url"><img class="img-class" src="images/random.png" /></span>
+                <span *ngIf="item.tour.featuredImage?.url"><img class="img-class" [src]="item.tour.featuredImage?.url" style="width: 100%;" /></span>
+              </div>
+              <div class="col s8">
+                <div class="row">
+                  <div class="col s6">
+                    Departure: {{item.tour.departure}}
+                  </div>
+                  <div class="col s6">
+                    Destination: {{item.tour.destination}}
+                  </div>
+                  <div class="col s6">
+                    Customer: {{item.user.firstName}} {{item.user.lastName}}
+                  </div>
+                  <div class="col s6">
+                    Supplier: {{item.tour.supplier?.companyName}}
+                  </div>
+                  <div class="col s6">
+                    Booking Date : {{item.bookingDate | date}}
+                  </div>
+                  <div class="col s6">
+                    Total Price: AUD {{item.totalPrice}}
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
     </section>
 </section>
 
-<pagination-controls id="tours" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+<pagination-controls id="bookings" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>

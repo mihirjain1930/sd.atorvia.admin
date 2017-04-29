@@ -40,6 +40,7 @@ Meteor.methods({
                 "$or": [
                     { "_id": { $regex: `.*${searchString}.*`, $options: 'i' } },
                     { "tour.name": { $regex: `.*${searchString}.*`, $options: 'i' } },
+                    { "tour.supplier.companyName": { $regex: `.*${searchString}.*`, $options: 'i' } },
                     { "user.firstName": { $regex: `.*${searchString}.*`, $options: 'i' } },
                     { "user.lastName": { $regex: `.*${searchString}.*`, $options: 'i' } },
                     { "travellers.firstName": { $regex: `.*${searchString}.*`, $options: 'i' } },

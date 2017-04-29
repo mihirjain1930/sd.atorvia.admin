@@ -67,7 +67,7 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
     this.setOptionsSub();
 
     this.paginationService.register({
-      id: "booking",
+      id: "bookings",
       itemsPerPage: 10,
       currentPage: options.curPage,
       totalItems: this.itemsSize
@@ -106,9 +106,9 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
           return;
         }
         this.items = res.data;
-        // this.itemsSize = res.count;
+        this.itemsSize = res.count;
         // console.log(res.data);
-        this.paginationService.setTotalItems("booking", this.itemsSize);
+        this.paginationService.setTotalItems("bookings", this.itemsSize);
       })
     });
   }
