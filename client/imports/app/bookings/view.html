@@ -82,14 +82,16 @@
       </div>
 
       <div class="row pt-detail">
-        <h2>Traveller's Details</h2>
-        <div class="col s12" *ngFor="let traveller of booking.travellers; let i=index;">
-          <h4>Traveller <span [innerHTML]="i+1"></span></h4>
-          <div>
-            <p class="col s6">First Name: {{traveller.firstName}}</p>
-            <p class="col s6">Last Name: {{traveller.lastName}}</p>
-            <p class="col s6" *ngIf="!! traveller.email">Email : {{traveller.email}}</p>
-            <p class="col s6" *ngIf="!! traveller.contact">Contact : {{traveller.contact}}</p>
+        <div class="col s12">
+          <h2>Traveller's Details</h2>
+          <div class="col s12" *ngFor="let traveller of booking.travellers; let i=index;">
+            <h4>Traveller <span [innerHTML]="i+1"></span></h4>
+            <div>
+              <p class="col s6">First Name: {{traveller.firstName}}</p>
+              <p class="col s6">Last Name: {{traveller.lastName}}</p>
+              <p class="col s6" *ngIf="!! traveller.email">Email : {{traveller.email}}</p>
+              <p class="col s6" *ngIf="!! traveller.contact">Contact : {{traveller.contact}}</p>
+            </div>
           </div>
         </div>
       </div>

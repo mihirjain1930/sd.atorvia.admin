@@ -43,10 +43,10 @@
             <ul>
                 <!-- <li><a href="javascript:void(0);" [routerLink]="['/sub-admin/update', user._id]" >Edit User</a></li> -->
                 <!--<li><a href="javascript:void(0);" [routerLink]="['/sub-admin/passwd', user._id]" >Change Password</a></li>-->
-                <li *ngIf="user.profile.supplier.agentCertificate.verified"><a href="javascript:void(0);" (click)="unverifyCertificate(user)">Unverify Certificate</a></li>
-                <li *ngIf="! user.profile.supplier.agentCertificate.verified"><a href="javascript:void(0);" (click)="verifyCertificate(user)">Verify Certificate</a></li>
-                <li *ngIf="user.profile.supplier.agentIdentity.verified"><a href="javascript:void(0);" (click)="unverifyIdentity(user)">Unverify Identity</a></li>
-                <li *ngIf="! user.profile.supplier.agentIdentity.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Identity</a></li>
+                <li *ngIf="user.profile.supplier.agentCertificate?.verified"><a href="javascript:void(0);" (click)="unverifyCertificate(user)">Unverify Certificate</a></li>
+                <li *ngIf="user.profile.supplier.agentCertificate?.url && ! user.profile.supplier.agentCertificate?.verified"><a href="javascript:void(0);" (click)="verifyCertificate(user)">Verify Certificate</a></li>
+                <li *ngIf="user.profile.supplier.agentIdentity?.verified"><a href="javascript:void(0);" (click)="unverifyIdentity(user)">Unverify Identity</a></li>
+                <li *ngIf="user.profile.supplier.agentIdentity?.url && ! user.profile.supplier.agentIdentity?.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Identity</a></li>
                 <li *ngIf="user.active == undefined || user.active === true"><a href="javascript:void(0);" (click)="deactivate(user)">Deactivate</a></li>
                 <li *ngIf="user.active === false"><a href="javascript:void(0);" (click)="activate(user)">Activate</a></li>
                 <li *ngIf="!user.deleted"><a href="javascript:void(0);" (click)="deleteUser(user)">Delete</a></li>

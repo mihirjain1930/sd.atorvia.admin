@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Injectable, NgZone } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
+import { MeteorObservable } from "meteor-rxjs";
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Roles } from 'meteor/alanning:roles';
 import {showAlert} from "../app/shared/show-alert";
@@ -14,20 +15,20 @@ export class AuthService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot
   ): Observable<boolean>|Promise<boolean>|boolean {
-    let roles = route.data["roles"] as Array<string>;
+    return MeteorObservable.subscribe("users").map(() => {
+      let roles = route.data["roles"] as Array<string>;
 
-    if (! Roles.userIsInRole(Meteor.userId(), roles) ) {
-
-      if (this.user.isLoggedIn()) {
-        this.router.navigate(['/dashboard']);
+      if (! Roles.userIsInRole(Meteor.userId(), roles) ) {
+        if (this.user.isLoggedIn()) {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+        return false;
       } else {
-        this.router.navigate(['/login']);
-        //showAlert("You are not authorized to access this page.", "danger");
+        return true;
       }
+    });
 
-      return false;
-    }
-
-    return true;
   }
 }

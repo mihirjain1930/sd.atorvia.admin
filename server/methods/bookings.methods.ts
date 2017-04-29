@@ -85,13 +85,6 @@ Meteor.methods({
       bookingsCount.completed = Meteor.call("bookings.find", {}, {"confirmed": true, "completed": true}, "", true);
 
       return bookingsCount;
-    },
-    "bookings.sales": (lastday: Date, firstday: Date) => {
-      console.log(firstday, lastday);
-      console.log(new Date(firstday));
-      let user = Meteor.user();
-      let cursor = Bookings.collection.find({"tour.supplierId": user._id, confirmed: true, completed: false, bookingDate:{$gte: lastday, $lte: firstday}});
-      return {count: cursor.count(), data: cursor.fetch()};
     }
 
 });
