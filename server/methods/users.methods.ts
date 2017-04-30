@@ -238,37 +238,61 @@ Meteor.methods({
     "verifyAgentCertificate": (id: string) => {
       userIsInRole(["super-admin"]);
 
-      return Meteor.users.update({ _id: id}, {
+      let retVal = Meteor.users.update({ _id: id}, {
         $set: {
             "profile.supplier.agentCertificate.verified": true
         }
       });
+
+      Meteor.setTimeout(() => {
+        Meteor.call("tours.updateUser", id);
+      }, 0);
+
+      return retVal;
     },
     "verifyAgentIdentity": (id: string) => {
       userIsInRole(["super-admin"]);
 
-      return Meteor.users.update({ _id: id}, {
+      let retVal = Meteor.users.update({ _id: id}, {
         $set: {
             "profile.supplier.agentIdentity.verified": true
         }
       });
+
+      Meteor.setTimeout(() => {
+        Meteor.call("tours.updateUser", id);
+      }, 0);
+
+      return retVal;
     },
     "unverifyAgentIdentity": (id: string) => {
       userIsInRole(["super-admin"]);
 
-      return Meteor.users.update({ _id: id}, {
+      let retVal = Meteor.users.update({ _id: id}, {
         $set: {
             "profile.supplier.agentIdentity.verified": false
         }
       });
+
+      Meteor.setTimeout(() => {
+        Meteor.call("tours.updateUser", id);
+      }, 0);
+
+      return retVal;
     },
     "unverifyAgentCertificate": (id: string) => {
       userIsInRole(["super-admin"]);
 
-      return Meteor.users.update({ _id: id}, {
+      let retVal = Meteor.users.update({ _id: id}, {
         $set: {
             "profile.supplier.agentCertificate.verified": false
         }
       });
+
+      Meteor.setTimeout(() => {
+        Meteor.call("tours.updateUser", id);
+      }, 0);
+
+      return retVal;
     }
 });

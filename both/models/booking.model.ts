@@ -4,15 +4,46 @@ export interface Booking extends CollectionObject {
     tour: {
       id: string;
       supplierId: string;
+      supplier?: {
+        companyName: string;
+        agentIdentity: {
+          verified: boolean;
+        };
+        agentCertificate: {
+          verified: boolean;
+        };
+        image: {
+          id: string;
+          url: string;
+          name: string;
+        };
+      };
       name: string;
       departure: string;
       destination: string;
+      totalMeals: number;
+      noOfDays: number;
+      noOfNights: number;
       featuredImage: {
         id: string;
         url: string;
         name: string;
       };
       dateRangeId?: string;
+      cancellationPolicy: {
+        id: string;
+        name: string;
+        url: string;
+      };
+      refundPolicy: {
+        id: string;
+        name: string;
+        url: string;
+      };
+      tourType: string;
+      tourPace: string;
+      hasGuide: boolean;
+      hasFlight: boolean;
     };
     user: {
       id: string;
@@ -43,7 +74,7 @@ export interface Booking extends CollectionObject {
         contact: string;
         addressLine1: string;
         addressLine2: string;
-        town: string;
+        suburb: string;
         state: string;
         postCode: string;
         country: string;
@@ -65,9 +96,7 @@ export interface Booking extends CollectionObject {
     paymentDate: Date;
     active: boolean;
     confirmed: boolean;
-    confirmedAt: Date;
     cancelled: boolean;
-    cancelledAt: Date;
     completed: boolean;
     cancellationReason: string;
     denied: boolean;
