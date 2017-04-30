@@ -12,7 +12,7 @@ interface Options {
 }
 
 Meteor.methods({
-    "tours.find": (options: Options, criteria: any, searchString: string) => {
+    "tours.find": (options: Options, criteria: any, searchString: string, count: boolean = false) => {
         let where:any = [];
         where.push({
             "$or": [{deleted: false}, {deleted: {$exists: false} }]
@@ -37,6 +37,9 @@ Meteor.methods({
         }
 
         let cursor = Tours.collection.find({$and: where}, options);
+        if (count === true) {
+          return cursor.count();
+        }
         return {count: cursor.count(), data: cursor.fetch()};
     },
     "tours.findOne": (criteria: any, options: {with?: {owner: boolean}}= {}) => {
@@ -62,42 +65,6 @@ Meteor.methods({
         let numOfTours = Tours.collection.find({"owner.id": tour.owner.id, "approved": true, "active": true, "deleted": false}).count();
         return {tour, owner, numOfTours};
       }
-    },
-    "tours.count": ( criteria: any, searchString: string ) => {
-      let where:any = [];
-      where.push({
-          "$or": [{deleted: false}, {deleted: {$exists: false} }]
-      }, {
-        "$or": [{active: true}, {active: {$exists: false} }]
-      });
-
-      if (_.isEmpty(criteria)) {
-        criteria = { };
-      }
-      criteria.approved = true;
-      where.push(criteria);
-
-      // match search string
-      if (typeof searchString === 'string' && searchString.length) {
-          // allow search on firstName, lastName
-          where.push({
-              "$or": [
-                  { "name": { $regex: `.*${searchString}.*`, $options: 'i' } },
-                  { "departure": { $regex: `.*${searchString}.*`, $options: 'i' } },
-                  { "destination": { $regex: `.*${searchString}.*`, $options: 'i' } }
-              ]
-          });
-      }
-
-      let approvedCount =  Tours.collection.find({$and: where}).count();
-
-      // find pending count
-      criteria.approved = false;
-      let pendingCount =  Tours.collection.find({$and: where}).count();
-      let count = { };
-      count["approvedCount"] = approvedCount;
-      count["pendingCount"] = pendingCount;
-      return count;
     },
     "tours.delete": (id: string) => {
       let tour = Tours.collection.findOne({_id: id});
