@@ -40,6 +40,7 @@
               <span class="level-link" *ngIf="!user.profile.supplier?.agentIdentity?.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Agent Identity</a></span>
               <span class="level-link" *ngIf="user.profile.supplier?.agentIdentity?.verified"><a href="javascript:void(0);" (click)="unverifyIdentity(user)">UnVerify Agent Identity</a></span>
             </span>
+            <span class="level-link"><a href="javascript:void(0);" [routerLink]="['/sub-admin/payout', user._id]">Payout Form</a></span>
           </section>
         </div>
       </section>
