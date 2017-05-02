@@ -86,6 +86,32 @@ Meteor.methods({
       bookingsCount.completed = Meteor.call("bookings.find", {}, {"confirmed": true, "completed": true}, "", true);
 
       return bookingsCount;
+    },
+    "bookings.statistics":(id: string) => {
+      let data = Bookings.collection.aggregate([{
+        "$project":
+          {
+            "tour.supplierId":1,
+            "totalPrice":1,
+            "month": {"$month":"$bookingDate"},
+            "year": {"$year": "$bookingDate"}
+          }},
+        {
+          "$match":
+            {
+              "tour.supplierId": id
+            }
+        },
+        {
+          "$group":
+            {
+              _id:{"month":"$month","year":"$year"},
+              "totalPrice":{"$sum":"$totalPrice"},
+              "count":{"$sum":1}
+            }
+        }
+      ])
+      return data;
     }
 
 });

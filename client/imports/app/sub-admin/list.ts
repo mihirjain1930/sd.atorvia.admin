@@ -134,7 +134,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
                 jQuery(".loading").hide();
                 if (err) {
                     //console.log("error while fetching patient list:", err);
-                    showAlert("Error while fetching users list.", "danger");
+                    showAlert("Error while fetching suppliers list.", "danger");
                     return;
                 }
                 this.items = res.data;
@@ -168,13 +168,13 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
     }
 
     activate(user: User) {
-        if (! confirm("Are you sure to activate this subadmin?")) {
+        if (! confirm("Are you sure to activate this supplier?")) {
             return false;
         }
 
         Meteor.call("users.activate", user._id, (err, res) => {
             if (err) {
-                showAlert("Error calling users.activate", "danger");
+                showAlert("Error while processing your request.", "danger");
                 return;
             }
             user.active = true;
@@ -186,13 +186,13 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
     }
 
     deactivate(user: User) {
-        if (! confirm("Are you sure to deactivate this subadmin?")) {
+        if (! confirm("Are you sure to deactivate this supplier?")) {
             return false;
         }
 
         Meteor.call("users.deactivate", user._id, (err, res) => {
             if (err) {
-                showAlert("Error calling users.deactivate", "danger");
+                showAlert("Error while processing your request.", "danger");
                 return;
             }
             user.active = false;
@@ -204,13 +204,13 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
     }
 
     deleteUser(user: User) {
-        if (! confirm("Are you sure to delete this subadmin?")) {
+        if (! confirm("Are you sure to delete this supplier?")) {
             return false;
         }
 
         Meteor.call("users.delete", user._id, (err, res) => {
             if (err) {
-                showAlert("Error calling users.delete", "danger");
+                showAlert("Error while processing your request.", "danger");
                 return;
             }
             //set user.deleted to true to remove from list
@@ -245,8 +245,9 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
           showAlert("Agent Certificate has been verified successfully.", "success");
 
           user.profile.supplier.agentCertificate.verified = true;
+          this.changeDetectorRef.detectChanges();
         } else {
-          showAlert("Error verifying agent certificate.", "danger");
+          showAlert("Error while processing your request.", "danger");
         }
       })
     }
@@ -261,9 +262,9 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
           showAlert("Agent Certificate has been unverified successfully.", "success");
 
           user.profile.supplier.agentCertificate.verified = false;
+          this.changeDetectorRef.detectChanges();
         } else {
-          console.log(err);
-          showAlert("Error verifying agent certificate.", "danger");
+          showAlert("Error while processing your request.", "danger");
         }
       })
     }
@@ -278,8 +279,9 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
           showAlert("Agent Identity has been verified successfully.", "success");
 
           user.profile.supplier.agentIdentity.verified = true;
+          this.changeDetectorRef.detectChanges();
         } else {
-          showAlert("Error verifying agent certificate.", "danger");
+          showAlert("Error while processing your request.", "danger");
         }
       })
     }
@@ -294,9 +296,9 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
           showAlert("Agent Identity has been unverified successfully.", "success");
 
           user.profile.supplier.agentIdentity.verified = false;
+          this.changeDetectorRef.detectChanges();
         } else {
-          console.log(err);
-          showAlert("Error verifying agent certificate.", "danger");
+          showAlert("Error while processing your request.", "danger");
         }
       })
     }

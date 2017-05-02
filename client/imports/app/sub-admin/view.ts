@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { Subscription } from "rxjs";
 import { User } from "../../../../both/models/user.model";
-import {showAlert} from "../shared/show-alert";
+import { showAlert } from "../shared/show-alert";
 
 import template from "./view.html";
 
@@ -17,6 +17,22 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
   userId: string;
   user: User;
   error: string;
+  bookingsStats: any[] = null;
+  monthsArr: string[] = [
+    "",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ]
   constructor(private router: Router, private route: ActivatedRoute, private zone: NgZone) {
     super();
   }
@@ -38,13 +54,20 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
                   return;
               }
               this.user = res;
-              console.log(this.user);
           });
+
+          this.call("bookings.statistics", id, (err, res) => {
+            if (err) {
+                //console.log("error while fetching patient data:", err);
+                showAlert("Error while fetching bookings stats.", "danger");
+                return;
+            }
+            this.bookingsStats = res;
+          })
       });
 
     this.error = '';
   }
-
 
   verifyCertificate (user: User) {
     if (! confirm("Are you sure to verify the supplier's certificate?")) {
@@ -57,7 +80,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
 
         user.profile.supplier.agentCertificate.verified = true;
       } else {
-        showAlert("Error verifying agent certificate.", "danger");
+        showAlert("Error while processing your request.", "danger");
       }
     })
   }
@@ -73,8 +96,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
 
         user.profile.supplier.agentCertificate.verified = false;
       } else {
-        console.log(err);
-        showAlert("Error verifying agent certificate.", "danger");
+        showAlert("Error while processing your request.", "danger");
       }
     })
   }
@@ -90,7 +112,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
 
         user.profile.supplier.agentIdentity.verified = true;
       } else {
-        showAlert("Error verifying agent certificate.", "danger");
+        showAlert("Error while processing your request.", "danger");
       }
     })
   }
@@ -106,8 +128,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
 
         user.profile.supplier.agentIdentity.verified = false;
       } else {
-        console.log(err);
-        showAlert("Error verifying agent certificate.", "danger");
+        showAlert("Error while processing your request.", "danger");
       }
     })
   }
