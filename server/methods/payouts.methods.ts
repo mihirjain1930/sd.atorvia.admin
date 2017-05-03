@@ -10,5 +10,23 @@ Meteor.methods({
   "payouts.insert": (payout: Payout) => {
     let payoutId = Payouts.collection.insert(payout);
     return payoutId;
+  },
+  "payouts.find": (options: Options, criteria: any = {}, count: boolean = false) => {
+      let where:any = [];
+      where.push({
+          "$or": [{deleted: false}, {deleted: {$exists: false} }]
+      }, {
+        "$or": [{active: true}, {active: {$exists: false} }]
+      });
+
+      if (!_.isEmpty(criteria)) {
+        where.push(criteria);
+      }
+
+      let cursor = Payouts.collection.find({$and: where}, options);
+      if (count === true) {
+        return cursor.count();
+      }
+      return {count: cursor.count(), data: cursor.fetch()};
   }
 })

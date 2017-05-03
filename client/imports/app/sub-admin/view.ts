@@ -2,11 +2,21 @@ import { Meteor } from "meteor/meteor";
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
-import { Subscription } from "rxjs";
+import { PaginationService } from "ng2-pagination";
+import { Observable, Subscription, Subject, BehaviorSubject } from "rxjs";
 import { User } from "../../../../both/models/user.model";
 import { showAlert } from "../shared/show-alert";
 
 import template from "./view.html";
+
+interface Pagination {
+  limit: number;
+  skip: number;
+}
+
+interface Options extends Pagination {
+  [key: string]: any
+}
 
 @Component({
   selector: '',
@@ -32,8 +42,17 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
     "Oct",
     "Nov",
     "Dec",
-  ]
-  constructor(private router: Router, private route: ActivatedRoute, private zone: NgZone) {
+  ];
+  payouts: Payout[] = null;
+  payoutsSize: number = -1;
+  pageSize: Subject<number> = new Subject<number>();
+  curPage: Subject<number> = new Subject<number>();
+  optionsSub: Subscription;
+
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private zone: NgZone,
+    private paginationService: PaginationService) {
     super();
   }
 
@@ -54,19 +73,70 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
                   return;
               }
               this.user = res;
+              this.fetchBookingsStats(id);
           });
 
-          this.call("bookings.statistics", id, (err, res) => {
-            if (err) {
-                //console.log("error while fetching patient data:", err);
-                showAlert("Error while fetching bookings stats.", "danger");
-                return;
-            }
-            this.bookingsStats = res;
-          })
       });
 
     this.error = '';
+  }
+
+  private fetchBookingsStats(supplierId) {
+    this.call("bookings.statistics", supplierId, (err, res) => {
+      if (err) {
+          //console.log("error while fetching patient data:", err);
+          showAlert("Error while fetching bookings stats.", "danger");
+          return;
+      }
+      this.bookingsStats = res;
+      this.fetchPayouts(supplierId);
+    });
+  }
+
+  private fetchPayouts(supplierId) {
+    let options: Options = {
+        limit: 5,
+        curPage: 1
+    };
+
+    this.paginationService.register({
+    id: "payouts",
+    itemsPerPage: 5,
+    currentPage: options.curPage,
+    totalItems: this.payoutsSize
+    });
+
+    this.optionsSub = Observable.combineLatest(
+        this.pageSize,
+        this.curPage
+    ).subscribe(([pageSize, curPage]) => {
+        const options: Options = {
+            limit: pageSize as number,
+            skip: ((curPage as number) - 1) * (pageSize as number),
+            sort: { "createdAt": -1 }
+        };
+
+        this.paginationService.setCurrentPage("payouts", curPage as number);
+
+        jQuery(".loading").show();
+        this.call("payouts.find", options, {supplierId: supplierId}, (err, res) => {
+          jQuery(".loading").hide();
+          if (err) {
+            showAlert("Error while fetching payouts data.", "danger");
+            return;
+          }
+          this.payouts = res.data;
+          this.payoutsSize = res.count;
+          this.paginationService.setTotalItems("payouts", this.payoutsSize);
+        });
+    });
+
+    this.pageSize.next(options.limit);
+    this.curPage.next(options.curPage);
+  }
+
+  onPageChanged(page: number): void {
+      this.curPage.next(page);
   }
 
   verifyCertificate (user: User) {

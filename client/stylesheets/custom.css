@@ -46,7 +46,8 @@ text-align: right;
   float: left;
 }
 .level-link {
-  margin-left: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .ul-level {

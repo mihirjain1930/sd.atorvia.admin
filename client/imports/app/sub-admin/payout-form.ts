@@ -64,6 +64,7 @@ export class PayoutSubadminComponent extends MeteorComponent implements OnInit {
     }
 
     let payoutData = {
+      supplierId: this.userId,
       amount: Number(this.payoutForm.value.amount),
       title: this.payoutForm.value.title,
       fromDate: new Date(this.payoutForm.value.fromDate),
@@ -73,8 +74,10 @@ export class PayoutSubadminComponent extends MeteorComponent implements OnInit {
 
     this.call("payouts.insert", payoutData, (err, res) => {
       if (! err) {
-        showAlert("Payment Process successful.", "success");
-        this.router.navigate(['/sub-admin/list']);
+        showAlert("Payout entry created successfully.", "success");
+        this.zone.run(() => {
+          this.router.navigate(['/sub-admin/view', this.userId]);
+        });
       }
     })
   }
