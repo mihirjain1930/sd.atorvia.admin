@@ -6,6 +6,10 @@ import { Payouts } from "../../both/collections/payouts.collection";
 import { Payout } from "../../both/models/payout.model";
 import * as _ from 'underscore';
 
+interface Options {
+  [key: string]: any;
+}
+
 Meteor.methods({
   "payouts.insert": (payout: Payout) => {
     let payoutId = Payouts.collection.insert(payout);

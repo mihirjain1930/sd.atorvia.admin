@@ -10,10 +10,7 @@ import template from "./dashboard.html";
 })
 
 export class DashboardComponent extends MeteorComponent implements OnInit {
-    usersActive: number;
-    usersInactive: number;
-    packagesActive: number;
-    totalUsers: number;
+  totalStats: any;
 
     constructor() {
         super();
@@ -29,10 +26,10 @@ export class DashboardComponent extends MeteorComponent implements OnInit {
                 console.log(err)
                 return;
             }
-            this.usersActive = res.users.active;
-            this.usersInactive = res.users.inactive;
-            this.packagesActive = res.packages.active;
-            this.totalUsers = (res.users.active) + (res.users.inactive)
+            
+            this.totalStats = res;
         });
+
+
     }
 }

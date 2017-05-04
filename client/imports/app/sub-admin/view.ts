@@ -5,6 +5,7 @@ import { MeteorComponent } from 'angular2-meteor';
 import { PaginationService } from "ng2-pagination";
 import { Observable, Subscription, Subject, BehaviorSubject } from "rxjs";
 import { User } from "../../../../both/models/user.model";
+import { Payout } from "../../../../both/models/payout.model";
 import { showAlert } from "../shared/show-alert";
 
 import template from "./view.html";
@@ -28,6 +29,11 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
   user: User;
   error: string;
   bookingsStats: any[] = null;
+  payouts: Payout[] = null;
+  payoutsSize: number = -1;
+  pageSize: Subject<number> = new Subject<number>();
+  curPage: Subject<number> = new Subject<number>();
+  optionsSub: Subscription;
   monthsArr: string[] = [
     "",
     "Jan",
@@ -43,11 +49,6 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
     "Nov",
     "Dec",
   ];
-  payouts: Payout[] = null;
-  payoutsSize: number = -1;
-  pageSize: Subject<number> = new Subject<number>();
-  curPage: Subject<number> = new Subject<number>();
-  optionsSub: Subscription;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -94,7 +95,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
   }
 
   private fetchPayouts(supplierId) {
-    let options: Options = {
+    let options = {
         limit: 5,
         curPage: 1
     };

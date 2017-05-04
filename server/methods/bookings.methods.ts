@@ -33,12 +33,17 @@ Meteor.methods({
           //console.log(criteria);
           where.push(criteria);
         }
+
         // match search string
-        if (typeof searchString === 'string' && searchString.length) {
+        if (isNaN(searchString) == false && searchString.length) {
+          searchString = Number(searchString);
+          where.push({
+              "$or": [{uniqueId: searchString}]
+          });
+        } else if (typeof searchString === 'string' && searchString.length) {
             // allow search on firstName, lastName
             where.push({
                 "$or": [
-                    { "_id": { $regex: `.*${searchString}.*`, $options: 'i' } },
                     { "tour.name": { $regex: `.*${searchString}.*`, $options: 'i' } },
                     { "tour.supplier.companyName": { $regex: `.*${searchString}.*`, $options: 'i' } },
                     { "user.firstName": { $regex: `.*${searchString}.*`, $options: 'i' } },
@@ -112,6 +117,41 @@ Meteor.methods({
         }
       ])
       return data;
-    }
+    },
+    "bookings.statistics.new":(criteria: any = {}) => {
+      let _id: any = {"year":"$year","month":"$month"};
+      let data = Bookings.collection.aggregate([
+        {
+          "$match":
+          {
+            "confirmed": true
+          }},
+          {
+            "$project":
+            {
+              "tour.supplierId":1,
+              "totalPrice":1,
+              "month": {"$month":"$bookingDate"},
+              "year": {"$year": "$bookingDate"},
+              "bookingDate": 1
+            }},
+            {
+              "$match": criteria
+            },
+            {
+              "$group":
+              {
+                _id: "$confirmed",
+                "totalPrice":{"$sum":"$totalPrice"},
+                "count":{"$sum":1}
+              }},
+              {
+                "$sort":
+                {
+                  "_id.year": 1, "_id.month": 1
+                }}
+              ])
+              return data;
+            }
 
 });

@@ -4,22 +4,22 @@
             <h2 class="header red-text text-lighten-1" color="primary">
                 Dashboard
             </h2>
-            <fieldset class="">
+            <fieldset class="" *ngIf="!! totalStats">
                 <legend> Statistics</legend>
-                <p>Total Suppliers: <strong></strong>20</p>
-                <p>Total Active Suppliers: <strong>15</strong></p>
-                <p>Total Customers: <strong>100</strong></p>
-                <p>Total Active Customers: <strong>80</strong></p>
+                <p>Total Suppliers: <strong>{{totalStats.activeSuppliers + totalStats.inactiveSuppliers}}</strong></p>
+                <p>Total Active Suppliers: <strong>{{totalStats.activeSuppliers}}</strong></p>
+                <p>Total Customers: <strong>{{totalStats.activeCustomers + totalStats.inactiveCustomers}}</strong></p>
+                <p>Total Active Customers: <strong>{{totalStats.activeCustomers}}</strong></p>
             </fieldset>
 
-            <fieldset class="">
+            <fieldset class="" *ngIf="!! totalStats">
                 <legend> Tour Statistics</legend>
-                <p>Total Tours: <strong>10</strong></p>
-                <p>Total Approved Tours: <strong>10</strong></p>
-                <p>Total Bookings: <strong>5</strong></p>
-                <p>Total Confirmed Bookings: <strong>2</strong></p>
-                <p>Total Sales (Last Month): <strong>A$ 1000</strong></p>
-                <p>Total Sales (Last 6 Months): <strong>A$ 5000</strong></p>
+                <p>Total Tours: <strong>{{totalStats.totalTours}}</strong></p>
+                <p>Total Approved Tours: <strong>{{totalStats.approvedTours}}</strong></p>
+                <p>Total Bookings: <strong>{{totalStats.totalBookings}}</strong></p>
+                <p>Total Confirmed Bookings: <strong>{{totalStats.confirmedBooking}}</strong></p>
+                <p>Total Sales (Last Month): <strong>A$ {{totalStats.lastMonthSales[0].totalPrice}}</strong></p>
+                <p>Total Sales (Last 6 Months): <strong>A$ {{totalStats.last6MonthsSales[0].totalPrice}}</strong></p>
             </fieldset>
         </div>
     </div>
