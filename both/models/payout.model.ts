@@ -5,7 +5,7 @@ export interface Payout extends CollectionObject {
     amount: number;
     fromDate: Date;
     toDate: Date;
-    comments: string;
+    title: string;
     status: string;
     createdAt: Date;
     modifiedAt: Date;

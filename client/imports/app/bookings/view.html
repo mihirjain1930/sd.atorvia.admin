@@ -75,7 +75,7 @@
             <p class="col s6">Booking Date: {{booking.bookingDate | date}}</p>
             <p class="col s6">No. of Travellers: {{booking.numOfTravellers}}</p>
             <p class="col s6">Price per adult: {{booking.pricePerAdult}}</p>
-            <p class="col s6">Price er child: {{booking.pricePerChild}}</p>
+            <p class="col s6">Price per child: {{booking.pricePerChild}}</p>
             <p class="col s6">Guide Included: <span [innerHTML]="booking.tour.hasGuide == true ? 'Yes' : 'No'"></span></p>
             <p class="col s6">Flight Included: <span [innerHTML]="booking.tour.hasFlight == true ? 'Yes' : 'No'"></span></p>
         </div>
