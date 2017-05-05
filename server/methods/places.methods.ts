@@ -84,28 +84,25 @@ Meteor.methods({
       let csv = require('csv-parser');
       let fs = require('fs');
 
-      fs.createReadStream('/home/rahul/Downloads/simplemaps-worldcities-basic.csv')
+      fs.createReadStream('/Users/rahul.sethi/Downloads/countries.csv')
       .pipe(csv())
       .on('data', Meteor.bindEnvironment((data) => {
-        if (typeof data.city_ascii !== "string") {
+        if (typeof data.name !== "string") {
           return;
         }
         let formData = {
-          name: data.city_ascii,
-          slug: slugify(data.city_ascii),
-          geometry: {
-            lat: data.lat,
-            lng: data.lng
-          },
-          province: data.province,
-          country: data.iso3,
+          name: data.name,
+          slug: slugify(data.name),
+          iso2: data["alpha-2"],
+          iso3: data["alpha-3"],
+          sortOrder: 1,
           active: true,
           createdAt: new Date()
         };
-        
-        console.log("insert ", data.city_ascii);
+
+        // console.log("insert ", formData);
         Places.collection.insert(formData);
-        
+
         })
       )
     }*/

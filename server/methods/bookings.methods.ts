@@ -11,13 +11,15 @@ interface Options {
 }
 
 Meteor.methods({
-    "bookings.find": (options: Options, criteria: any, searchString: string, count: boolean = false) => {
+    "bookings.find": (options: Options, criteria: any, searchString: any, count: boolean = false) => {
         let where:any = [];
         let userId = Meteor.userId();
         where.push({
             "$or": [{deleted: false}, {deleted: {$exists: false} }]
         }, {
           "$or": [{active: true}, {active: {$exists: false} }]
+        }, {
+          "paymentInfo.status": "approved"
         });
 
         if ( !_.isEmpty(criteria) ) {
@@ -67,6 +69,8 @@ Meteor.methods({
           "$or": [{deleted: false}, {deleted: {$exists: false} }]
       }, {
         "$or": [{active: true}, {active: {$exists: false} }]
+      }, {
+        "paymentInfo.status": "approved"
       });
 
       if (_.isEmpty(criteria)) {
@@ -94,6 +98,13 @@ Meteor.methods({
     },
     "bookings.statistics":(id: string) => {
       let data = Bookings.collection.aggregate([{
+        "$match":
+          {
+            "tour.supplierId": id,
+            "confirmed": true
+          }
+      },
+      {
         "$project":
           {
             "tour.supplierId":1,
@@ -101,12 +112,6 @@ Meteor.methods({
             "month": {"$month":"$bookingDate"},
             "year": {"$year": "$bookingDate"}
           }},
-        {
-          "$match":
-            {
-              "tour.supplierId": id
-            }
-        },
         {
           "$group":
             {
