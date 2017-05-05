@@ -157,7 +157,7 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
       this.whereSub.next({confirmed: true, cancelled: false});
     } else if (value == "Cancelled") {
       this.whereSub.next({confirmed: false, cancelled: true});
-    } else if (value == "Both") {
+    } else if (value == "") {
       this.whereSub.next({});
     }
   }
