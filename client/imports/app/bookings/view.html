@@ -77,6 +77,7 @@
             <p class="col s6">No. of Travellers: {{booking.numOfTravellers}}</p>
             <p class="col s6">Price per adult: {{booking.pricePerAdult}}</p>
             <p class="col s6">Price per child: {{booking.pricePerChild}}</p>
+            <p class="col s6">Status: <b>{{getBookingStatus(booking)}}</b></p>
             <p class="col s6">Guide Included: <span [innerHTML]="booking.tour.hasGuide == true ? 'Yes' : 'No'"></span></p>
             <p class="col s6">Flight Included: <span [innerHTML]="booking.tour.hasFlight == true ? 'Yes' : 'No'"></span></p>
         </div>
@@ -92,6 +93,19 @@
               <p class="col s6">Last Name: {{traveller.lastName}}</p>
               <p class="col s6" *ngIf="!! traveller.email">Email : {{traveller.email}}</p>
               <p class="col s6" *ngIf="!! traveller.contact">Contact : {{traveller.contact}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-detail" *ngIf="booking.cancelled">
+        <div class="col s12">
+          <h2>Cancellation Details</h2>
+          <div class="col s12">
+            <div>
+              <p class="col s6">Cancelled Date: {{booking.cancelledAt | date}}</p>
+              <p class="col s6">Cancelled By: <b>{{booking.cancelledBy | uppercase}}</b></p>
+              <p class="col s12">Reason: {{booking.cancellationReason}}</p>
+              <p class="col s12">Comments: {{booking.cancellationComments}}</p>
             </div>
           </div>
         </div>
