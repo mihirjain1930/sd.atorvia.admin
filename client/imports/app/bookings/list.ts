@@ -40,7 +40,8 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
   itemsSize: number = -1;
   searchSubject: Subject<string> = new Subject<string>();
   searchString: string = "";
-  customerAppUrl: string;
+  whereCond: any = {};
+  whereSub: Subject<any> = new Subject<any>();
   constructor(private router: Router,
     private route: ActivatedRoute,
     private paginationService: PaginationService,
@@ -61,7 +62,8 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
       curPage: 1,
       orderBy: "bookingDate",
       nameOrder: -1,
-      searchString: ''
+      searchString: '',
+      where: {}
     }
 
     this.setOptionsSub();
@@ -78,6 +80,7 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
     this.orderBy.next(options.orderBy);
     this.nameOrder.next(options.nameOrder);
     this.searchSubject.next(options.searchString);
+    this.whereSub.next(options.where);
   }
 
   private setOptionsSub() {
@@ -86,8 +89,9 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
       this.curPage,
       this.orderBy,
       this.nameOrder,
+      this.whereSub,
       this.searchSubject
-    ).subscribe(([pageSize, curPage, orderBy, nameOrder, searchString]) => {
+    ).subscribe(([pageSize, curPage, orderBy, nameOrder, where, searchString]) => {
       //console.log("inside subscribe");
       const options: Options = {
         limit: pageSize as number,
@@ -99,7 +103,7 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
 
       this.searchString = searchString;
       jQuery(".loading").show();
-      this.call("bookings.find", options, {}, searchString, (err, res) => {
+      this.call("bookings.find", options, where, searchString, (err, res) => {
         jQuery(".loading").hide();
         if (err) {
           showAlert("Error while fetching tours list.", "danger");
@@ -145,5 +149,37 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
         $('.tooltipped').tooltip({delay: 50});
       });
     }, 500);
+  }
+
+  filter(value) {
+
+    if (value == "Confirmed") {
+      this.whereSub.next({confirmed: true, cancelled: false});
+    } else if (value == "Cancelled") {
+      this.whereSub.next({confirmed: false, cancelled: true});
+    } else if (value == "") {
+      this.whereSub.next({});
+    }
+  }
+
+  getBookingStatus(item) {
+    let retVal = null;
+
+    // check completed flag
+    if (new Date(item.startDate) < new Date()) {
+      item.completed = true;
+    }
+
+    if (item.cancelled == true) {
+      retVal = "Cancelled";
+    } else if (item.confirmed !== true) {
+        retVal = "Pending";
+    } else if (item.confirmed === true && item.completed !== true) {
+        retVal = "Confirmed";
+    } else if (item.completed === true) {
+        retVal = "Completed";
+    }
+
+    return retVal;
   }
 }

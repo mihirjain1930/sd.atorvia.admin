@@ -50,4 +50,25 @@ export class ViewBookingComponent extends MeteorComponent {
 
     this.error = '';
   }
+
+  getBookingStatus(item) {
+    let retVal = null;
+
+    // check completed flag
+    if (new Date(item.startDate) < new Date()) {
+      item.completed = true;
+    }
+
+    if (item.cancelled == true) {
+      retVal = "Cancelled";
+    } else if (item.confirmed !== true) {
+        retVal = "Pending";
+    } else if (item.confirmed === true && item.completed !== true) {
+        retVal = "Confirmed";
+    } else if (item.completed === true) {
+        retVal = "Completed";
+    }
+
+    return retVal;
+  }
 }

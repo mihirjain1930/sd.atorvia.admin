@@ -11,10 +11,12 @@ Meteor.methods({
       let approvedTours = Meteor.call("tours.find", {}, {"approved": true}, "", true);
       let totalBookings = Meteor.call("bookings.find",{}, {}, "", true);
       let confirmedBooking = Meteor.call("bookings.find",{}, {"confirmed": true}, "", true);
-
+      let nowDate = new Date();
+      let lastMonth = new Date(nowDate.setMonth(nowDate.getMonth() - 1));
+      let sixMonths = new Date(nowDate.setMonth(nowDate.getMonth() - 6));
       let criteria = {
         bookingDate: {
-          $gte: new Date("01 Mar 2017"),
+          $gte: lastMonth,
           $lte: new Date()
         }
       };
@@ -22,14 +24,14 @@ Meteor.methods({
 
       criteria = {
         bookingDate: {
-          $gte: new Date("01 Oct 2016"),
+          $gte: sixMonths,
           $lte: new Date()
         }
       };
       let last6MonthsSales = Meteor.call("bookings.statistics.new", criteria);
 
       return {
-        activeSuppliers, 
+        activeSuppliers,
         inactiveSuppliers,
         activeCustomers,
         inactiveCustomers,
