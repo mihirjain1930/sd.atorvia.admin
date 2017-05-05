@@ -59,14 +59,14 @@ export class ViewBookingComponent extends MeteorComponent {
       item.completed = true;
     }
 
-    if (item.confirmed !== true && item.cancelled !== true) {
+    if (item.cancelled == true) {
+      retVal = "Cancelled";
+    } else if (item.confirmed !== true) {
         retVal = "Pending";
     } else if (item.confirmed === true && item.completed !== true) {
         retVal = "Confirmed";
     } else if (item.completed === true) {
         retVal = "Completed";
-    } else if (item.confirmed !== true && item.cancelled === true) {
-      retVal = "Cancelled";
     }
 
     return retVal;
