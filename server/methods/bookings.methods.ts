@@ -184,7 +184,7 @@ Meteor.methods({
       }, 0);
 
       // send email to supplier
-      let supplier = Meteor.users.findOne({_id: booking.tour.supplierId});
+      let supplier = Meteor.users.findOne({_id: booking.tour.supplierId}, {fields: {emails: 1} });
       if (_.isEmpty(supplier)) {
         return;
       }
