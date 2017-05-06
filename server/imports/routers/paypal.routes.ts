@@ -72,6 +72,10 @@ Picker.route( '/api/1.0/paypal/payment/refund/', function( params, request, resp
             }
           } });
 
+          Meteor.setTimeout(() => {
+            Meteor.call("bookings.refundConfirmation", booking._id);
+          }, 0);
+
           response.end( JSON.stringify({success: true}) );
       }
   }) );

@@ -157,6 +157,62 @@ Meteor.methods({
                 }}
               ])
               return data;
-            }
+            },
+    "bookings.refundConfirmation": (bookingId) => {
+      let fs = require("fs");
 
+      // find booking details
+      let booking = Bookings.collection.findOne({_id: bookingId});
+      if (_.isEmpty(booking)) {
+        return;
+      }
+
+      let paymentMethod = booking.paymentInfo.method;
+      if (paymentMethod == "express_checkout") {
+        booking.paymentInfo.method = "Paypal";
+      } else if(paymentMethod == "credit_card") {
+        booking.paymentInfo.method = "Credit Card";
+      }
+
+      // send email to customer
+      let customerAppUrl = Meteor.settings.public["customerAppUrl"];
+      let to = booking.user.email;
+      let subject = "Booking Refund Confirmation - Customer";
+      let text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/customer/booking-refund.html")+'`');
+      Meteor.setTimeout(() => {
+        Meteor.call("sendEmail", to, subject, text);
+      }, 0);
+
+      // send email to supplier
+      let supplier = Meteor.users.findOne({_id: booking.tour.supplierId});
+      if (_.isEmpty(supplier)) {
+        return;
+      }
+
+      let supplierAppUrl = Meteor.settings.public["supplierAppUrl"];
+      to = supplier.emails[0].address;
+      subject = "Booking Refund Confirmation - Supplier";
+      text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/supplier/booking-refund.html")+'`');
+      Meteor.setTimeout(() => {
+        Meteor.call("sendEmail", to, subject, text)
+      }, 0);
+    }
 });
+
+function getFormattedDate(today) {
+  if (! today) {
+    return "N.A.";
+  }
+  today = new Date(today.toString());
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+
+  var yyyy = today.getFullYear();
+  if(dd<10){
+      dd='0'+dd;
+  }
+  if(mm<10){
+      mm='0'+mm;
+  }
+  return dd+'/'+mm+'/'+yyyy;
+}
