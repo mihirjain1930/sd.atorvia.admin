@@ -3,8 +3,8 @@ import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import { check } from "meteor/check";
 import { isValidEmail, isValidFirstName, isValidPhoneNum, isValidSSN, isValidPasswd } from "../../both/validators";
-import { Images, Thumbs } from "../../both/collections/images.collection";
-import { Image, Thumb } from "../../both/models/image.model";
+import { Images } from "../../both/collections/images.collection";
+import { Image } from "../../both/models/image.model";
 import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
@@ -197,21 +197,17 @@ Meteor.methods({
 
         let user = Meteor.user();
         let userId = Meteor.userId();
-        /* check user */
-        /*if (typeof user == "undefined" || user._id !== userId) {
-            throw new Meteor.Error(`Invalid user-id "${userId}"`);
-        }*/
 
         /* check if image exists for user */
-        if (typeof user.profile.imageId == "undefined" || !user.profile.imageId) {
+        if (typeof user.profile.image.id == "undefined" || !user.profile.image.id) {
             throw new Meteor.Error(`Invalid image-id for user "${userId}"`);
         }
 
         let fs = require('fs');
         /* remove original image */
-        let image = Images.collection.findOne({_id: user.profile.imageId});
+        let image = Images.collection.findOne({_id: user.profile.image.id});
         if (typeof image == "undefined" || !image._id) {
-            throw new Meteor.Error(`Invalid image-id "${user.profile.imageId}"`);
+            throw new Meteor.Error(`Invalid image-id "${user.profile.image.id}"`);
         }
         let imagePath = process.env.PWD + '/uploads/images/' + image._id + '.' + image.extension;
         fs.unlink(imagePath, (res) => {
@@ -219,19 +215,7 @@ Meteor.methods({
         });
         /* reset data in collections */
         Images.collection.remove({_id: image._id});
-        Meteor.call("users.update", userId, {"profile.imageId": null, "profile.imageUrl": null});
-
-        /* remove thumb */
-        let thumb = Thumbs.collection.findOne({originalId: image._id});
-        if (typeof thumb == "undefined" || !thumb._id) {
-            return true;
-        }
-
-        let thumbPath = process.env.PWD + '/uploads/thumbs/' + thumb._id + '.' + thumb.extension;
-        fs.unlink(thumbPath, (res) => {
-            //console.log("unlink.thumb:", res);
-        });
-        Thumbs.collection.remove({_id: thumb._id});
+        Meteor.call("users.update", userId, {"profile.image": {}});
 
         return true;
     },
