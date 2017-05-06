@@ -4,7 +4,7 @@
 
 <section class="serach-bg" *ngIf="itemsSize>=0">
       <div class="col s3" style="width: 20%;">
-        <select class="browser-default" (click)="filter(filterBooking.value)" #filterBooking id="filterBooking">
+        <select class="browser-default" (change)="filter(filterBooking.value)" #filterBooking id="filterBooking">
           <option></option>
           <option>Confirmed</option>
           <option>Cancelled</option>
@@ -63,7 +63,7 @@
                     Total Price: AUD {{item.totalPrice}}
                   </div>
                   <div class="col s6">
-                    Status: {{getBookingStatus(item)}}
+                    Status: <b>{{getBookingStatus(item)}}</b>
                   </div>
                 </div>
               </div>

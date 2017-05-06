@@ -3,6 +3,7 @@ import {Component, OnDestroy, NgZone } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
+import { ChangeDetectorRef } from "@angular/core";
 import { Booking } from "../../../../both/models/booking.model";
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
@@ -21,9 +22,12 @@ export class ViewBookingComponent extends MeteorComponent {
   bookingId: string;
   owner: User;
   error: string;
+  isProcessing: boolean = false;
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     super();
   }
@@ -59,8 +63,12 @@ export class ViewBookingComponent extends MeteorComponent {
       item.completed = true;
     }
 
-    if (item.cancelled == true) {
+    if (! item.paymentInfo || item.paymentInfo.status != 'approved') {
+      retVal = "Unpaid";
+    } else if (item.cancelled == true && item.refunded !== true) {
       retVal = "Cancelled";
+    } else if (item.cancelled == true && item.refunded == true) {
+      retVal = "Refunded";
     } else if (item.confirmed !== true) {
         retVal = "Pending";
     } else if (item.confirmed === true && item.completed !== true) {
@@ -70,5 +78,36 @@ export class ViewBookingComponent extends MeteorComponent {
     }
 
     return retVal;
+  }
+
+  processRefund() {
+    if (this.isProcessing) {
+        showAlert("Your previous request is under processing. Please wait for a while.", "info");
+        return false;
+      }
+
+      this.isProcessing = true;
+      this.changeDetectorRef.detectChanges();
+      let booking = this.booking;
+      HTTP.call("POST", "/api/1.0/paypal/payment/refund", {
+        data: {},
+        params: {
+          paymentId: booking.paymentInfo.gatewayTransId
+        }
+      }, (error, result) => {
+        this.isProcessing = false;
+        this.changeDetectorRef.detectChanges();
+        let response = JSON.parse(result.content);
+        if (! response.success) {
+          showAlert("Error while processing refund request. Please review gateway configurations and try again after some time.", "danger");
+          return;
+        } else {
+          booking.refunded = true;
+          this.zone.run(() => {
+            showAlert("Refund request has been processed successfully. Payment will be sent to customer based on processing time of gateway.", "success")
+            this.router.navigate(['/bookings/list']);
+          });
+        }
+      });
   }
 }

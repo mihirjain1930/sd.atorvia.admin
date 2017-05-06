@@ -24,6 +24,7 @@ shell-server@0.2.1
 accounts-password
 check
 email
+http
 jalik:ufs
 jalik:ufs-local
 #jalik:ufs-gridfs
@@ -32,3 +33,4 @@ mys:fonts
 themeteorchef:bert
 alanning:roles
 meteorhacks:aggregate
+meteorhacks:picker

@@ -170,8 +170,12 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
       item.completed = true;
     }
 
-    if (item.cancelled == true) {
+    if (! item.paymentInfo || item.paymentInfo.status != 'approved') {
+      retVal = "Unpaid";
+    } else if (item.cancelled == true && item.refunded !== true) {
       retVal = "Cancelled";
+    } else if (item.cancelled == true && item.refunded == true) {
+      retVal = "Refunded";
     } else if (item.confirmed !== true) {
         retVal = "Pending";
     } else if (item.confirmed === true && item.completed !== true) {

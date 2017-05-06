@@ -63,6 +63,7 @@ export interface Booking extends CollectionObject {
     endDate: Date;
     numOfAdults: number;
     numOfChild: number;
+    currencyCode: string;
     pricePerAdult: number;
     pricePerChild: number;
     travellers: [
@@ -91,16 +92,36 @@ export interface Booking extends CollectionObject {
       type: string;
       expiry: Date;
     };
+    uniqueId: number;
     totalPrice: number;
     bookingDate: Date;
     paymentDate: Date;
     active: boolean;
     confirmed: boolean;
-    cancelled: boolean;
+    confirmedAt: Date;
     completed: boolean;
+    cancelled: boolean;
+    cancelledAt: Date;
+    cancelledBy: string;
     cancellationReason: string;
+    cancellationComments: string;
     denied: boolean;
     deniedReason: string;
+    paymentInfo: {
+      gateway: string;
+      method: string;
+      transactionId: string;
+      gatewayTransId: string;
+      status: string;
+      saleId: string;
+    };
+    refunded: boolean;
+    refundInfo: {
+      transactionId: string;
+      gatewayTransId: string;
+      processedAt: Date;
+      processedBy: string;
+    };
     deleted: boolean;
     createdAt: Date;
     modifiedAt: Date;
