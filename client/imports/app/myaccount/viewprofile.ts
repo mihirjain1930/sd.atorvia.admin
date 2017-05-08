@@ -76,7 +76,7 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
             let userData = {
               "profile.image":{
                   id: res._id,
-                  url: res.url,
+                  url: res.path,
                   name: res.name
                 }
             };
@@ -86,7 +86,7 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
                     return;
                 }
                 $("#inputFile").val("");
-                this.user.profile.image.url = res.url;
+                this.user.profile.image.url = res.path;
                 showAlert("Profile picture updated successfully.", "success");
             });
         })
