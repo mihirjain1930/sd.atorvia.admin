@@ -13,8 +13,8 @@ import {routes as emailRoutes} from "./email/routes";
 import {routes as faqcategoryRoutes} from "./faq/routes";
 import {routes as toursRoutes} from "./tours/routes";
 import {routes as placesRoutes } from "./places/routes";
-import {routes as bookingRoutes } from "./bookings/routes"
-
+import {routes as bookingRoutes } from "./bookings/routes";
+import {routes as subscribersRoutes } from "./subscribers/routes";
 let mainRoutes = [
     { path: '', component: LandingComponent/*, canActivate: ['canActivateForLogoff']*/ },
     { path: 'dashboard', component: DashboardComponent, canActivate: ['canActivateForLoggedIn'] },
@@ -32,7 +32,8 @@ export const routes: Route[] = [
     ...faqcategoryRoutes,
     ...toursRoutes,
     ...placesRoutes,
-    ...bookingRoutes
+    ...bookingRoutes,
+    ...subscribersRoutes
 ];
 
 export const ROUTES_PROVIDERS = [

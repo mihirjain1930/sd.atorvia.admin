@@ -21,6 +21,7 @@ import { Email_Declarations } from "./email/index";
 import { Tours_Declarations } from "./tours/index";
 import { Places_Declarations } from "./places/index";
 import { Booking_Declarations } from "./bookings/index";
+import { Subscribers_Declarations } from "./subscribers/index";
 
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
@@ -58,7 +59,8 @@ moduleDefinition = {
     ...Faq_Declarations,
     ...Tours_Declarations,
     ...Places_Declarations,
-    ...Booking_Declarations
+    ...Booking_Declarations,
+    ...Subscribers_Declarations
   ],
   providers: [
     ...ROUTES_PROVIDERS,
