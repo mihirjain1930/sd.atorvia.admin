@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
-import { User } from "../../../../both/models/user.model";
+import { Subscriber } from "../../../../both/models/subscriber.model";
 import {showAlert} from "../shared/show-alert";
 import { Roles } from 'meteor/alanning:roles';
 
@@ -31,7 +31,7 @@ declare var jQuery:any;
   template
 })
 export class ListSubscribersComponent extends MeteorComponent implements OnInit, AfterViewInit {
-    items: User[];
+    items: Subscriber[];
     pageSize: Subject<number> = new Subject<number>();
     curPage: Subject<number> = new Subject<number>();
     nameOrder: Subject<number> = new Subject<number>();
@@ -126,10 +126,16 @@ export class ListSubscribersComponent extends MeteorComponent implements OnInit,
         this.curPage.next(page);
     }
 
-    deleteSubscriber(subscriber) {
+    deleteSubscriber(subscriber: Subscriber) {
+      if (! confirm("Are you sure to delete this subscriber?")) {
+          return false;
+      }
+
       this.call("subscribers.delete", subscriber.email, (err, res) => {
         if (! err) {
           showAlert("Subscriber has been removed successfully.", "success");
+          subscriber.deleted = true;
+          this.changeDetectorRef.detectChanges();
         } else {
           console.log(err);
         }

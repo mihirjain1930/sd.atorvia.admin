@@ -24,7 +24,8 @@
 
 <section class="col s12 wht-bg mar-tp5 mar-bt5 bt-shadow"
 *ngFor="let subscribers of items"
-[attr.data-user-id]="subscribers._id">
+[attr.data-user-id]="subscribers._id"
+[hidden]="subscribers.deleted">
 <section class="pateint-list">
   <section class="col s10 mar-tp10">
     <ul class="pateint-deatil">
