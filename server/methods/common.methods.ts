@@ -43,9 +43,9 @@ Meteor.methods({
         last6MonthsSales
       };
     },
-    "sendEmail": (to: string, subject: string, text: string) => {
+    "sendEmail": (to: string, subject: string, html: string) => {
     let from = "atorvia12@gmail.com";
-    return Email.send({ to, from, subject, text});
+    return Email.send({ to, from, subject, html});
     },
     "sendEmailCustom": (to: string, subject: string, text: string) => {
         let Mailgun = require('mailgun').Mailgun;

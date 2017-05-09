@@ -7,3 +7,4 @@ run.sh
 .vscode
 .DS_Store
 settings.json
+debug.log

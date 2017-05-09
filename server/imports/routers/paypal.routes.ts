@@ -19,7 +19,7 @@ let rootUrl = process.env.ROOT_URL;
 Picker.middleware( bodyParser.json() );
 Picker.middleware( bodyParser.urlencoded( { extended: false } ) );
 
-Picker.route( '/api/1.0/paypal/payment/get/', function( params, request, response, next ) {
+Picker.route( '/admin/api/1.0/paypal/payment/get/', function( params, request, response, next ) {
   let body = request.body;
   let args = params.query;
 
@@ -34,7 +34,7 @@ Picker.route( '/api/1.0/paypal/payment/get/', function( params, request, respons
   });
 });
 
-Picker.route( '/api/1.0/paypal/payment/refund/', function( params, request, response, next ) {
+Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request, response, next ) {
   let body = request.body;
   let args = params.query;
   let booking = <any>Bookings.collection.findOne({"paymentInfo.gatewayTransId": args.paymentId});
@@ -64,6 +64,7 @@ Picker.route( '/api/1.0/paypal/payment/refund/', function( params, request, resp
           // update booking object
           Bookings.collection.update({_id: booking._id}, {$set: {
             refunded: true,
+            confirmed: false,
             "refundInfo": {
               transactionId: transactionId,
               gatewayTransId: refund.id,
