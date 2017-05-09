@@ -89,7 +89,8 @@ export class ViewBookingComponent extends MeteorComponent {
       this.isProcessing = true;
       this.changeDetectorRef.detectChanges();
       let booking = this.booking;
-      HTTP.call("POST", "/api/1.0/paypal/payment/refund", {
+      let adminAppUrl = Meteor.settings.public["adminAppUrl"];
+      HTTP.call("POST", adminAppUrl + "/api/1.0/paypal/payment/refund", {
         data: {},
         params: {
           paymentId: booking.paymentInfo.gatewayTransId
