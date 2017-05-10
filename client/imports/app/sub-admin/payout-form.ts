@@ -5,8 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from "rxjs";
 import { MeteorComponent } from 'angular2-meteor';
 import { User } from "../../../../both/models/user.model";
-import {showAlert} from "../shared/show-alert";
-import {validatePassword} from "../../validators/common";
+import { showAlert } from "../shared/show-alert";
+import { validatePassword } from "../../validators/common";
 
 import template from "./payout-form.html";
 

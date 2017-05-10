@@ -15,6 +15,8 @@ import {routes as toursRoutes} from "./tours/routes";
 import {routes as placesRoutes } from "./places/routes";
 import {routes as bookingRoutes } from "./bookings/routes";
 import {routes as subscribersRoutes } from "./subscribers/routes";
+import {routes as currencyRoutes } from "./currency/routes";
+
 let mainRoutes = [
     { path: '', component: LandingComponent/*, canActivate: ['canActivateForLogoff']*/ },
     { path: 'dashboard', component: DashboardComponent, canActivate: ['canActivateForLoggedIn'] },
@@ -33,7 +35,8 @@ export const routes: Route[] = [
     ...toursRoutes,
     ...placesRoutes,
     ...bookingRoutes,
-    ...subscribersRoutes
+    ...subscribersRoutes,
+    ...currencyRoutes
 ];
 
 export const ROUTES_PROVIDERS = [

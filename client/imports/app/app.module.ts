@@ -22,7 +22,7 @@ import { Tours_Declarations } from "./tours/index";
 import { Places_Declarations } from "./places/index";
 import { Booking_Declarations } from "./bookings/index";
 import { Subscribers_Declarations } from "./subscribers/index";
-
+import { CURRENCY_DECLARATIONS } from "./currency/index";
 
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
 /*let localStorageServiceConfig = {
@@ -60,7 +60,8 @@ moduleDefinition = {
     ...Tours_Declarations,
     ...Places_Declarations,
     ...Booking_Declarations,
-    ...Subscribers_Declarations
+    ...Subscribers_Declarations,
+    ...CURRENCY_DECLARATIONS
   ],
   providers: [
     ...ROUTES_PROVIDERS,

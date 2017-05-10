@@ -1,16 +1,16 @@
 import { Meteor } from "meteor/meteor";
-import {Component, OnInit, OnDestroy, NgZone, AfterViewInit} from "@angular/core";
-import {Observable, Subscription, Subject, BehaviorSubject} from "rxjs";
-import {PaginationService} from "ng2-pagination";
-import {MeteorObservable} from "meteor-rxjs";
-import {InjectUser} from "angular2-meteor-accounts-ui";
+import { Component, OnInit, OnDestroy, NgZone, AfterViewInit } from "@angular/core";
+import { Observable, Subscription, Subject, BehaviorSubject } from "rxjs";
+import { PaginationService } from "ng2-pagination";
+import { MeteorObservable } from "meteor-rxjs";
+import { InjectUser } from "angular2-meteor-accounts-ui";
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Subscriber } from "../../../../both/models/subscriber.model";
-import {showAlert} from "../shared/show-alert";
+import { showAlert } from "../shared/show-alert";
 import { Roles } from 'meteor/alanning:roles';
 
 import template from "./list.html";
