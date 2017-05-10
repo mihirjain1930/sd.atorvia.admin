@@ -18,8 +18,10 @@
                 <p>Total Approved Tours: <strong>{{totalStats.approvedTours}}</strong></p>
                 <p>Total Bookings: <strong>{{totalStats.totalBookings}}</strong></p>
                 <p>Total Confirmed Bookings: <strong>{{totalStats.confirmedBooking}}</strong></p>
-                <p>Total Sales (Last Month): <strong>A$ {{totalStats.lastMonthSales[0]?.totalPrice}}</strong></p>
-                <p>Total Sales (Last 6 Months): <strong>A$ {{totalStats.last6MonthsSales[0]?.totalPrice}}</strong></p>
+                <p *ngIf="totalStats.currentMonthSales.length == 0">Total Sales (Current Month): <strong>$0</strong></p>
+                <p *ngIf="totalStats.currentMonthSales.length != 0">Total Sales (Current Month): <strong>${{totalStats.currentMonthSales[0]?.totalPrice}}</strong></p>
+                <p>Total Sales (Last Month): <strong>${{totalStats.lastMonthSales[0]?.totalPrice}}</strong></p>
+                <p>Total Sales (Last 6 Months): <strong>${{totalStats.last6MonthsSales[0]?.totalPrice}}</strong></p>
             </fieldset>
         </div>
     </div>

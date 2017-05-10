@@ -13,48 +13,6 @@ interface Options {
 }
 
 Meteor.methods({
-    /* insert a new user */
-    "users.insert": (userData: { email: string, passwd: string, profile?: any }, roles: [string]): string => {
-        /* validate email */
-        check(userData.email, String);
-        if (!isValidEmail(userData.email)) {
-            throw new Meteor.Error(`Invalid email ${userData.email}`);
-        }
-        /* validate password */
-        if (!isValidPasswd(userData.passwd)) {
-            throw new Meteor.Error(`Invalid password supplied.`);
-        }
-        /* validate first name */
-        check(userData.profile.firstName, String);
-        if (!isValidFirstName(userData.profile.firstName)) {
-            throw new Meteor.Error(`Invalid first name ${userData.profile.firstName}`);
-        }
-        /* validate last name */
-        check(userData.profile.lastName, String);
-        if (!isValidFirstName(userData.profile.lastName)) {
-            throw new Meteor.Error(`Invalid last name ${userData.profile.lastName}`);
-        }
-        /* valiate contact */
-        if (typeof userData.profile.contact !== "undefined") {
-          check(userData.profile.contact, String);
-          if (!isValidPhoneNum(userData.profile.contact)) {
-              throw new Meteor.Error(`Invalid contact ${userData.profile.contact}`);
-          }
-        }
-
-        let userId = Accounts.createUser({
-            email: userData.email,
-            password: userData.passwd,
-            profile: userData.profile
-        });
-
-        if (typeof roles == "undefined" || !roles.length) {
-            roles = ["standard"];
-        }
-        Roles.addUsersToRoles(userId, roles);
-
-        return userId;
-    },
     /* find users and search */
     "users.find": (options: Options, criteria: any, searchString: string) => {
         userIsInRole(["super-admin"]);
@@ -77,7 +35,8 @@ Meteor.methods({
             where.push({
                 "$or": [
                     { "profile.firstName": { $regex: `.*${searchString}.*`, $options: 'i' } },
-                    { "profile.lastName": { $regex: `.*${searchString}.*`, $options: 'i' } }
+                    { "profile.lastName": { $regex: `.*${searchString}.*`, $options: 'i' } },
+                    { "emails.address": { $regex: `.*${searchString}.*`, $options: 'i' } }
                 ]
             });
         }
@@ -121,35 +80,6 @@ Meteor.methods({
     /* find single user */
     "users.findOne": (userId: string) => {
         return Meteor.users.findOne({ _id: userId });
-    },
-    /* update user data */
-    "users.update": (userId: string, userData: any) => {
-        userIsInRole(["super-admin"]);
-        // validate firstName if present in userData
-        if (typeof userData["profile.firstName"] !== "undefined") {
-            check(userData["profile.firstName"], String);
-            if (!isValidFirstName(userData["profile.firstName"])) {
-                throw new Meteor.Error(`Invalid firstName ${userData.profile.firstName}`);
-            }
-        }
-
-        // validate lastName if present in userData
-        if (typeof userData["profile.lastName"] !== "undefined") {
-            check(userData["profile.lastName"], String);
-            if (!isValidFirstName(userData["profile.lastName"])) {
-                throw new Meteor.Error(`Invalid lastName ${userData.profile.lastName}`);
-            }
-        }
-
-        // validate contact if present in userData
-        if (typeof userData["profile.contact"] !== "undefined") {
-            check(userData["profile.contact"], String);
-            if (!isValidPhoneNum(userData["profile.contact"])) {
-                throw new Meteor.Error(`Invalid phoneNum ${userData.profile.contact}`);
-            }
-        }
-
-        return Meteor.users.update({ _id: userId }, { $set: userData });
     },
     /* delete a user */
     "users.delete": (userId: string) => {

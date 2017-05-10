@@ -61,10 +61,11 @@
         </section>
         <section class="col s4 detail-btn">
             <ul>
-                <li *ngIf="item.approved === true && item.active === false"><a class="btn-floating waves-effect red waves-light  lighten-2 tooltipped" href="javascript:void(0);" (click)="activate(item)" data-position="top" data-delay="0" data-tooltip="Activate"><i class="material-icons">check</i></a></li>
-                <li *ngIf="item.approved === true && item.active === true"><a class="btn-floating waves-effect green waves-light  lighten-2 tooltipped" href="javascript:void(0);" (click)="deactivate(item)" data-position="top" data-delay="0" data-tooltip="Deactivate"><i class="material-icons">check</i></a></li>
-                <li *ngIf="item.approved === false"><a class="btn-floating waves-effect waves-light teal lighten-1 tooltipped" href="javascript:void(0);" (click)="approveTour(item)" data-position="top" data-delay="0" data-tooltip="Approve"><i class="material-icons">check_circle</i></a></li>
-                <li *ngIf="!item.deleted"><a class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deleteTour(item)" data-position="top" data-delay="0" data-tooltip="Delete Tour"><i class="material-icons">delete</i></a></li>
+                <li *ngIf="item.approved === true && item.active === false"><a href="javascript:void(0);" (click)="activate(item)">Publish Tour</a></li>
+                <li *ngIf="item.approved === true && item.active === true"><a href="javascript:void(0);" (click)="deactivate(item)">Unpublish Tour</a></li>
+                <li *ngIf="item.approved === false && item.rejected === false"><a href="javascript:void(0);" (click)="approveTour(item)" data-position="top" data-delay="0" data-tooltip="Approve">Approve Tour</a></li>
+                <li *ngIf="item.approved === false && item.rejected === false"><a href="javascript:void(0);" (click)="disapproveTour(item)">Disapprove Tour</a></li>
+                <!-- <li *ngIf="!item.deleted"><a class="btn-floating waves-effect waves-light red tooltipped" href="javascript:void(0);" (click)="deleteTour(item)" data-position="top" data-delay="0" data-tooltip="Delete Tour"><i class="material-icons">delete</i></a></li> -->
             </ul>
         </section>
     </section>

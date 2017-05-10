@@ -26,7 +26,7 @@ export class DashboardComponent extends MeteorComponent implements OnInit {
                 console.log(err)
                 return;
             }
-            
+
             this.totalStats = res;
         });
 

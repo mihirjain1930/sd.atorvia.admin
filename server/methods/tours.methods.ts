@@ -88,6 +88,14 @@ Meteor.methods({
       /* reset data in collections */
       Tours.collection.update({_id: tour._id}, {$set : {approved: true } });
     },
+    "tours.disapprove": (id: string) => {
+      let tour = Tours.collection.findOne({_id: id});
+      if (_.isEmpty(tour)) {
+          throw new Meteor.Error(`Invalid tour-id "${id}"`);
+      }
+
+      Tours.collection.update({_id: tour._id}, {$set: {rejected: true } });
+    },
     "tours.deactivate": (id: string) => {
       let tour = Tours.collection.findOne({_id: id});
       if (_.isEmpty(tour)) {

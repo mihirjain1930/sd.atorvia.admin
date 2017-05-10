@@ -1,5 +1,5 @@
 <h2 class="header red-text text-lighten-1" color="primary">
-    <span>Suppliers</span>
+    <span>{{pageTitle}}</span>
 </h2>
 
 <section class="serach-bg" *ngIf="itemsSize>=0">
@@ -9,9 +9,6 @@
     <section class="search col s9">
         <input id="search" type="text" #searchtext class="col s12" placeholder="Search here..." (keyup.enter)="search(searchtext.value)" [(ngModel)]="searchString" />
         <label class="tooltipped" for="search" (click)="search(searchtext.value)" data-position="top" data-delay="0" data-tooltip="Click to Search"><i class="material-icons">search</i></label>
-    </section>
-    <section class="download-btn col s2">
-        <a class="waves-effect waves-light btn blue accent-2" [routerLink]="['/sub-admin/create']"><i class="zmdi zmdi-account-add"></i>Add User</a>
     </section>
 </section>
 
@@ -30,23 +27,35 @@
 [attr.data-user-id]="user._id"
 [ngClass]="{'red accent-1': user.deleted, 'red lighten-4': user.active === false}"
 [hidden]="user.deleted">
-    <section class="pateint-list">
+    <section *ngIf="user.roles.indexOf('supplier') >= 0" class="pateint-list">
         <section class="col s7 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/sub-admin/view', user._id]">{{user.profile.supplier.companyName}}</a></h2>
             <ul class="pateint-deatil">
                 <li><i class="zmdi zmdi-email tooltipped" data-position="top" data-delay="0" data-tooltip="Email"></i> {{user.emails[0].address}}</li>
-                <!-- <li><i class="zmdi zmdi-phone tooltipped" data-position="top" data-delay="0" data-tooltip="Contact"></i> {{user.profile.contact}}</li>
-                <li><i class="zmdi tooltipped" data-position="top" data-delay="0" data-tooltip=""></i> {{user.roles}}</li> -->
             </ul>
         </section>
         <section class="col s5 detail-btn">
             <ul>
-                <!-- <li><a href="javascript:void(0);" [routerLink]="['/sub-admin/update', user._id]" >Edit User</a></li> -->
-                <!--<li><a href="javascript:void(0);" [routerLink]="['/sub-admin/passwd', user._id]" >Change Password</a></li>-->
                 <li *ngIf="user.profile.supplier.agentCertificate?.verified"><a href="javascript:void(0);" (click)="unverifyCertificate(user)">Unverify Certificate</a></li>
                 <li *ngIf="user.profile.supplier.agentCertificate?.url && ! user.profile.supplier.agentCertificate?.verified"><a href="javascript:void(0);" (click)="verifyCertificate(user)">Verify Certificate</a></li>
                 <li *ngIf="user.profile.supplier.agentIdentity?.verified"><a href="javascript:void(0);" (click)="unverifyIdentity(user)">Unverify Identity</a></li>
                 <li *ngIf="user.profile.supplier.agentIdentity?.url && ! user.profile.supplier.agentIdentity?.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Identity</a></li>
+                <li *ngIf="user.active == undefined || user.active === true"><a href="javascript:void(0);" (click)="deactivate(user)">Deactivate</a></li>
+                <li *ngIf="user.active === false"><a href="javascript:void(0);" (click)="activate(user)">Activate</a></li>
+                <li *ngIf="!user.deleted"><a href="javascript:void(0);" (click)="deleteUser(user)">Delete</a></li>
+            </ul>
+        </section>
+    </section>
+
+    <section *ngIf="user.roles.indexOf('customer') >= 0" class="pateint-list">
+        <section class="col s7 mar-tp10">
+            <h2 class="pateint-name"><a [routerLink]="['/customer/view', user._id]">{{user.profile.fullName}}</a></h2>
+            <ul class="pateint-deatil">
+                <li><i class="zmdi zmdi-email tooltipped" data-position="top" data-delay="0" data-tooltip="Email"></i> {{user.emails[0].address}}</li>
+            </ul>
+        </section>
+        <section class="col s5 detail-btn">
+            <ul>
                 <li *ngIf="user.active == undefined || user.active === true"><a href="javascript:void(0);" (click)="deactivate(user)">Deactivate</a></li>
                 <li *ngIf="user.active === false"><a href="javascript:void(0);" (click)="activate(user)">Activate</a></li>
                 <li *ngIf="!user.deleted"><a href="javascript:void(0);" (click)="deleteUser(user)">Delete</a></li>

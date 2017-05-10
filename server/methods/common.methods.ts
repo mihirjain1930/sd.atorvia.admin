@@ -12,8 +12,17 @@ Meteor.methods({
       let totalBookings = Meteor.call("bookings.find",{}, {}, "", true);
       let confirmedBooking = Meteor.call("bookings.find",{}, {"confirmed": true}, "", true);
       let nowDate = new Date();
+      let currentMonth = new Date(nowDate.setMonth(nowDate.getMonth()));
       let lastMonth = new Date(nowDate.setMonth(nowDate.getMonth() - 1));
       let sixMonths = new Date(nowDate.setMonth(nowDate.getMonth() - 6));
+      let criteria = {
+        bookingDate: {
+          $gte: currentMonth,
+          $lte: new Date()
+        }
+      }
+      let currentMonthSales = Meteor.call("bookings.statistics.new", criteria);
+
       let criteria = {
         bookingDate: {
           $gte: lastMonth,
@@ -39,6 +48,7 @@ Meteor.methods({
         approvedTours,
         totalBookings,
         confirmedBooking,
+        currentMonthSales,
         lastMonthSales,
         last6MonthsSales
       };

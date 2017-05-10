@@ -39,6 +39,8 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
     itemsSize: number = -1;
     searchSubject: Subject<string> = new Subject<string>();
     searchString: string = "";
+    pageTitle = "Suppliers";
+    userRoles = ["supplier"];
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -48,6 +50,12 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
         private localStorageService: LocalStorageService
     ) {
         super();
+
+        let currentUrl = this.router.url;
+        if(currentUrl == "/customers/list") {
+          this.pageTitle = "Customers";
+          this.userRoles = ["customer"];
+        }
     }
 
     ngOnInit() {
@@ -55,38 +63,11 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
     }
 
     private setOptions() {
-        let options:any = this.localStorageService.get("subadmin-list.options");
-        //console.log("patient-list.options:", options);
-
-        if (!!options) {
-            if (! options.pageSize) {
-                options.limit = 10;
-            } else {
-                options.limit = Number(options.pageSize);
-            }
-
-            if (! options.curPage) {
-                options.curPage = 1;
-            } else {
-                options.curPage = Number(options.curPage);
-            }
-
-            if (! options.nameOrder) {
-                options.nameOrder = 1;
-            } else {
-                options.nameOrder = Number(options.nameOrder);
-            }
-
-            if (! options.searchString) {
-                options.searchString = '';
-            }
-        } else {
-            options = {
-                limit: 10,
-                curPage: 1,
-                nameOrder: 1,
-                searchString: '',
-            }
+        let options: any = {
+            limit: 10,
+            curPage: 1,
+            nameOrder: 1,
+            searchString: '',
         }
 
         this.setOptionsSub();
@@ -116,12 +97,6 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
                 skip: ((curPage as number) - 1) * (pageSize as number),
                 sort: { "profile.firstName": nameOrder as number }
             };
-            this.localStorageService.set("subadmin-list.options", {
-                pageSize: pageSize,
-                curPage: curPage,
-                nameOrder: nameOrder,
-                searchString: searchString
-            });
 
             this.paginationService.setCurrentPage("sub-admins", curPage as number);
 
@@ -129,7 +104,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
             //console.log("searchString:", this.searchString);
             this.searchString = searchString;
             jQuery(".loading").show();
-            this.call("users.find", options, {"roles": {$in: ["supplier"]} }, searchString, (err, res) => {
+            this.call("users.find", options, {"roles": {$in: this.userRoles} }, searchString, (err, res) => {
                 //console.log("patients.find() done");
                 jQuery(".loading").hide();
                 if (err) {

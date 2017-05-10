@@ -164,10 +164,30 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
         return;
       }
       tour.approved = true;
+      tour.rejected = false;
       //angular2 waits for dom event to detect changes automatically
       //so trigger change detection manually to update dom
       this.changeDetectorRef.detectChanges();
       showAlert("Tour has been approved.", "success");
+    })
+  }
+
+  disapproveTour(tour: Tour) {
+    if (! confirm("Are you sure to disapprove this tour?")) {
+      return false;
+    }
+
+    Meteor.call("tours.disapprove", tour._id, (err, res) => {
+      if (err) {
+        showAlert("Error calling tours.approved", "danger");
+        return;
+      }
+      tour.approved = false;
+      tour.rejected = true;
+      //angular2 waits for dom event to detect changes automatically
+      //so trigger change detection manually to update dom
+      this.changeDetectorRef.detectChanges();
+      showAlert("Tour has been disapproved.", "success");
     })
   }
 

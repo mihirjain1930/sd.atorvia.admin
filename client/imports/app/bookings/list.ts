@@ -153,12 +153,18 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
 
   filter(value) {
 
-    if (value == "Confirmed") {
-      this.whereSub.next({confirmed: true, refunded: false});
-    } else if (value == "Cancelled") {
-      this.whereSub.next({confirmed: false, refunded: true});
-    } else if (value == "") {
+    if (value == "") {
       this.whereSub.next({});
+    } else if (value == "Confirmed") {
+      this.whereSub.next({confirmed: true, completed: false});
+    } else if (value == "Cancelled") {
+      this.whereSub.next({cancelled: true, refunded: true});
+    } else if (value == "Pending") {
+      this.whereSub.next({confirmed: false, refunded: false});
+    } else if (value == "Completed") {
+      this.whereSub.next({confirmed: true, cancelled:false, completed: true});
+    } else if (value == "Refund Requested") {
+      this.whereSub.next({confirmed: false, refunded: false});
     }
   }
 

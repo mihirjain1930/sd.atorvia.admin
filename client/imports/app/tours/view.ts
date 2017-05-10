@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import {Component, OnDestroy, NgZone } from "@angular/core";
+import {Component, OnDestroy, OnInit, AfterViewInit, NgZone } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
@@ -12,16 +12,31 @@ import template from './view.html';
 
 declare var jQuery:any;
 
+interface DateRange {
+  _id: string;
+  startDate: Date;
+  endDate: Date;
+  price?: [{
+    numOfPersons: number;
+    adult: number;
+    child: number;
+  }],
+  numOfSeats: number;
+  soldSeats: number;
+  availableSeats: number;
+}
+
 @Component({
   selector: '',
   template
 })
-export class ViewTourComponent extends MeteorComponent {
+export class ViewTourComponent extends MeteorComponent implements OnInit, AfterViewInit {
   tour: Tour;
   paramsSub: Subscription;
   tourId: string;
   owner: User;
   error: string;
+  selDateRange: DateRange = null;
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
@@ -124,5 +139,14 @@ export class ViewTourComponent extends MeteorComponent {
       this.changeDetectorRef.detectChanges();
       showAlert("Tour has been removed.", "success");
     })
+  }
+
+  ngAfterViewInit() {
+    Meteor.setTimeout(function() {
+      jQuery(function($){
+        /*$('select').material_select();*/
+        jQuery('.modal').modal();
+      });
+    }, 500);
   }
 }

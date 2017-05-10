@@ -6,7 +6,10 @@
       <div class="col s3" style="width: 20%;">
         <select class="browser-default" (change)="filter(filterBooking.value)" #filterBooking id="filterBooking">
           <option></option>
+          <option>Pending</option>
           <option>Confirmed</option>
+          <option>Completed</option>
+          <option>Refund Requested</option>
           <option>Cancelled</option>
         </select>
       </div>

@@ -53,3 +53,11 @@ text-align: right;
 .ul-level {
   margin-bottom: 10px !important;
 }
+
+.inclusion {
+  padding-left: 20px !important;
+}
+
+.tour-inclusion {
+  list-style-type: disc !important;
+}
