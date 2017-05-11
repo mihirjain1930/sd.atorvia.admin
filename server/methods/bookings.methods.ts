@@ -4,6 +4,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { check } from "meteor/check";
 import { Bookings } from "../../both/collections/bookings.collection";
 import { Booking } from "../../both/models/booking.model";
+import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
 interface Options {
@@ -12,6 +13,8 @@ interface Options {
 
 Meteor.methods({
     "bookings.find": (options: Options, criteria: any, searchString: any, count: boolean = false) => {
+      userIsInRole(["super-admin"]);
+
         let where:any = [];
         let userId = Meteor.userId();
         where.push({
@@ -64,6 +67,7 @@ Meteor.methods({
         return {count: cursor.count(), data: cursor.fetch()};
     },
     "bookings.findOne": (criteria: any, options: {with?: {tour: boolean}}= {}) => {
+      userIsInRole(["super-admin"]);
       let where:any = [];
       where.push({
           "$or": [{deleted: false}, {deleted: {$exists: false} }]
@@ -89,6 +93,7 @@ Meteor.methods({
       }
     },
     "bookings.count": () => {
+      userIsInRole(["super-admin"]);
       let bookingsCount: any = {};
       bookingsCount.new = Meteor.call("bookings.find", {}, {"confirmed": false, "cancelled": false}, "", true);
       bookingsCount.pending = Meteor.call("bookings.find", {}, {"confirmed": true, "completed": false}, "", true);
@@ -97,6 +102,7 @@ Meteor.methods({
       return bookingsCount;
     },
     "bookings.statistics":(id: string) => {
+      userIsInRole(["super-admin"]);
       let data = Bookings.collection.aggregate([{
         "$match":
           {
@@ -124,6 +130,7 @@ Meteor.methods({
       return data;
     },
     "bookings.statistics.new":(criteria: any = {}) => {
+      userIsInRole(["super-admin"]);
       let _id: any = {"year":"$year","month":"$month"};
       let data = Bookings.collection.aggregate([
         {
