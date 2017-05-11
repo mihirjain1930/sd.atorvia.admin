@@ -4,6 +4,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { check } from "meteor/check";
 import { Payouts } from "../../both/collections/payouts.collection";
 import { Payout } from "../../both/models/payout.model";
+import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
 interface Options {
@@ -12,10 +13,12 @@ interface Options {
 
 Meteor.methods({
   "payouts.insert": (payout: Payout) => {
+    userIsInRole(["super-admin"]);
     let payoutId = Payouts.collection.insert(payout);
     return payoutId;
   },
   "payouts.find": (options: Options, criteria: any = {}, count: boolean = false) => {
+    userIsInRole(["super-admin"]);
       let where:any = [];
       where.push({
           "$or": [{deleted: false}, {deleted: {$exists: false} }]

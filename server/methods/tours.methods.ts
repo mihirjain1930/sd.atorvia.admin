@@ -5,6 +5,7 @@ import { check } from "meteor/check";
 import { Tours } from "../../both/collections/tours.collection";
 import { Bookings } from "../../both/collections/bookings.collection";
 import { Tour } from "../../both/models/tour.model";
+import { isLoggedIn, userIsInRole } from "../imports/services/auth";
 import * as _ from 'underscore';
 
 interface Options {
@@ -13,6 +14,7 @@ interface Options {
 
 Meteor.methods({
     "tours.find": (options: Options, criteria: any, searchString: string, count: boolean = false) => {
+      userIsInRole(["super-admin"]);
         let where:any = [];
         where.push({
             "$or": [{deleted: false}, {deleted: {$exists: false} }]
@@ -43,6 +45,7 @@ Meteor.methods({
         return {count: cursor.count(), data: cursor.fetch()};
     },
     "tours.findOne": (criteria: any, options: {with?: {owner: boolean}}= {}) => {
+      userIsInRole(["super-admin"]);
       let where:any = [];
       where.push({
           "$or": [{deleted: false}, {deleted: {$exists: false} }]
@@ -67,6 +70,7 @@ Meteor.methods({
       }
     },
     "tours.delete": (id: string) => {
+      userIsInRole(["super-admin"]);
       let tour = Tours.collection.findOne({_id: id});
       if (_.isEmpty(tour)) {
           throw new Meteor.Error(`Invalid tour-id "${id}"`);
@@ -76,10 +80,12 @@ Meteor.methods({
       Tours.collection.update({_id: tour._id}, {$set : {deleted: true } });
     },
     "tours.update": (data: Tour, id: string) => {
+      userIsInRole(["super-admin"]);
       data.modifiedAt = new Date();
       return Tours.collection.update({_id: id}, {$set: data});
     },
     "tours.approve": (id: string) => {
+      userIsInRole(["super-admin"]);
       let tour = Tours.collection.findOne({_id: id});
       if (_.isEmpty(tour)) {
           throw new Meteor.Error(`Invalid tour-id "${id}"`);
@@ -89,14 +95,20 @@ Meteor.methods({
       Tours.collection.update({_id: tour._id}, {$set : {approved: true } });
     },
     "tours.disapprove": (id: string) => {
+      userIsInRole(["super-admin"]);
       let tour = Tours.collection.findOne({_id: id});
       if (_.isEmpty(tour)) {
           throw new Meteor.Error(`Invalid tour-id "${id}"`);
       }
 
-      Tours.collection.update({_id: tour._id}, {$set: {rejected: true } });
+      //send email to supplier
+      Meteor.setTimeout(() => {
+        Meteor.call("tours.rejectConfirmation", id);
+      }, 0);
+      return  Tours.collection.update({_id: tour._id, approved: false}, {$set: {rejected: true }, $unset:{requestApprovalSentAt: 1, requestApprovalAt: 1} });
     },
     "tours.deactivate": (id: string) => {
+      userIsInRole(["super-admin"]);
       let tour = Tours.collection.findOne({_id: id});
       if (_.isEmpty(tour)) {
           throw new Meteor.Error(`Invalid tour-id "${id}"`);
@@ -106,6 +118,7 @@ Meteor.methods({
       Tours.collection.update({_id: tour._id}, {$set : {active: false } });
     },
     "tours.activate": (id: string) => {
+      userIsInRole(["super-admin"]);
       let tour = Tours.collection.findOne({_id: id});
       if (_.isEmpty(tour)) {
           throw new Meteor.Error(`Invalid tour-id "${id}"`);
@@ -115,6 +128,7 @@ Meteor.methods({
       Tours.collection.update({_id: tour._id}, {$set : {active: true } });
     },
     "tours.updateUser": (userId: string) => {
+      userIsInRole(["super-admin"]);
       let user = Meteor.users.findOne({_id: userId});
       if (_.isEmpty(user)) {
         console.log("Error calling bookings.updateUser(). Invalid userId supplied.")
@@ -138,5 +152,23 @@ Meteor.methods({
       }, {
         multi: true
       });
+    },
+    "tours.rejectConfirmation": (id: string) => {
+      let fs = require("fs");
+
+      let tour = Tours.collection.findOne({_id: id});
+      if (_.isEmpty(tour)) {
+        return;
+      }
+
+      let supplier = Meteor.users.findOne({_id: tour.owner.id}, {fields: {emails: 1, profile: 1} });
+
+      let supplierAppUrl = Meteor.settings.public["supplierAppUrl"];
+      let to = supplier.emails[0].address;
+      let subject = "Booking Refund Confirmation - Supplier";
+      let text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/supplier/tour-reject.html")+'`');
+      Meteor.setTimeout(() => {
+        Meteor.call("sendEmail", to, subject, text)
+      }, 0);
     }
 });

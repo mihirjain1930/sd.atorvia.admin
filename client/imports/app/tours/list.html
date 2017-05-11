@@ -32,9 +32,9 @@
             <h2 class="pateint-name"><a [routerLink]="['/tours/view', item._id]">{{item.name}}</a></h2>
             <div class="row">
               <div class="col s4">
-                <span *ngIf="!item.images?.length"><img class="img-class" src="/images/random.png" /></span>
-                <span *ngIf="item.images?.length > 0 && item.featuredImage?.url"><img class="img-class" [src]="'/'+item.featuredImage?.url" style="width: 100%" /></span>
-                <span *ngIf="item.images?.length > 0 && !item.featuredImage?.url"><img class="img-class" [src]="'/'+item.images[0]?.url" style="width: 100%" /></span>
+                <span *ngIf="!item.images?.length"><img class="img-class" src="images/random.png" /></span>
+                <span *ngIf="item.images?.length > 0 && item.featuredImage?.url"><img class="img-class" [src]="item.featuredImage?.url" style="width: 100%" /></span>
+                <span *ngIf="item.images?.length > 0 && !item.featuredImage?.url"><img class="img-class" [src]="item.images[0]?.url" style="width: 100%" /></span>
               </div>
               <div class="col s8">
                 <div class="row">

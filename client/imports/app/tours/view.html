@@ -8,8 +8,8 @@
         <div class="col s12">
           <h2>Tour Gallery</h2>
           <div class="col s6 pt-detail" *ngFor="let image of tour.images">
-            <img *ngIf="! image.url" class="img-class" src="/images/random.png" style="width: 100%;" />
-            <a *ngIf="!! image.url" [href]="image.url" target="_blank"><img class="'/'+img-class" [src]="'/'+image.url" style="width: 100%;" />
+            <img *ngIf="! image.url" class="img-class" src="images/random.png" style="width: 100%;" />
+            <a *ngIf="!! image.url" [href]="image.url" target="_blank"><img class="img-class" [src]="image.url" style="width: 100%;" />
           </div>
       </div>
       </div>
@@ -18,8 +18,8 @@
         <div class="col s12">
           <h2> Supplier's Details</h2>
           <div class="center-img">
-            <img *ngIf="! owner.profile.image?.url" src="/images/user.png" class="img-class">
-            <img *ngIf="!! owner.profile.image?.url" [src]="'/'+owner.profile.image?.url" class="img-class">
+            <img *ngIf="! owner.profile.image?.url" src="images/user.png" class="img-class">
+            <img *ngIf="!! owner.profile.image?.url" [src]="owner.profile.image?.url" class="img-class">
           </div>
         </div>
 
@@ -170,18 +170,18 @@
             <h5>Meals</h5>
             <p>
               <span class="radio-wrap">
-                <img src="/images/imgpsh_fullsize.png" alt="" *ngIf="!itenerary.hasBreakfast">
-                <img src="/images/imgpsh_fullsize(2).png" alt="" *ngIf="itenerary.hasBreakfast">
+                <img src="images/imgpsh_fullsize.png" alt="" *ngIf="!itenerary.hasBreakfast">
+                <img src="images/imgpsh_fullsize(2).png" alt="" *ngIf="itenerary.hasBreakfast">
                 <label for="breakFast" class="radio-custom-label">Breakfast</label>
               </span>
               <span class="radio-wrap">
-                <img src="/images/imgpsh_fullsize.png" alt="" *ngIf="!itenerary.hasLunch">
-                <img src="/images/imgpsh_fullsize(2).png" alt="" *ngIf="itenerary.hasLunch">
+                <img src="images/imgpsh_fullsize.png" alt="" *ngIf="!itenerary.hasLunch">
+                <img src="images/imgpsh_fullsize(2).png" alt="" *ngIf="itenerary.hasLunch">
                 <label for="lunch" class="radio-custom-label">Lunch</label>
               </span>
               <span class="radio-wrap">
-                <img src="/images/imgpsh_fullsize.png" alt="" *ngIf="!itenerary.hasDinner">
-                <img src="/images/imgpsh_fullsize(2).png" alt="" *ngIf="itenerary.hasDinner">
+                <img src="images/imgpsh_fullsize.png" alt="" *ngIf="!itenerary.hasDinner">
+                <img src="images/imgpsh_fullsize(2).png" alt="" *ngIf="itenerary.hasDinner">
                 <label for="dinner" class="radio-custom-label">Dinner</label>
               </span>
             </p>
