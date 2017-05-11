@@ -6,6 +6,7 @@ import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { Tour } from "../../../../both/models/tour.model";
 import { User } from "../../../../both/models/user.model";
+import { Title } from '@angular/platform-browser';
 import {showAlert} from "../shared/show-alert";
 
 import template from './view.html';
@@ -42,6 +43,7 @@ export class ViewTourComponent extends MeteorComponent implements OnInit, AfterV
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
+    private titleService: Title,
     private changeDetectorRef: ChangeDetectorRef
   ) {
     super();
@@ -62,6 +64,9 @@ export class ViewTourComponent extends MeteorComponent implements OnInit, AfterV
                   });
                   return;
               }
+              let tour = res.tour.name;
+              let name = tour.toUpperCase();
+              this.titleService.setTitle("Tour - " + name + " | Atorvia");
               this.tour = <Tour>res.tour;
               this.owner = <User>res.owner;
           });

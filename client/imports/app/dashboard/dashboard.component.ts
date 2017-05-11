@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Title } from '@angular/platform-browser';
 import { MeteorComponent } from 'angular2-meteor';
 import { Meteor } from "meteor/meteor";
 
@@ -12,12 +13,13 @@ import template from "./dashboard.html";
 export class DashboardComponent extends MeteorComponent implements OnInit {
   totalStats: any;
 
-    constructor() {
+    constructor(private titleService: Title){
         super();
     }
 
     ngOnInit() {
-        this.fetchStats();
+      this.titleService.setTitle("Dashboard | Atorvia");
+      this.fetchStats();
     }
 
     private fetchStats() {

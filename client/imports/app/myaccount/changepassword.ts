@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Accounts } from 'meteor/accounts-base';
 import { MeteorComponent } from 'angular2-meteor';
+import { Title } from '@angular/platform-browser';
 import { matchingPasswords, validatePassword } from '../../validators/common';
 import { showAlert } from "../shared/show-alert";
 
@@ -17,11 +18,12 @@ export class PasswordComponent extends MeteorComponent implements OnInit {
   passwordForm: FormGroup;
   error: string;
 
-  constructor(private router: Router, private zone: NgZone, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private zone: NgZone, private formBuilder: FormBuilder,private titleService: Title) {
     super();
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Change Password | Atorvia");
     this.passwordForm = this.formBuilder.group({
       oldpassword: ['', Validators.compose([Validators.required])],
       newPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(30), validatePassword])],

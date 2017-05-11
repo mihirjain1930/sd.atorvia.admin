@@ -7,6 +7,7 @@ import { InjectUser } from "angular2-meteor-accounts-ui";
 import { upload } from '../../../../both/methods/images.methods';
 import { Image } from "../../../../both/models/image.model";
 import { MeteorComponent } from 'angular2-meteor';
+import { Title } from '@angular/platform-browser';
 import { User } from "../../../../both/models/user.model";
 import template from './viewprofile.html';
 import { showAlert } from "../shared/show-alert";
@@ -28,12 +29,14 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private titleService: Title
     ) {
         super();
     }
 
     ngOnInit() {
+        this.titleService.setTitle("My Account | Atorvia");
         this.userId = Meteor.userId();
         this.fetchUser();
     }

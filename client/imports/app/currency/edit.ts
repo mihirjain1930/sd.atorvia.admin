@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from "rxjs";
 import { ChangeDetectorRef } from "@angular/core";
+import { Title } from '@angular/platform-browser';
 import { MeteorComponent } from 'angular2-meteor';
 import { Currency } from "../../../../both/models/currency.model";
 import { showAlert } from "../shared/show-alert";
@@ -24,6 +25,7 @@ export class EditCurrencyComponent extends MeteorComponent implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
+    private titleService: Title,
     private changeDetectorRef: ChangeDetectorRef,
     private formBuilder: FormBuilder)
   {
@@ -31,6 +33,7 @@ export class EditCurrencyComponent extends MeteorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Edit Currency Form | Atorvia");
     this.paramsSub = this.route.params
       .map(params => params['id'])
       .subscribe(id => {

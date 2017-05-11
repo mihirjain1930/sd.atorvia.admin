@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
+import { Title } from '@angular/platform-browser';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Subscriber } from "../../../../both/models/subscriber.model";
 import { showAlert } from "../shared/show-alert";
@@ -44,6 +45,7 @@ export class ListSubscribersComponent extends MeteorComponent implements OnInit,
         private route: ActivatedRoute,
         private paginationService: PaginationService,
         private ngZone: NgZone,
+        private titleService: Title,
         private changeDetectorRef: ChangeDetectorRef,
         private localStorageService: LocalStorageService
     ) {
@@ -51,7 +53,8 @@ export class ListSubscribersComponent extends MeteorComponent implements OnInit,
     }
 
     ngOnInit() {
-        this.setOptions();
+      this.titleService.setTitle(user + "Subscribers List | Atorvia");
+      this.setOptions();
     }
 
     private setOptions() {

@@ -6,6 +6,7 @@ import { Subscription } from "rxjs";
 import { MeteorComponent } from 'angular2-meteor';
 import { User } from "../../../../both/models/user.model";
 import { showAlert } from "../shared/show-alert";
+import { Title } from '@angular/platform-browser';
 import { validatePassword } from "../../validators/common";
 
 import template from "./payout-form.html";
@@ -24,6 +25,7 @@ export class PayoutSubadminComponent extends MeteorComponent implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
+    private titleService: Title,
     private formBuilder: FormBuilder)
   {
     super();
@@ -42,6 +44,8 @@ export class PayoutSubadminComponent extends MeteorComponent implements OnInit {
                 showAlert("Error while fetching user data.", "danger");
                 return;
             }
+
+            this.titleService.setTitle("Payout Form | Atorvia");
             this.user = res;
         });
     });

@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
+import { Title } from '@angular/platform-browser';
 import { Booking } from "../../../../both/models/booking.model";
 import { showAlert } from "../shared/show-alert";
 import { Roles } from 'meteor/alanning:roles';
@@ -46,6 +47,7 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
     private route: ActivatedRoute,
     private paginationService: PaginationService,
     private ngZone: NgZone,
+    private titleService: Title,
     private changeDetectorRef: ChangeDetectorRef,
     private localStorageService: LocalStorageService
   ) {
@@ -53,6 +55,7 @@ export class ListBookingComponent extends MeteorComponent implements OnInit, Aft
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Bookings List | Atorvia");
     this.setOptions();
   }
 

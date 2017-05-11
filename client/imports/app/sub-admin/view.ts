@@ -3,6 +3,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { PaginationService } from "ng2-pagination";
+import { Title } from '@angular/platform-browser';
 import { Observable, Subscription, Subject, BehaviorSubject } from "rxjs";
 import { User } from "../../../../both/models/user.model";
 import { Payout } from "../../../../both/models/payout.model";
@@ -53,6 +54,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
+    private titleService: Title,
     private paginationService: PaginationService) {
     super();
   }
@@ -73,6 +75,9 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
                   });
                   return;
               }
+
+              let user = res.profile.supplier.companyName;
+              this.titleService.setTitle(user + " | Atorvia");
               this.user = res;
               this.fetchBookingsStats(id);
           });

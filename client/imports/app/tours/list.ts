@@ -10,6 +10,7 @@ import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Tour } from "../../../../both/models/tour.model";
+import { Title } from '@angular/platform-browser';
 import {showAlert} from "../shared/show-alert";
 import { Roles } from 'meteor/alanning:roles';
 
@@ -45,6 +46,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
     private route: ActivatedRoute,
     private paginationService: PaginationService,
     private ngZone: NgZone,
+    private titleService: Title,
     private changeDetectorRef: ChangeDetectorRef,
     private localStorageService: LocalStorageService
   ) {
@@ -52,6 +54,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
   }
 
   ngOnInit() {
+    this.titleService.setTitle("Tours List | Atorvia");
     this.setOptions();
     this.customerAppUrl = Meteor.settings.public["customerAppUrl"];
   }

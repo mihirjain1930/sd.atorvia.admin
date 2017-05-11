@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
+import { Title } from '@angular/platform-browser';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from "../../../../both/models/user.model";
 import {showAlert} from "../shared/show-alert";
@@ -46,6 +47,7 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
         private route: ActivatedRoute,
         private paginationService: PaginationService,
         private ngZone: NgZone,
+        private titleService: Title,
         private changeDetectorRef: ChangeDetectorRef,
         private localStorageService: LocalStorageService
     ) {
@@ -55,11 +57,14 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
         if(currentUrl == "/customers/list") {
           this.pageTitle = "Customers";
           this.userRoles = ["customer"];
+          this.titleService.setTitle("Customers List | Atorvia");
+        } else {
+          this.titleService.setTitle("Suppliers List | Atorvia");
         }
     }
 
     ngOnInit() {
-        this.setOptions();
+      this.setOptions();
     }
 
     private setOptions() {

@@ -6,6 +6,7 @@ import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
 import { Booking } from "../../../../both/models/booking.model";
 import { User } from "../../../../both/models/user.model";
+import { Title } from '@angular/platform-browser';
 import {showAlert} from "../shared/show-alert";
 
 import template from './view.html';
@@ -27,6 +28,7 @@ export class ViewBookingComponent extends MeteorComponent {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
+    private titleService: Title,
     private changeDetectorRef: ChangeDetectorRef
   ) {
     super();
@@ -47,6 +49,10 @@ export class ViewBookingComponent extends MeteorComponent {
                   });
                   return;
               }
+
+              let tour = res.booking.tour.name;
+              let name = tour.toUpperCase();
+              this.titleService.setTitle("Booking - " + name +" | Atorvia");
               this.booking = <Booking>res.booking;
               this.owner = <User>res.owner;
           });
