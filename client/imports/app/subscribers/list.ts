@@ -53,7 +53,7 @@ export class ListSubscribersComponent extends MeteorComponent implements OnInit,
     }
 
     ngOnInit() {
-      this.titleService.setTitle(user + "Subscribers List | Atorvia");
+      this.titleService.setTitle("Subscribers List | Atorvia");
       this.setOptions();
     }
 

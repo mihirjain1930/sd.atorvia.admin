@@ -50,7 +50,7 @@
     <section *ngIf="user.roles.indexOf('customer') >= 0" class="pateint-list">
         <section class="col s7 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/customer/view', user._id]">{{user.profile.fullName}}</a></h2>
-            <ul class="pateint-deatil">
+            <ul class="pateint-deatil" *ngIf="user.emails && user.emails.length">
                 <li><i class="zmdi zmdi-email tooltipped" data-position="top" data-delay="0" data-tooltip="Email"></i> {{user.emails[0].address}}</li>
             </ul>
         </section>
