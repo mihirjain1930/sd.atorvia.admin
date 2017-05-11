@@ -10,7 +10,7 @@ Meteor.methods({
       let totalTours = Meteor.call("tours.find", {}, {}, "", true);
       let approvedTours = Meteor.call("tours.find", {}, {"approved": true}, "", true);
       let totalBookings = Meteor.call("bookings.find",{}, {}, "", true);
-      let confirmedBooking = Meteor.call("bookings.find",{}, {"confirmed": true}, "", true);
+      let confirmedBooking = Meteor.call("bookings.find",{}, {"confirmed": true, "cancelled": false}, "", true);
       let nowDate = new Date();
       let currentMonth = new Date(nowDate.setMonth(nowDate.getMonth() - 1));
       let lastMonth = new Date(nowDate.setMonth(nowDate.getMonth() - 2));
