@@ -50,6 +50,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
     "Nov",
     "Dec",
   ];
+  supplierAppUrl: string;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -57,6 +58,7 @@ export class ViewSubadminComponent extends MeteorComponent implements OnInit {
     private titleService: Title,
     private paginationService: PaginationService) {
     super();
+    this.supplierAppUrl = Meteor.settings.public["supplierAppUrl"];
   }
 
   ngOnInit() {

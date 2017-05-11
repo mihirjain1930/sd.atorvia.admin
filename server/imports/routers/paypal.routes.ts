@@ -40,15 +40,15 @@ Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request
   let booking = <any>Bookings.collection.findOne({"paymentInfo.gatewayTransId": args.paymentId});
 
   // get refund amount
-  let refund_details = {
+  /*let refund_details = {
       "amount": {
         total: booking.totalPrice - 250,
         currency: booking.currencyCode
       },
       "invoice_number": args.paymentId
-  };
+  };*/
   // delete refund_details.amount.details;
-  // let refund_details = {};
+  let refund_details = {};
   // get sale id
   let saleId = booking.paymentInfo.saleId;
 
