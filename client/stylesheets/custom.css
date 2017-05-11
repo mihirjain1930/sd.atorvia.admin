@@ -61,3 +61,14 @@ text-align: right;
 .tour-inclusion {
   list-style-type: disc !important;
 }
+
+.btn-info {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin-left: 10px;
+  margin-top: 2px;
+}
+.btn-info:focus {
+  background-color: inherit
+}

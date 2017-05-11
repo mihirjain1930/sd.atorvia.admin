@@ -37,6 +37,8 @@ export class ViewTourComponent extends MeteorComponent implements OnInit, AfterV
   owner: User;
   error: string;
   selDateRange: DateRange = null;
+  initializedModal: boolean = false;
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
@@ -122,7 +124,26 @@ export class ViewTourComponent extends MeteorComponent implements OnInit, AfterV
     })
   }
 
-  deleteTour(tour: Tour) {
+  disapproveTour(tour: Tour) {
+    if (! confirm("Are you sure to disapprove this tour?")) {
+      return false;
+    }
+
+    Meteor.call("tours.disapprove", tour._id, (err, res) => {
+      if (err) {
+        showAlert("Error calling tours.approved", "danger");
+        return;
+      }
+      tour.approved = false;
+      tour.rejected = true;
+      //angular2 waits for dom event to detect changes automatically
+      //so trigger change detection manually to update dom
+      this.changeDetectorRef.detectChanges();
+      showAlert("Tour has been disapproved.", "success");
+    })
+  }
+
+  /*deleteTour(tour: Tour) {
     if (! confirm("Are you sure to delete this tour?")) {
       return false;
     }
@@ -139,13 +160,25 @@ export class ViewTourComponent extends MeteorComponent implements OnInit, AfterV
       this.changeDetectorRef.detectChanges();
       showAlert("Tour has been removed.", "success");
     })
-  }
+  }*/
 
   ngAfterViewInit() {
     Meteor.setTimeout(function() {
       jQuery(function($){
         /*$('select').material_select();*/
-        jQuery('.modal').modal();
+      });
+    }, 500);
+  }
+
+  initializeModal() {
+    if (this.initializedModal) {
+      return;
+    }
+
+    this.initializedModal = true;
+    Meteor.setTimeout(function() {
+      jQuery(function($){
+        $('.modal').modal();
       });
     }, 500);
   }

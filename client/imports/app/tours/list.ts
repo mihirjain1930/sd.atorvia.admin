@@ -209,7 +209,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
     })
   }
 
-  deleteTour(tour: Tour) {
+  /*deleteTour(tour: Tour) {
     if (! confirm("Are you sure to delete this tour?")) {
       return false;
     }
@@ -226,7 +226,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
       this.changeDetectorRef.detectChanges();
       showAlert("Tour has been removed.", "success");
     })
-  }
+  }*/
 
   ngOnDestroy() {
     this.optionsSub.unsubscribe();

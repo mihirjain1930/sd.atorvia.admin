@@ -25,31 +25,38 @@
 
         <div class="col s12">
             <h3>{{owner.profile.supplier?.companyName}}</h3>
-            <div class="row">
-              <div class="col s12" *ngIf="!! owner.profile.address?.address1">
-                <span class="col s6">Address Line 1</span>
-                <span class="col s6">{{owner.profile.address.address1}}</span>
+            <div class="row" *ngIf="!! owner.profile.address">
+
+              <div>
+                <label>Address Line 1</label>:
+                <span >{{owner.profile.address.address1}}</span>
               </div>
-              <div class="col s12" *ngIf="!! owner.profile.address?.address2">
-                <span class="col s6">Address Line 2</span>
-                <span class="col s6">{{owner.profile.address.address2}}</span>
+
+              <div *ngIf="!! owner.profile.address.address2">
+                <label>Address Line 2</label>:
+                <span>{{owner.profile.address.address2}}</span>
               </div>
-              <div class="col s12" *ngIf="!! owner.profile.address?.suburb">
-                <span class="col s6">Suburb</span>
-                <span class="col s6">{{owner.profile.address.suburb}}</span>
+
+              <div>
+                <label>Suburb</label>:
+                <span>{{owner.profile.address.suburb}}</span>
               </div>
-              <div class="col s12" *ngIf="!! owner.profile.address?.state">
-                <span class="col s6">State</span>
-                <span class="col s6">{{owner.profile.address.state}}</span>
+
+              <div>
+                <label>State</label>:
+                <span>{{owner.profile.address.state}}</span>
               </div>
-              <div class="col s12" *ngIf="!! owner.profile.address?.country">
-                <span class="col s6">Country</span>
-                <span class="col s6">{{owner.profile.address.country}}</span>
+
+              <div>
+                <label>Country</label>:
+                <span>{{owner.profile.address.country}}</span>
               </div>
-              <div class="col s12" *ngIf="!! owner.profile.address?.postCode">
-                <span class="col s6">Postcode</span>
-                <span class="col s6">{{owner.profile.address.postCode}}</span>
+
+              <div>
+                <label>Postcode</label>:
+                <span>{{owner.profile.address.postCode}}</span>
               </div>
+
             </div>
 
             <h4>Agent Certificate</h4>
@@ -83,12 +90,11 @@
       <div class="row pt-detail" *ngIf="tour.deleted !== true">
         <div class="col s12">
           <h2>Tour Actions</h2>
-          <span *ngIf="tour.approved === false"><a href="javascript:void(0)" class="" (click)="approveTour(tour)">Approve</a> |</span>
-          <span *ngIf="tour.approved === false"><a href="javascript:void(0)" class="" (click)="disapproveTour(tour)">Disapprove</a></span>
+          <span *ngIf="tour.approved === false && tour.rejected === false"><a href="javascript:void(0)" class="" (click)="approveTour(tour)">Approve</a> |</span>
+          <span *ngIf="tour.approved === false && tour.rejected === false"><a href="javascript:void(0)" class="" (click)="disapproveTour(tour)">Disapprove</a></span>
 
-          <span *ngIf="tour.approved === true && tour.active == false"><a href="javascript:void(0)" class="" (click)="activate(tour)">Activate</a> |</span>
-          <span *ngIf="tour.approved === true && tour.active == true"><a href="javascript:void(0)" class="" (click)="deactivate(tour)">Deactivate</a> |</span>
-          <span *ngIf="tour.approved === true"><a href="javascript:void(0)" class="" (click)="deleteTour(tour)">Delete</a></span>
+          <span *ngIf="tour.approved === true && tour.active == false"><a href="javascript:void(0)" class="" (click)="activate(tour)">Publish</a> |</span>
+          <span *ngIf="tour.approved === true && tour.active == true"><a href="javascript:void(0)" class="" (click)="deactivate(tour)">Unpublish</a> |</span>
         </div>
       </div>
     </div>
@@ -119,7 +125,7 @@
                 <th>Start</th>
                 <th>End </th>
                 <th>Seats Left</th>
-                <th>Price(A$)</th>
+                <th>Price($)</th>
                 <th></th>
               </tr>
             </thead>
@@ -128,13 +134,14 @@
                 <td>{{row.startDate | date}}</td>
                 <td>{{row.endDate | date}}</td>
                 <td>{{row.availableSeats}}</td>
-                <td>A$ {{row.price[0]?.adult}}</td>
+                <td>${{row.price[0]?.adult}}</td>
                 <td>
-                  <button (click)="selDateRange=row" type="button" data-toggle="modal" data-target="myModal"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                  <button class="btn-info" (click)="selDateRange=row" type="button" data-toggle="modal" data-target="myModal"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
                 </td>
               </tr>
             </tbody>
           </table>
+          {{initializeModal()}}
         </div>
       </div>
       <div id="myModal" class="modal">

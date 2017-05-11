@@ -48,15 +48,15 @@
         <div class="col s12">
           <h2>User Details</h2>
           <div>
-            <label>Full Name :</label>
+            <label>Full Name</label>:
             <span>{{booking.user.firstName}} {{booking.user.lastName}}</span>
           </div>
           <div>
-            <label>Email :</label>
+            <label>Email</label>:
             <span>{{booking.user.email}} </span>
           </div>
           <div>
-            <label>Contact</label>
+            <label>Contact</label>:
             <span>{{booking.user.contact}}</span>
           </div>
         </div>
@@ -91,8 +91,8 @@
             <div>
               <p class="col s6">First Name: {{traveller.firstName}}</p>
               <p class="col s6">Last Name: {{traveller.lastName}}</p>
-              <p class="col s6" *ngIf="!! traveller.email">Email : {{traveller.email}}</p>
-              <p class="col s6" *ngIf="!! traveller.contact">Contact : {{traveller.contact}}</p>
+              <p class="col s6" *ngIf="!! traveller.email">Email: {{traveller.email}}</p>
+              <p class="col s6" *ngIf="!! traveller.contact">Contact: {{traveller.contact}}</p>
             </div>
           </div>
         </div>
