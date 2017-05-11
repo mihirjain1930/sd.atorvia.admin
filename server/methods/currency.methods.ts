@@ -27,7 +27,6 @@ Meteor.methods({
     return Currencies.collection.findOne({_id: id});
   },
   "currency.update": (id: string, currencyData: Currency) => {
-    currencyData.modifiedAt = new Date();
     return Currencies.collection.update({_id: id}, {$set: currencyData})
   }
 })

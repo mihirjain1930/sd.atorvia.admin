@@ -20,10 +20,10 @@ Meteor.methods({
           $gte: currentMonth,
           $lte: new Date()
         }
-      }
+      };
       let currentMonthSales = Meteor.call("bookings.statistics.new", criteria);
 
-      let criteria = {
+      criteria = {
         bookingDate: {
           $gte: lastMonth,
           $lte: new Date()

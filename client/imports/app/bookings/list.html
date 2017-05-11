@@ -42,8 +42,8 @@
             <h2 class="pateint-name"><a [routerLink]="['/bookings/view', item._id]">{{item.tour?.name}}</a></h2>
             <div class="row">
               <div class="col s4">
-                <span *ngIf="!item.tour.featuredImage?.url"><img class="img-class" src="images/random.png" /></span>
-                <span *ngIf="item.tour.featuredImage?.url"><img class="img-class" [src]="item.tour.featuredImage?.url" style="width: 100%;" /></span>
+                <span *ngIf="!item.tour.featuredImage?.url"><img class="img-class" src="/images/random.png" /></span>
+                <span *ngIf="item.tour.featuredImage?.url"><img class="img-class" [src]="'/'+item.tour.featuredImage?.url" style="width: 100%;" /></span>
               </div>
               <div class="col s8">
                 <div class="row">
