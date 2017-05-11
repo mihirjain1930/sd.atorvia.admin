@@ -19,7 +19,7 @@ let rootUrl = process.env.ROOT_URL;
 Picker.middleware( bodyParser.json() );
 Picker.middleware( bodyParser.urlencoded( { extended: false } ) );
 
-Picker.route( '/admin/api/1.0/paypal/payment/get/', function( params, request, response, next ) {
+Picker.route( '/api/1.0/paypal/payment/get/', function( params, request, response, next ) {
   let body = request.body;
   let args = params.query;
 
@@ -34,30 +34,39 @@ Picker.route( '/admin/api/1.0/paypal/payment/get/', function( params, request, r
   });
 });
 
-Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request, response, next ) {
+Picker.route( '/api/1.0/paypal/payment/refund/', function( params, request, response, next ) {
   let body = request.body;
   let args = params.query;
   let booking = <any>Bookings.collection.findOne({"paymentInfo.gatewayTransId": args.paymentId});
 
   // get refund amount
-  // let refund_details = {
-  //     "amount": transaction.transactions[0].amount
-  // };
+  let refund_details = {
+      "amount": {
+        total: booking.totalPrice - 250,
+        currency: booking.currencyCode
+      },
+      "invoice_number": args.paymentId
+  };
   // delete refund_details.amount.details;
-  let refund_details = {};
+  // let refund_details = {};
   // get sale id
   let saleId = booking.paymentInfo.saleId;
 
   paypal.sale.refund(saleId, refund_details, Meteor.bindEnvironment( (error, refund) => {
       if (error) {
           //console.log(error.response);
-          response.end( JSON.stringify({success: false}) );
+          // response.end( JSON.stringify({success: false}) );
+          response.end( JSON.stringify(error) );
       } else {
           console.log("Get Refund Response");
           //console.log(JSON.stringify(payment));
           // insert transaction in mongodb
-          refund.bookingId = booking._id;
-          refund.supplierId = booking.tour.supplierId;
+          refund.relatedInfo = {
+            gateway: "paypal",
+            purpose: "refund",
+            bookingId: booking._id,
+            supplierId: booking.tour.supplierId
+          };
           refund.createdAt = new Date();
           var transactionId = Transactions.collection.insert(refund);
           console.log("new transactionId:", transactionId);
@@ -77,7 +86,8 @@ Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request
             Meteor.call("bookings.refundConfirmation", booking._id);
           }, 0);
 
-          response.end( JSON.stringify({success: true}) );
+          // response.end( JSON.stringify({success: true}) );
+          response.end( JSON.stringify(refund) );
       }
   }) );
 });

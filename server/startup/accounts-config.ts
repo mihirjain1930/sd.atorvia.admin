@@ -22,11 +22,11 @@ Accounts.onCreateUser(function(options, user) {
 // validate user role before login
 Accounts.validateLoginAttempt(function (options) {
 
-    if ( options.user.deleted === true ) {
+    if ( options.user && options.user.deleted === true ) {
       throw new Meteor.Error(403, "You are not allowed to login.");
     }
 
-    if ( options.user.active === false ) {
+    if ( options.user && options.user.active === false ) {
       throw new Meteor.Error(403, "Your account is deactivated.");
     }
 
