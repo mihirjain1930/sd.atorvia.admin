@@ -109,14 +109,15 @@ Meteor.methods({
         "$match":
           {
             "tour.supplierId": id,
-            "confirmed": true
+            "confirmed": true,
+            "refunded": false
           }
       },
       {
         "$project":
           {
             "tour.supplierId":1,
-            "totalPrice":1,
+            "totalPriceDefault":1,
             "month": {"$month":"$bookingDate"},
             "year": {"$year": "$bookingDate"}
           }},
@@ -124,12 +125,64 @@ Meteor.methods({
           "$group":
             {
               _id:{"month":"$month","year":"$year"},
-              "totalPrice":{"$sum":"$totalPrice"},
+              "totalPrice":{"$sum":"$totalPriceDefault"},
               "count":{"$sum":1}
             }
         }
       ])
       return data;
+    },
+    "bookings.statistics.monthly": () => {
+      let userId = Meteor.userId(),
+          today = new Date(),
+          oneDay = ( 1000 * 60 * 60 * 24 ),
+          month6 = new Date( today.valueOf() - ( 6 * 30 * oneDay ) ),
+          month2 = new Date( today.valueOf() - ( 1 * 30 * oneDay ) ),
+          month1 = new Date( today.valueOf() - ( 0 * 30 * oneDay ) );
+
+      let $cond = {
+          "$cond": [
+              { "$lte": [ "$bookingDate", month6 ] },
+              "month6",
+              { "$cond": [
+                  { "$lte": [ "$bookingDate", month2 ] },
+                  "month2",
+                  "month1"
+              ]}
+          ]
+      };
+
+      let data = Bookings.collection.aggregate([
+          { "$match": {
+              "confirmed": true,
+              "refunded": false,
+              "bookingDate": { "$gte": month6 }
+          }},
+          { "$group": {
+              "_id": $cond,
+              "count": { "$sum": 1 },
+              "totalValue": { "$sum": "$totalPriceDefault" }
+          }}
+      ]);
+      console.log(data);
+
+      let bookings = data;
+      let bookingsCount = [];
+      let bookingsValue = [];
+      let groupNames = ["month1", "month2", "month6"];
+      interface BookingStats {count: number; totalValue: number}
+      for (let i=0; i<groupNames.length; i++) {
+        let item: BookingStats = <BookingStats>_.find(bookings, {_id: groupNames[i]});
+        if (_.isEmpty(item)) {
+          bookingsCount.push(0);
+          bookingsValue.push(0);
+        } else {
+          bookingsCount.push(item.count);
+          bookingsValue.push(item.totalValue);
+        }
+      }
+
+      return {bookingsCount, bookingsValue};
     },
     "bookings.statistics.new":(criteria: any = {}) => {
       userIsInRole(["super-admin"]);
@@ -138,13 +191,14 @@ Meteor.methods({
         {
           "$match":
           {
-            "confirmed": true
+            "confirmed": true,
+            "refunded": false
           }},
           {
             "$project":
             {
               "tour.supplierId":1,
-              "totalPrice":1,
+              "totalPriceDefault":1,
               "month": {"$month":"$bookingDate"},
               "year": {"$year": "$bookingDate"},
               "bookingDate": 1
@@ -156,7 +210,7 @@ Meteor.methods({
               "$group":
               {
                 _id: "$confirmed",
-                "totalPrice":{"$sum":"$totalPrice"},
+                "totalPrice":{"$sum":"$totalPriceDefault"},
                 "count":{"$sum":1}
               }},
               {
