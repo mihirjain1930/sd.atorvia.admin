@@ -26,7 +26,7 @@
 *ngFor="let item of items"
 [attr.data-item-id]="item._id"
 [ngClass]="{'red accent-1': item.deleted, 'red lighten-4': item.active === false}"
-[hidden]="item.deleted">
+[hidden]="item.rejected">
     <section class="pateint-list">
         <section class="col s8 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/tours/view', item._id]">{{item.name}}</a></h2>

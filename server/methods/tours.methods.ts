@@ -20,6 +20,8 @@ Meteor.methods({
             "$or": [{deleted: false}, {deleted: {$exists: false} }]
         }, {
           "$or": [{active: true}, {active: {$exists: false} }]
+        }, {
+          "$or": [{rejected: false}, {rejected: {$exists: false} }]
         });
 
         if (!_.isEmpty(criteria)) {
@@ -165,7 +167,7 @@ Meteor.methods({
 
       let supplierAppUrl = Meteor.settings.public["supplierAppUrl"];
       let to = supplier.emails[0].address;
-      let subject = "Booking Refund Confirmation - Supplier";
+      let subject = "Tour Rejected Confirmation - Supplier";
       let text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/supplier/tour-reject.html")+'`');
       Meteor.setTimeout(() => {
         Meteor.call("sendEmail", to, subject, text)
