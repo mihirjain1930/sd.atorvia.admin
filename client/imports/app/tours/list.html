@@ -17,7 +17,7 @@
 </div>
 
 <section *ngIf="itemsSize==0">
-    No tours have been added yet.
+    No tours found to be displayed here.
 </section>
 
 <pagination-controls id="tours" *ngIf="itemsSize>0" class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>

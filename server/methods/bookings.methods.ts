@@ -28,9 +28,11 @@ Meteor.methods({
         if ( !_.isEmpty(criteria) ) {
           if ( criteria.confirmed == false ) {
             criteria.startDate = {$gt: new Date()};
+            delete criteria["completed"];
           } else if ( criteria.completed==true ) {
             criteria.startDate = {$lte: new Date()};
             delete criteria["completed"];
+            delete criteria["confirmed"];
           } else if ( criteria.completed==false && criteria.confirmed==true ) {
             criteria.startDate = {$gt: new Date()};
             delete criteria["completed"];
