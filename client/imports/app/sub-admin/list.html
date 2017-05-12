@@ -28,13 +28,13 @@
 [ngClass]="{'red accent-1': user.deleted, 'red lighten-4': user.active === false}"
 [hidden]="user.deleted">
     <section *ngIf="user.roles.indexOf('supplier') >= 0" class="pateint-list">
-        <section class="col s7 mar-tp10">
+        <section class="col s6 mar-tp10">
             <h2 class="pateint-name"><a [routerLink]="['/sub-admin/view', user._id]">{{user.profile.supplier.companyName}}</a></h2>
             <ul class="pateint-deatil">
                 <li><i class="zmdi zmdi-email tooltipped" data-position="top" data-delay="0" data-tooltip="Email"></i> {{user.emails[0].address}}</li>
             </ul>
         </section>
-        <section class="col s5 detail-btn">
+        <section class="col s6 detail-btn">
             <ul>
                 <li *ngIf="user.profile.supplier.agentCertificate?.verified"><a href="javascript:void(0);" (click)="unverifyCertificate(user)">Unverify Certificate</a></li>
                 <li *ngIf="user.profile.supplier.agentCertificate?.url && ! user.profile.supplier.agentCertificate?.verified"><a href="javascript:void(0);" (click)="verifyCertificate(user)">Verify Certificate</a></li>
@@ -42,7 +42,7 @@
                 <li *ngIf="user.profile.supplier.agentIdentity?.url && ! user.profile.supplier.agentIdentity?.verified"><a href="javascript:void(0);" (click)="verifyIdentity(user)">Verify Identity</a></li>
                 <li *ngIf="user.active == undefined || user.active === true"><a href="javascript:void(0);" (click)="deactivate(user)">Deactivate</a></li>
                 <li *ngIf="user.active === false"><a href="javascript:void(0);" (click)="activate(user)">Activate</a></li>
-                <li *ngIf="!user.deleted"><a href="javascript:void(0);" (click)="deleteUser(user)">Delete</a></li>
+                <!-- <li *ngIf="!user.deleted"><a href="javascript:void(0);" (click)="deleteUser(user)">Delete</a></li> -->
             </ul>
         </section>
     </section>
@@ -58,7 +58,7 @@
             <ul>
                 <li *ngIf="user.active == undefined || user.active === true"><a href="javascript:void(0);" (click)="deactivate(user)">Deactivate</a></li>
                 <li *ngIf="user.active === false"><a href="javascript:void(0);" (click)="activate(user)">Activate</a></li>
-                <li *ngIf="!user.deleted"><a href="javascript:void(0);" (click)="deleteUser(user)">Delete</a></li>
+                <!-- <li *ngIf="!user.deleted"><a href="javascript:void(0);" (click)="deleteUser(user)">Delete</a></li> -->
             </ul>
         </section>
     </section>

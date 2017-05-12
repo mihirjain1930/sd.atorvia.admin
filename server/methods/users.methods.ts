@@ -82,15 +82,15 @@ Meteor.methods({
         return Meteor.users.findOne({ _id: userId });
     },
     /* delete a user */
-    "users.delete": (userId: string) => {
-        userIsInRole(["super-admin"]);
-
-        return Meteor.users.update({ _id: userId }, {
-            $set: {
-                "deleted": true
-            }
-        });
-    },
+    // "users.delete": (userId: string) => {
+    //     userIsInRole(["super-admin"]);
+    //
+    //     return Meteor.users.update({ _id: userId }, {
+    //         $set: {
+    //             "deleted": true
+    //         }
+    //     });
+    // },
     /* deactivate a user */
     "users.deactivate": (userId: string) => {
         userIsInRole(["super-admin"]);

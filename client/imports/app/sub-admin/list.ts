@@ -183,24 +183,24 @@ export class ListSubadminComponent extends MeteorComponent implements OnInit, Af
         })
     }
 
-    deleteUser(user: User) {
-        if (! confirm("Are you sure to delete this supplier?")) {
-            return false;
-        }
-
-        Meteor.call("users.delete", user._id, (err, res) => {
-            if (err) {
-                showAlert("Error while processing your request.", "danger");
-                return;
-            }
-            //set user.deleted to true to remove from list
-            user.deleted = true;
-            //angular2 waits for dom event to detect changes automatically
-            //so trigger change detection manually to update dom
-            this.changeDetectorRef.detectChanges();
-            showAlert("User has been removed.", "success");
-        })
-    }
+    // deleteUser(user: User) {
+    //     if (! confirm("Are you sure to delete this supplier?")) {
+    //         return false;
+    //     }
+    //
+    //     Meteor.call("users.delete", user._id, (err, res) => {
+    //         if (err) {
+    //             showAlert("Error while processing your request.", "danger");
+    //             return;
+    //         }
+    //         //set user.deleted to true to remove from list
+    //         user.deleted = true;
+    //         //angular2 waits for dom event to detect changes automatically
+    //         //so trigger change detection manually to update dom
+    //         this.changeDetectorRef.detectChanges();
+    //         showAlert("User has been removed.", "success");
+    //     })
+    // }
 
     ngOnDestroy() {
         this.optionsSub.unsubscribe();
