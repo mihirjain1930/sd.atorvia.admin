@@ -23,7 +23,7 @@ Meteor.methods({
       };
       let currentMonthSales = Meteor.call("bookings.statistics.new", criteria);
       if (currentMonthSales.length == 0) {
-        currentMonthSales = [{totalPrice: 0}];
+        currentMonthSales = [{totalPriceDefault: 0}];
       }
 
       criteria = {
@@ -34,7 +34,7 @@ Meteor.methods({
       };
       let lastMonthSales = Meteor.call("bookings.statistics.new", criteria);
       if (lastMonthSales.length == 0) {
-        lastMonthSales = [{totalPrice: 0}];
+        lastMonthSales = [{totalPriceDefault: 0}];
       }
 
       criteria = {
@@ -45,7 +45,7 @@ Meteor.methods({
       };
       let last6MonthsSales = Meteor.call("bookings.statistics.new", criteria);
       if (last6MonthsSales.length == 0) {
-        last6MonthsSales = [{totalPrice: 0}];
+        last6MonthsSales = [{totalPriceDefault: 0}];
       }
 
       return {
