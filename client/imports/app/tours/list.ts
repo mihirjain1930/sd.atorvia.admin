@@ -63,7 +63,7 @@ export class ListTourComponent extends MeteorComponent implements OnInit, AfterV
     let options = {
       limit: 10,
       curPage: 1,
-      orderBy: "createdAt",
+      orderBy: "requestApprovalSentAt",
       nameOrder: -1,
       searchString: ''
     }
