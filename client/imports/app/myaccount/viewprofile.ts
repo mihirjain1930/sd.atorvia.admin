@@ -85,7 +85,7 @@ export class UserDetailsComponent extends MeteorComponent implements OnInit {
             };
             this.call("users.update", this.userId, userData, (err, res) => {
                 if (err) {
-                    console.log("Error while updating user picture");
+                    console.log("Error while updating user picture",err);
                     return;
                 }
                 $("#inputFile").val("");

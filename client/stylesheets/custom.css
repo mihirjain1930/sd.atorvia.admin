@@ -72,3 +72,12 @@ text-align: right;
 .btn-info:focus {
   background-color: inherit
 }
+.label-info {
+  color: #000;
+}
+.address {
+  margin-left: 32px;
+  color: #101010;
+  font-size: 24px;
+  font-weight: 600;
+}

@@ -7,31 +7,58 @@
         <img *ngIf="!! user.profile.image?.url" [src]="user.profile.image.url" alt="" style="width:100px;" />
       </section>
       <section class="col s9 content-ptdetail ">
-        <h2 style="">{{user.profile.supplier?.companyName}}</h2>
+        <h2>{{user.profile.supplier?.companyName}}</h2>
         <div>
           <section class="user-gendetail row col s12">
-            <ul class="ul-level">
-              <li>
-                <label style="color:black">Manager Name</label>
-                <span>{{user.profile.supplier?.ownerName}}</span>
-              </li>
-              <li>
-                <label style="color:black">Email Address</label>
-                <span>{{user.emails[0]?.address}}</span>
-              </li>
-              <li>
-                <label style="color:black">Contact Number</label>
-                <span>{{user.profile?.contact}}</span>
-              </li>
-              <li>
-                <label style="color:black">Agent Certificate</label>
-                <a href="{{supplierAppUrl}}/{{user.profile.supplier?.agentCertificate?.url}}" download><span>{{user.profile.supplier?.agentCertificate?.name}}</span></a>
-              </li>
-              <li>
-                <label style="color:black">Agent Identity</label>
-                <a href="{{supplierAppUrl}}/{{user.profile.supplier?.agentIdentity?.url}}" download><span>{{user.profile.supplier?.agentIdentity?.name}}</span></a>
-              </li>
-            </ul>
+              <ul class="ul-level">
+                <li>
+                  <label class="label-info">Manager Name</label>
+                  <span>{{user.profile.supplier?.ownerName}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Email Address</label>
+                  <span>{{user.emails[0]?.address}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Contact Number</label>
+                  <span>{{user.profile?.contact}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Agent Certificate</label>
+                  <a href="{{supplierAppUrl}}/{{user.profile.supplier?.agentCertificate?.url}}" download><span>{{user.profile.supplier?.agentCertificate?.name}}</span></a>
+                </li>
+                <li>
+                  <label class="label-info">Agent Identity</label>
+                  <a href="{{supplierAppUrl}}/{{user.profile.supplier?.agentIdentity?.url}}" download><span>{{user.profile.supplier?.agentIdentity?.name}}</span></a>
+                </li>
+              </ul>
+              <h3 class="address">Address</h3>
+              <ul *ngIf="!! user.profile.address">
+                <li>
+                  <label class="label-info">Address Line 1 :</label>
+                  <span>{{user.profile.address?.address1}}</span>
+                </li>
+                <li *ngIf="!! user.profile.address?.address2">
+                  <label class="label-info">Address Line 2 :</label>
+                  <span>{{user.profile.address?.address2}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Suburb :</label>
+                  <span>{{user.profile.address?.suburb}}</span>
+                </li>
+                <li>
+                  <label class="label-info">State :</label>
+                  <span>{{user.profile.address?.state}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Country :</label>
+                  <span>{{user.profile.address?.country}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Pincode :</label>
+                  <span>{{user.profile.address?.postCode}}</span>
+                </li>
+              </ul>
           </section>
         </div>
       </section>

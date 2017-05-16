@@ -81,6 +81,35 @@ Meteor.methods({
     "users.findOne": (userId: string) => {
         return Meteor.users.findOne({ _id: userId });
     },
+    /* update user data */
+    "users.update": (userId: string, userData: any) => {
+      userIsInRole(["super-admin"]);
+      // validate firstName if present in userData
+      if (typeof userData["profile.firstName"] !== "undefined") {
+        check(userData["profile.firstName"], String);
+        if (!isValidFirstName(userData["profile.firstName"])) {
+          throw new Meteor.Error(`Invalid firstName ${userData.profile.firstName}`);
+        }
+      }
+      
+      // validate lastName if present in userData
+      if (typeof userData["profile.lastName"] !== "undefined") {
+        check(userData["profile.lastName"], String);
+        if (!isValidFirstName(userData["profile.lastName"])) {
+          throw new Meteor.Error(`Invalid lastName ${userData.profile.lastName}`);
+        }
+      }
+
+      // validate contact if present in userData
+      if (typeof userData["profile.contact"] !== "undefined") {
+        check(userData["profile.contact"], String);
+        if (!isValidPhoneNum(userData["profile.contact"])) {
+          throw new Meteor.Error(`Invalid phoneNum ${userData.profile.contact}`);
+        }
+      }
+
+      return Meteor.users.update({ _id: userId }, { $set: userData });
+    },
     /* delete a user */
     // "users.delete": (userId: string) => {
     //     userIsInRole(["super-admin"]);
