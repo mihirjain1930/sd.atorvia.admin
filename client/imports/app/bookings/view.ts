@@ -66,7 +66,7 @@ export class ViewBookingComponent extends MeteorComponent {
 
     this.refundForm = this.formBuilder.group({
       amount: ['', Validators.compose([Validators.required])],
-      comments: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(255)])]
+      comments: ['', Validators.compose([Validators.maxLength(255)])]
     });
   }
 

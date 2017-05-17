@@ -141,12 +141,11 @@
               <label for="amount">Comments</label>
               <textarea id="amount" placeholder="Enter the comments" formControlName="comments"></textarea>
               <div *ngIf="refundForm.controls['comments'].errors && refundForm.controls['comments'].touched" class="has-error">
-                <div *ngIf="refundForm.controls.comments.hasError('minlength')">Min characters required is 8.</div>
                 <div *ngIf="refundForm.controls.comments.hasError('maxlength')">Max characters allowed is 255.</div>
               </div>
             </div>
             <div class="col s12">
-              <button class="btn waves-effect waves-light blue accent-2" (click)="processRefund()">Make Refund</button>
+              <button class="btn-payment btn waves-effect waves-light blue accent-2" (click)="processRefund()">Make Refund</button>
             </div>
           </div>
         </form>
