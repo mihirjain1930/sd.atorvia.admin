@@ -75,8 +75,9 @@
             <p class="col s6">Booking Date: {{booking.bookingDate | date}}</p>
             <p class="col s6">Booking Id: {{booking.uniqueId}}</p>
             <p class="col s6">No. of Travellers: {{booking.numOfTravellers}}</p>
-            <p class="col s6">Price per adult: $ {{booking.pricePerAdult}}</p>
-            <p class="col s6">Price per child: $ {{booking.pricePerChild}}</p>
+            <p class="col s6">Total Price: ${{booking.totalPriceDefault}}</p>
+            <p class="col s6">Price per adult: ${{booking.pricePerAdultDefault}}</p>
+            <p class="col s6">Price per child: ${{booking.pricePerChildDefault}}</p>
             <p class="col s6">Status: <b>{{getBookingStatus(booking)}}</b></p>
             <p class="col s6">Guide Included: <span [innerHTML]="booking.tour.hasGuide == true ? 'Yes' : 'No'"></span></p>
             <p class="col s6">Flight Included: <span [innerHTML]="booking.tour.hasFlight == true ? 'Yes' : 'No'"></span></p>
@@ -106,11 +107,11 @@
               <p class="col s6">Cancelled By: <b>{{booking.cancelledBy | uppercase}}</b></p>
               <p class="col s6" *ngIf="!! booking.refundInfo">Refunded Date: {{booking.refundInfo?.processedAt | date}}</p>
               <p class="col s6" *ngIf="!! booking.refundInfo">Refunded By: <b>{{booking.refundInfo?.processedBy | uppercase}}</b></p>
+              <p class="col s6" *ngIf="!! booking.refundInfo">Refunded Amount: ${{booking.refundedAmount}}</p>
               <p class="col s12">Reason: {{booking.cancellationReason}}</p>
               <p class="col s12">Comments: {{booking.cancellationComments}}</p>
-
-              <button *ngIf="booking.cancelled == true && booking.refunded !== true" class="btn waves-effect waves-light blue accent-2" (click)="processRefund()">Make Refund</button>
-
+              <button *ngIf="booking.cancelled == true && booking.refunded !== true" type="button" class="btn waves-effect waves-light blue accent-2" data-toggle="modal" data-target="payment">Refund Payment</button>
+              {{initializeModal()}}
             </div>
           </div>
           <div class="col s12" *ngIf="isProcessing">
@@ -118,9 +119,28 @@
           </div>
         </div>
       </div>
-
-
     </div>
     <!-- right col ends-->
+
+    <!--modal starts-->
+    <div id="payment" class="modal">
+      <div class="modal-content">
+        <form [formGroup]="refundForm" #f="ngForm">
+          <h2>Refund Payment</h2>
+          <div class="row payment-form">
+            <div class="input field col s12" >
+              <label for="amount">Amount to refund</label>
+              <input id="amount" type="number" placeholder="Enter the amount" formControlName="amount">
+              <div *ngIf="refundForm.controls['amount'].errors && refundForm.controls['amount'].touched" class="has-error">
+                <div *ngIf="refundForm.controls.amount.hasError('required')">You have to fill in Amount to continue.</div>
+              </div>
+            </div>
+            <div class="col s12">
+              <button class="btn waves-effect waves-light blue accent-2" (click)="processRefund()">Make Refund</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
   </section>

@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import {Component, OnDestroy, NgZone } from "@angular/core";
 import { Subscription } from "rxjs";
+import { FormBuilder, FormGroup, FormArray, Validators as Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MeteorComponent } from 'angular2-meteor';
 import { ChangeDetectorRef } from "@angular/core";
@@ -18,16 +19,19 @@ declare var jQuery:any;
   template
 })
 export class ViewBookingComponent extends MeteorComponent {
+  refundForm: FormGroup;
   booking: Booking;
   paramsSub: Subscription;
   bookingId: string;
   owner: User;
   error: string;
   isProcessing: boolean = false;
+  initializedModal: boolean = false;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private zone: NgZone,
+    private formBuilder: FormBuilder,
     private titleService: Title,
     private changeDetectorRef: ChangeDetectorRef
   ) {
@@ -59,6 +63,10 @@ export class ViewBookingComponent extends MeteorComponent {
       });
 
     this.error = '';
+
+    this.refundForm = this.formBuilder.group({
+      amount: ['', Validators.compose([Validators.required])]
+    });
   }
 
   getBookingStatus(item) {
@@ -87,34 +95,61 @@ export class ViewBookingComponent extends MeteorComponent {
   }
 
   processRefund() {
-    if (this.isProcessing) {
-        showAlert("Your previous request is under processing. Please wait for a while.", "info");
-        return false;
-      }
+    let refundAmount = this.refundForm.value.amount;
+    let booking = this.booking;
 
-      this.isProcessing = true;
+    if (! this.refundForm.valid) {
+      showAlert("Invalid amount supplied.", "danger");
+      return;
+    }
+
+    if(refundAmount > booking.totalPrice) {
+      showAlert("Refund amount is greater than total amount paid for booking.", "danger");
+      return;
+    }
+
+
+    if (this.isProcessing) {
+      showAlert("Your previous request is under processing. Please wait for a while.", "info");
+      return false;
+    }
+
+    this.isProcessing = true;
+    this.changeDetectorRef.detectChanges();
+    let adminAppUrl = Meteor.settings.public["adminAppUrl"];
+    HTTP.call("POST", adminAppUrl + "/api/1.0/paypal/payment/refund", {
+      data: {refundAmount},
+      params: {
+        paymentId: booking.paymentInfo.gatewayTransId
+      }
+    }, (error, result) => {
+      this.isProcessing = false;
       this.changeDetectorRef.detectChanges();
-      let booking = this.booking;
-      let adminAppUrl = Meteor.settings.public["adminAppUrl"];
-      HTTP.call("POST", adminAppUrl + "/api/1.0/paypal/payment/refund", {
-        data: {},
-        params: {
-          paymentId: booking.paymentInfo.gatewayTransId
-        }
-      }, (error, result) => {
-        this.isProcessing = false;
-        this.changeDetectorRef.detectChanges();
-        let response = JSON.parse(result.content);
-        if (! response.success) {
-          showAlert("Error while processing refund request. Please review gateway configurations and try again after some time.", "danger");
-          return;
-        } else {
-          booking.refunded = true;
-          this.zone.run(() => {
-            showAlert("Refund request has been processed successfully. Payment will be sent to customer based on processing time of gateway.", "success")
-            this.router.navigate(['/bookings/list']);
-          });
-        }
+      let response = JSON.parse(result.content);
+      if (! response.success) {
+        showAlert("Error while processing refund request. Please review gateway configurations and try again after some time.", "danger");
+        return;
+      } else {
+        booking.refunded = true;
+        this.zone.run(() => {
+          showAlert("Refund request has been processed successfully. Payment will be sent to customer based on processing time of gateway.", "success")
+          this.router.navigate(['/bookings/list']);
+        });
+      }
+    });
+    jQuery(".modal").modal('close');
+  }
+
+  initializeModal() {
+    if (this.initializedModal) {
+      return;
+    }
+
+    this.initializedModal = true;
+    Meteor.setTimeout(function() {
+      jQuery(function($){
+        $('.modal').modal();
       });
+    }, 500);
   }
 }

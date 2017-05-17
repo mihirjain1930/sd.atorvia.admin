@@ -81,3 +81,13 @@ text-align: right;
   font-size: 24px;
   font-weight: 600;
 }
+.payment-form {
+  margin-top: 10px;
+}
+.payment-type {
+  margin-left: 10px;
+}
+.has-error {
+  font-size: 14px;
+  color: #D8000C
+}

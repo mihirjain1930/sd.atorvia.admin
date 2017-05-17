@@ -38,25 +38,28 @@ Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request
   let body = request.body;
   let args = params.query;
   let booking = <any>Bookings.collection.findOne({"paymentInfo.gatewayTransId": args.paymentId});
+  let randomnumber = Math.ceil(Math.random() * 9999999);
+  let amountToRefund = Number(body.refundAmount);
 
   // get refund amount
-  /*let refund_details = {
+  let refund_details = {
       "amount": {
-        total: booking.totalPrice - 250,
-        currency: booking.currencyCode
+        total: amountToRefund,
+        currency: "USD"
       },
-      "invoice_number": args.paymentId
-  };*/
+      "invoice_number": randomnumber
+  };
   // delete refund_details.amount.details;
-  let refund_details = {};
+  // let refund_details = {};
   // get sale id
+  console.log("refund details",refund_details);
   let saleId = booking.paymentInfo.saleId;
 
   paypal.sale.refund(saleId, refund_details, Meteor.bindEnvironment( (error, refund) => {
       if (error) {
-          //console.log(error.response);
-          // response.end( JSON.stringify({success: false}) );
-          response.end( JSON.stringify(error) );
+          console.log(error.response);
+          response.end( JSON.stringify({success: false}) );
+          // response.end( JSON.stringify(error) );
       } else {
           console.log("Get Refund Response");
           //console.log(JSON.stringify(payment));
@@ -73,7 +76,7 @@ Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request
           // update booking object
           Bookings.collection.update({_id: booking._id}, {$set: {
             refunded: true,
-            confirmed: false,
+            refundedAmount: amountToRefund,
             "refundInfo": {
               transactionId: transactionId,
               gatewayTransId: refund.id,
@@ -86,8 +89,8 @@ Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request
             Meteor.call("bookings.refundConfirmation", booking._id);
           }, 0);
 
-          // response.end( JSON.stringify({success: true}) );
-          response.end( JSON.stringify(refund) );
+          response.end( JSON.stringify({success: true}) );
+          // response.end( JSON.stringify(refund) );
       }
   }) );
 });

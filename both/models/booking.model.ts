@@ -119,6 +119,7 @@ export interface Booking extends CollectionObject {
       saleId: string;
     };
     refunded: boolean;
+    refundedAmount: number;
     refundInfo: {
       transactionId: string;
       gatewayTransId: string;
