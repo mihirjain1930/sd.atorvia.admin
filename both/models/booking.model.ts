@@ -108,6 +108,7 @@ export interface Booking extends CollectionObject {
     cancelledBy: string;
     cancellationReason: string;
     cancellationComments: string;
+    refundComments: string;
     denied: boolean;
     deniedReason: string;
     paymentInfo: {

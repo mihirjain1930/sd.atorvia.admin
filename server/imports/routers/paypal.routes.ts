@@ -40,7 +40,7 @@ Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request
   let booking = <any>Bookings.collection.findOne({"paymentInfo.gatewayTransId": args.paymentId});
   let randomnumber = Math.ceil(Math.random() * 9999999);
   let amountToRefund = Number(body.refundAmount);
-
+  let comments = body.comments;
   // get refund amount
   let refund_details = {
       "amount": {
@@ -77,6 +77,7 @@ Picker.route( '/admin/api/1.0/paypal/payment/refund/', function( params, request
           Bookings.collection.update({_id: booking._id}, {$set: {
             refunded: true,
             refundedAmount: amountToRefund,
+            refundComments: comments,
             "refundInfo": {
               transactionId: transactionId,
               gatewayTransId: refund.id,

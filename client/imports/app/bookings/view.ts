@@ -97,6 +97,7 @@ export class ViewBookingComponent extends MeteorComponent {
 
   processRefund() {
     let refundAmount = this.refundForm.value.amount;
+    let comments = this.refundForm.value.comments;
     let booking = this.booking;
 
     if (! this.refundForm.valid) {
@@ -122,7 +123,7 @@ export class ViewBookingComponent extends MeteorComponent {
     this.changeDetectorRef.detectChanges();
     let adminAppUrl = Meteor.settings.public["adminAppUrl"];
     HTTP.call("POST", adminAppUrl + "/api/1.0/paypal/payment/refund", {
-      data: {refundAmount},
+      data: {refundAmount, comments},
       params: {
         paymentId: booking.paymentInfo.gatewayTransId
       }
