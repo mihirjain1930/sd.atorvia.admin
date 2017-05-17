@@ -65,7 +65,8 @@ export class ViewBookingComponent extends MeteorComponent {
     this.error = '';
 
     this.refundForm = this.formBuilder.group({
-      amount: ['', Validators.compose([Validators.required])]
+      amount: ['', Validators.compose([Validators.required])],
+      comments: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(255)])]
     });
   }
 
@@ -102,7 +103,10 @@ export class ViewBookingComponent extends MeteorComponent {
       showAlert("Invalid amount supplied.", "danger");
       return;
     }
-
+    if (refundAmount <= 0) {
+      showAlert("Amount entered is invalid.", "danger");
+      return;
+    }
     if(refundAmount > booking.totalPrice) {
       showAlert("Refund amount is greater than total amount paid for booking.", "danger");
       return;

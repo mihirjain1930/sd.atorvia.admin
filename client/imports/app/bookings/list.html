@@ -47,25 +47,25 @@
               </div>
               <div class="col s8">
                 <div class="row">
-                  <div class="col s6">
+                  <div class="col s4">
                     Departure: {{item.tour.departure}}
                   </div>
-                  <div class="col s6">
+                  <div class="col s4">
                     Destination: {{item.tour.destination}}
                   </div>
-                  <div class="col s6">
+                  <div class="col s4">
                     Customer: {{item.user.firstName}} {{item.user.lastName}}
                   </div>
-                  <div class="col s6">
+                  <div class="col s4">
                     Supplier: {{item.tour.supplier?.companyName}}
                   </div>
-                  <div class="col s6">
+                  <div class="col s4">
                     Booking Date : {{item.bookingDate | date}}
                   </div>
-                  <div class="col s6">
+                  <div class="col s4">
                     Total Price: ${{item.totalPriceDefault}}
                   </div>
-                  <div class="col s6">
+                  <div class="col s4">
                     Status: <b>{{getBookingStatus(item)}}</b>
                   </div>
                 </div>
