@@ -270,7 +270,8 @@ Meteor.methods({
       }
 
       Bookings.collection.update({_id: booking._id, cancelled: true, refunded: false}, {$set: {
-        refunded: true
+        refunded: true,
+        refundDeniedAt: new Date()
       } });
 
       let paymentMethod = booking.paymentInfo.method;
