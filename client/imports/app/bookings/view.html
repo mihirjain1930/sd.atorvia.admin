@@ -111,7 +111,12 @@
               <p class="col s12">Reason: {{booking.cancellationReason}}</p>
               <p class="col s12">Comments By Customer: {{booking.cancellationComments}}</p>
               <p class="col s12" *ngIf="!! booking.refundComments">Comments By Admin: {{booking.refundComments}}</p>
-              <button *ngIf="booking.cancelled == true && booking.refunded !== true" type="button" class="col s6 btn waves-effect waves-light blue accent-2" data-toggle="modal" data-target="payment">Refund Payment</button>
+              <p class="col s6">
+                <button *ngIf="booking.cancelled == true && booking.refunded !== true" type="button" class="col s6 btn waves-effect waves-light blue accent-2" data-toggle="modal" data-target="payment">Refund Payment</button>
+              </p>
+              <p class="col s6">
+                <button *ngIf="booking.cancelled == true && booking.refunded !== true" type="button" class="col s6 btn waves-effect waves-light amber accent-1" (click)="denyRefund()">Deny Refund</button>
+              </p>
               {{initializeModal()}}
             </div>
           </div>

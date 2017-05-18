@@ -259,6 +259,35 @@ Meteor.methods({
       Meteor.setTimeout(() => {
         Meteor.call("sendEmail", to, subject, text)
       }, 0);
+    },
+    "bookings.denyRefund": (bookingId: string) => {
+      let fs = require("fs");
+
+      // find booking details
+      let booking = Bookings.collection.findOne({_id: bookingId});
+      if (_.isEmpty(booking)) {
+        return;
+      }
+
+      Bookings.collection.update({_id: booking._id, cancelled: true, refunded: false}, {$set: {
+        refunded: true
+      } });
+
+      let paymentMethod = booking.paymentInfo.method;
+      if (paymentMethod == "express_checkout") {
+        booking.paymentInfo.method = "Paypal";
+      } else if(paymentMethod == "credit_card") {
+        booking.paymentInfo.method = "Credit Card";
+      }
+
+      // send email to customer
+      let customerAppUrl = Meteor.settings.public["customerAppUrl"];
+      let to = booking.user.email;
+      let subject = "Refund Rejected from Atorvia";
+      let text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/customer/booking-refund-denied.html")+'`');
+      Meteor.setTimeout(() => {
+        Meteor.call("sendEmail", to, subject, text);
+      }, 0);
     }
 });
 

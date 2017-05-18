@@ -95,6 +95,23 @@ export class ViewBookingComponent extends MeteorComponent {
     return retVal;
   }
 
+  denyRefund() {
+    let booking = this.booking;
+
+    this.call("bookings.denyRefund", booking._id, (err, res) => {
+      if (err) {
+        showAlert(err.reason, "danger");
+        return;
+      }
+
+      booking.refunded = true;
+      this.zone.run(() => {
+        showAlert("Refund request has been declined.", "success")
+        this.router.navigate(['/bookings/list']);
+      });
+    });
+  }
+
   processRefund() {
     let refundAmount = this.refundForm.value.amount;
     let comments = this.refundForm.value.comments;
