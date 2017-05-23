@@ -32,7 +32,7 @@
                   <a href="{{supplierAppUrl}}/{{user.profile.supplier?.agentIdentity?.url}}" download><span>{{user.profile.supplier?.agentIdentity?.name}}</span></a>
                 </li>
               </ul>
-              <h3 class="address">Address</h3>
+              <h3 class="address" *ngIf="!! user.profile.address">Address</h3>
               <ul *ngIf="!! user.profile.address">
                 <li>
                   <label class="label-info">Address Line 1 :</label>
@@ -59,6 +59,30 @@
                   <span>{{user.profile.address?.postCode}}</span>
                 </li>
               </ul>
+              <h3 *ngIf="!! user.profile.bankDetails" class="address">Bank Details</h3>
+              <ul *ngIf="!! user.profile.bankDetails">
+                <li>
+                  <label class="label-info">Benificiary Name :</label>
+                  <span>{{user.profile.bankDetails?.accountName}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Account Number :</label>
+                  <span>{{user.profile.bankDetails?.accountNumber}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Bank Name :</label>
+                  <span>{{user.profile.bankDetails?.bankName}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Bank Address :</label>
+                  <span>{{user.profile.bankDetails?.bankAddress}}</span>
+                </li>
+                <li>
+                  <label class="label-info">Bank Swift Code :</label>
+                  <span>{{user.profile.bankDetails?.swiftCode}}</span>
+                </li>
+              </ul>
+
           </section>
         </div>
       </section>
