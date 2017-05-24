@@ -11,6 +11,8 @@ Please find tour details below: <br />
   <li>End Date: ${getFormattedDate(booking.endDate)} </li>
   <li>Num of Travellers: ${booking.numOfTravellers} </li>
   <li>Total Price: ${booking.totalPriceDefault}</li>
+  <li>Refunded Amount: ${booking.refundedAmount}</li>
+  <li>Comments: ${booking.refundComments}</li>
   <li>Payment Method: ${booking.paymentInfo.method} </li>
   <li>Supplier Name: ${booking.tour.supplier.companyName}</li>
   <li> View Link: <a href="${supplierAppUrl}/bookings/view/${booking._id}">${booking.tour.name}</a> </li>
