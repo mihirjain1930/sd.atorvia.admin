@@ -12,7 +12,7 @@ let sendDefault = <any>_.bind(Email.send, Email);
       if (override) {
         /* your custom mail method, pull the options you need from `options` */
         // console.log('CUSTOM MAIL METHOD');
-        Meteor.call("sendEmailCustom", options.to, options.subject, options.text);
+        Meteor.call("sendEmailCustom", options.to, options.subject, options.html);
       } else {
         /* use the SMTP method */
         // console.log('DEFAULT MAIL METHOD');
