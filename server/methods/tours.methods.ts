@@ -6,6 +6,7 @@ import { Tours } from "../../both/collections/tours.collection";
 import { Bookings } from "../../both/collections/bookings.collection";
 import { Tour } from "../../both/models/tour.model";
 import { isLoggedIn, userIsInRole } from "../imports/services/auth";
+import tourRejectSupplierHtml from "../imports/emails/supplier/tour-reject.html"
 import * as _ from 'underscore';
 
 interface Options {
@@ -156,7 +157,6 @@ Meteor.methods({
       });
     },
     "tours.rejectConfirmation": (id: string) => {
-      let fs = require("fs");
 
       let tour = Tours.collection.findOne({_id: id});
       if (_.isEmpty(tour)) {
@@ -168,7 +168,7 @@ Meteor.methods({
       let supplierAppUrl = Meteor.settings.public["supplierAppUrl"];
       let to = supplier.emails[0].address;
       let subject = "Tour Rejected Confirmation - Supplier";
-      let text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/supplier/tour-reject.html")+'`');
+      let text = eval('`'+ tourRejectSupplierHtml +'`');
       Meteor.setTimeout(() => {
         Meteor.call("sendEmail", to, subject, text)
       }, 0);

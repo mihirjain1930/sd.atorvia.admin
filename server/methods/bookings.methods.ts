@@ -5,6 +5,9 @@ import { check } from "meteor/check";
 import { Bookings } from "../../both/collections/bookings.collection";
 import { Booking } from "../../both/models/booking.model";
 import { isLoggedIn, userIsInRole } from "../imports/services/auth";
+import bookingRefundCustomerHtml from "../imports/emails/customer/booking-refund.html";
+import bookingRefundSupplierHtml from "../imports/emails/supplier/booking-refund.html";
+import bookingDenyCustomerHtml from "../imports/emails/customer/booking-refund-denied.html";
 import * as _ from 'underscore';
 
 interface Options {
@@ -222,7 +225,6 @@ Meteor.methods({
               return data;
             },
     "bookings.refundConfirmation": (bookingId) => {
-      let fs = require("fs");
 
       // find booking details
       let booking = Bookings.collection.findOne({_id: bookingId});
@@ -241,7 +243,7 @@ Meteor.methods({
       let customerAppUrl = Meteor.settings.public["customerAppUrl"];
       let to = booking.user.email;
       let subject = "Booking Refund Confirmation - Customer";
-      let text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/customer/booking-refund.html")+'`');
+      let text = eval('`'+ bookingRefundCustomerHtml +'`');
       Meteor.setTimeout(() => {
         Meteor.call("sendEmail", to, subject, text);
       }, 0);
@@ -255,13 +257,12 @@ Meteor.methods({
       let supplierAppUrl = Meteor.settings.public["supplierAppUrl"];
       to = supplier.emails[0].address;
       subject = "Booking Refund Confirmation - Supplier";
-      text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/supplier/booking-refund.html")+'`');
+      text = eval('`'+ bookingRefundSupplierHtml +'`');
       Meteor.setTimeout(() => {
         Meteor.call("sendEmail", to, subject, text)
       }, 0);
     },
     "bookings.denyRefund": (bookingId: string) => {
-      let fs = require("fs");
 
       // find booking details
       let booking = Bookings.collection.findOne({_id: bookingId});
@@ -284,8 +285,9 @@ Meteor.methods({
       // send email to customer
       let customerAppUrl = Meteor.settings.public["customerAppUrl"];
       let to = booking.user.email;
+      console.log(to);
       let subject = "Refund Rejected from Atorvia";
-      let text = eval('`'+fs.readFileSync(process.env.PWD + "/server/imports/emails/customer/booking-refund-denied.html")+'`');
+      let text = eval('`'+ bookingDenyCustomerHtml +'`');
       Meteor.setTimeout(() => {
         Meteor.call("sendEmail", to, subject, text);
       }, 0);
