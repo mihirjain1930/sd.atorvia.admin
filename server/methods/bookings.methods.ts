@@ -285,7 +285,6 @@ Meteor.methods({
       // send email to customer
       let customerAppUrl = Meteor.settings.public["customerAppUrl"];
       let to = booking.user.email;
-      console.log(to);
       let subject = "Refund Rejected from Atorvia";
       let text = eval('`'+ bookingDenyCustomerHtml +'`');
       Meteor.setTimeout(() => {
