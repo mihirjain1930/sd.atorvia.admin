@@ -4,7 +4,7 @@
   <section class="col s12 pt-detail bt-shadow">
     <section class="pateint-pic detail-pic-user col s3">
       <img src="images/no-image-male.jpg" alt="" style="width:100px;" *ngIf="! user?.profile.image?.url" />
-      <img src="{{user?.profile.image?.url}}" alt="" style="width:100px;" *ngIf="!! user?.profile.image?.url" />
+      <img src="uploads/images/{{user?.profile.image?.id}}-100-100.jpg" alt="" style="width:100px;" *ngIf="!! user?.profile.image?.url" />
 
       <div>
         <span class="item item-input">

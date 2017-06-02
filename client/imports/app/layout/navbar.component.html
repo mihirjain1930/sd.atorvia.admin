@@ -1,7 +1,7 @@
 <ul id="nav-mobile" class="side-nav left-bar fixed">
     <li class="admin-pro">
       <img src="images/no-image-male.jpg" style="width: 50%;" alt="" *ngIf="! user?.profile.image?.url" />
-      <img style="width: 50%;" src="{{user?.profile.image.url}}" alt="" *ngIf="!! user?.profile.image?.url" />
+      <img style="width: 50%;" src="uploads/images/{{user?.profile.image.id}}-142-142.jpg" alt="" *ngIf="!! user?.profile.image?.url" />
     <h2>{{user.profile.firstName}} {{user.profile.lastName}}</h2>
     </li>
 
