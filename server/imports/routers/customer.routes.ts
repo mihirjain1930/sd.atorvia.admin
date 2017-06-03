@@ -15,9 +15,9 @@ Picker.route("/admin/uploads/images/:id-:w-:h.jpg", function( params, request, r
       response.end( "Invalid image-id" );
       return;
   }
-  let imagePath = process.env.PWD + '/../supplier/uploads/images/' + image._id + '.' + image.extension;
+  let imagePath = process.env.PWD + '/../uploads/images/' + image._id + '.' + image.extension;
   // let destPath = process.env.PWD + '/uploads/images/' + image._id + '-350x280.' + image.extension;
-  let destPath = `${process.env.PWD}/../supplier/uploads/images/${image._id}-${params.w}x${params.h}.${image.extension}`;
+  let destPath = `${process.env.PWD}/../uploads/images/${image._id}-${params.w}x${params.h}.${image.extension}`;
   console.log(destPath);
 
   function readFile() {
